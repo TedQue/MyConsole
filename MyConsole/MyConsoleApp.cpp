@@ -1,4 +1,4 @@
-// MyConsole.cpp : ¶¨ÒåÓ¦ÓÃ³ÌĞòµÄÈë¿Úµã¡£
+ï»¿// MyConsole.cpp : å®šä¹‰åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
 //
 
 #include "stdafx.h"
@@ -7,10 +7,10 @@
 #include <crtdbg.h>
 #define MAX_LOADSTRING 100
 
-// È«¾Ö±äÁ¿:
-HINSTANCE hInst;								// µ±Ç°ÊµÀı
-TCHAR szTitle[MAX_LOADSTRING];					// ±êÌâÀ¸ÎÄ±¾
-TCHAR szWindowClass[MAX_LOADSTRING];			// Ö÷´°¿ÚÀàÃû
+// å…¨å±€å˜é‡:
+HINSTANCE hInst;								// å½“å‰å®ä¾‹
+TCHAR szTitle[MAX_LOADSTRING];					// æ ‡é¢˜æ æ–‡æœ¬
+TCHAR szWindowClass[MAX_LOADSTRING];			// ä¸»çª—å£ç±»å
 HWND hWnd;
 
 TCHAR szChildClass[MAX_LOADSTRING];
@@ -19,7 +19,7 @@ MyConsole *theConsole = NULL;
 HWND hEditWnd = NULL;
 MyEdit *theEdit = NULL;
 
-// ´Ë´úÂëÄ£¿éÖĞ°üº¬µÄº¯ÊıµÄÇ°ÏòÉùÃ÷:
+// æ­¤ä»£ç æ¨¡å—ä¸­åŒ…å«çš„å‡½æ•°çš„å‰å‘å£°æ˜:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -35,17 +35,17 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
- 	// TODO: ÔÚ´Ë·ÅÖÃ´úÂë¡£
+ 	// TODO: åœ¨æ­¤æ”¾ç½®ä»£ç ã€‚
 	MSG msg;
 	HACCEL hAccelTable;
 
-	// ³õÊ¼»¯È«¾Ö×Ö·û´®
+	// åˆå§‹åŒ–å…¨å±€å­—ç¬¦ä¸²
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_MYCONSOLE, szWindowClass, MAX_LOADSTRING);
 	_tcscpy(szChildClass, _T("MyConsoleChildWnd"));
 	MyRegisterClass(hInstance);
 
-	// Ö´ĞĞÓ¦ÓÃ³ÌĞò³õÊ¼»¯:
+	// æ‰§è¡Œåº”ç”¨ç¨‹åºåˆå§‹åŒ–:
 	if (!InitInstance (hInstance, nCmdShow))
 	{
 		return FALSE;
@@ -53,7 +53,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MYCONSOLE));
 
-	// Ö÷ÏûÏ¢Ñ­»·:
+	// ä¸»æ¶ˆæ¯å¾ªç¯:
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
 		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
@@ -111,7 +111,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-	hInst = hInstance; // ½«ÊµÀı¾ä±ú´æ´¢ÔÚÈ«¾Ö±äÁ¿ÖĞ
+	hInst = hInstance; // å°†å®ä¾‹å¥æŸ„å­˜å‚¨åœ¨å…¨å±€å˜é‡ä¸­
 
 	hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
@@ -121,7 +121,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		return FALSE;
 	}
 
-	// ´´½¨Á½¸ö×Ó´°¿Ú,·Ö±ğ¹ØÁª Edit ºÍ Console
+	// åˆ›å»ºä¸¤ä¸ªå­çª—å£,åˆ†åˆ«å…³è” Edit å’Œ Console
 	hEditWnd = CreateWindow(szChildClass, _T("MyEdit"), WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hWnd, NULL, hInstance, NULL);
 	if(!hEditWnd)
 	{
@@ -146,7 +146,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
-	// Êä³ö°æ±¾ĞÅÏ¢
+	// è¾“å‡ºç‰ˆæœ¬ä¿¡æ¯
 	wchar_t* ver1 = L"Console Window with ";
 	wchar_t* ver2 = L" fonts supported [version 0.9 release 2015-04-23]\r\n(c) 2015 Que's C++ Studio all right reserved.\r\n";
 	theConsole->write(ver1);
@@ -155,7 +155,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	theConsole->write(L"ur", 2, RGB(50, 50, 255));
 	theConsole->write(ver2);
 
-	// ÇĞ»»µ½ÊäÈëÄ£Ê½
+	// åˆ‡æ¢åˆ°è¾“å…¥æ¨¡å¼
 	theConsole->switchMode(CONSOLEMODE_INPUT);
 
 	////theConsole->write(L"a\r\n", -1, CONSOLECOLOR_TEXT, CONSOLECOLOR_BK);
@@ -189,7 +189,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);
-		// ·ÖÎö²Ëµ¥Ñ¡Ôñ:
+		// åˆ†æèœå•é€‰æ‹©:
 		switch (wmId)
 		{
 		case IDM_ABOUT:
@@ -221,7 +221,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//		TCHAR txt[200] = {0};
 		//		for(int i = 0; i < 1000; i++)
 		//		{
-		//			_stprintf(txt, _T("²âÊÔÁ¬ĞøÊä³ö,row[%d]\r\n"), i);
+		//			_stprintf(txt, _T("æµ‹è¯•è¿ç»­è¾“å‡º,row[%d]\r\n"), i);
 		//			theConsole->write(txt, _tcslen(txt), RGB(255,0,0), 0);
 		//			if(i % 10 == 0)
 		//			{
@@ -240,19 +240,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	//case WM_LBUTTONDOWN:
 	//{
-	//	TCHAR* txt = _T("ÏûÏ¢ WM_LBUTTONDOWN Received.\n");
+	//	TCHAR* txt = _T("æ¶ˆæ¯ WM_LBUTTONDOWN Received.\n");
 	//	theConsole->append(txt, _tcslen(txt), RGB(255,0,0), bkcolor);
 	//}
 	//break;
 	//case WM_RBUTTONDOWN:
 	//{
-	//	TCHAR* txt = _T("ÏûÏ¢ WM_RBUTTONDOWN Received.\n");
+	//	TCHAR* txt = _T("æ¶ˆæ¯ WM_RBUTTONDOWN Received.\n");
 	//	theConsole->append(txt, _tcslen(txt), RGB(0,255,0), bkcolor);
 	//}
 	//break;
 	//case WM_KEYDOWN:
 	//{
-	//	TCHAR* txt = _T("ÏûÏ¢ WM_KEYDOWN Received.\n");
+	//	TCHAR* txt = _T("æ¶ˆæ¯ WM_KEYDOWN Received.\n");
 	//	theConsole->append(txt, _tcslen(txt), RGB(0,0,255), bkcolor);
 	//}
 	//break;
@@ -273,7 +273,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		theConsole->switchMode(CONSOLEMODE_INPUT);
 
-		// return 1 ±íÊ¾ÊÂ¼şÒÑ¾­±»´¦Àí
+		// return 1 è¡¨ç¤ºäº‹ä»¶å·²ç»è¢«å¤„ç†
 		return 1;
 	}
 	break;
@@ -299,7 +299,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-// ¡°¹ØÓÚ¡±¿òµÄÏûÏ¢´¦Àí³ÌĞò¡£
+// â€œå…³äºâ€æ¡†çš„æ¶ˆæ¯å¤„ç†ç¨‹åºã€‚
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(lParam);

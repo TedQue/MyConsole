@@ -1,19 +1,19 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include <assert.h>
 #include <time.h>
 #include "MyCell.h"
 
 /*///////////////////////////////////////////////////////////////////////////////////
-* ³£Êı¶¨Òå 
+* å¸¸æ•°å®šä¹‰ 
 *////////////////////////////////////////////////////////////////////////////////////
-#define ROWINDEX_INC 200			// ĞĞ»º³å²»×ãÊ±Ôö³¤µÄ¸öÊı
-#define CHARS_INC 1024				// ×Ö·û»º³å²»×ãÊ±Ôö³¤µÄ¸öÊı
-#define CELLS_INC 1024				// µ¥Ôª¸ñ»º³å²»×ãÊÇÔö³¤µÄ¸öÊı
+#define ROWINDEX_INC 200			// è¡Œç¼“å†²ä¸è¶³æ—¶å¢é•¿çš„ä¸ªæ•°
+#define CHARS_INC 1024				// å­—ç¬¦ç¼“å†²ä¸è¶³æ—¶å¢é•¿çš„ä¸ªæ•°
+#define CELLS_INC 1024				// å•å…ƒæ ¼ç¼“å†²ä¸è¶³æ˜¯å¢é•¿çš„ä¸ªæ•°
 
 #define BLOCK_SIZE 2048
 #define BLOCK_INDEX_INC 64
 
-// ÉèÖÃĞĞĞÅÏ¢µÄÆÁ±Î×Ö
+// è®¾ç½®è¡Œä¿¡æ¯çš„å±è”½å­—
 #define MASK_ROWNONE	0
 #define MASK_ROWINDEX	0x01
 #define MASK_ROWWIDTH	0x02
@@ -26,7 +26,7 @@
 #define MIN4(a,b,c,d) (MIN(MIN((a),(b)),MIN((c),(d))))
 
 /*///////////////////////////////////////////////////////////////////////////////////
-* È«¾Öº¯Êı
+* å…¨å±€å‡½æ•°
 *////////////////////////////////////////////////////////////////////////////////////
 COLORREF revers_color(COLORREF clr)
 {
@@ -87,7 +87,7 @@ void MyCellCharacter::draw(HDC hDc, const RECT* rc, bool selected)
 {
 	if(selected)
 	{
-		// ÔÚÑ¡ÇøÄÚ,»æÖÆÒ»¸ö±³¾°É«
+		// åœ¨é€‰åŒºå†…,ç»˜åˆ¶ä¸€ä¸ªèƒŒæ™¯è‰²
 		SetTextColor(hDc, revers_color(_fgClr));
 		SetBkColor(hDc, revers_color(_bkClr));
 
@@ -104,7 +104,7 @@ void MyCellCharacter::draw(HDC hDc, const RECT* rc, bool selected)
 	}
 	else
 	{
-		// ÔÚÑ¡ÇøÍâ
+		// åœ¨é€‰åŒºå¤–
 		SetTextColor(hDc, _fgClr);
 		SetBkColor(hDc, _bkClr);
 	}
@@ -114,10 +114,10 @@ void MyCellCharacter::draw(HDC hDc, const RECT* rc, bool selected)
 	}
 	else
 	{
-		// Êä³öÎÄ±¾
+		// è¾“å‡ºæ–‡æœ¬
 		TextOut(hDc, rc->left, rc->top, &_ch, 1);
 
-		// ÎÄ±¾ÏÂÃæÊä³öÒ»ÌõĞéÏß
+		// æ–‡æœ¬ä¸‹é¢è¾“å‡ºä¸€æ¡è™šçº¿
 		//SelectObject(hDc, GetStockObject(WHITE_PEN));
 		//MoveToEx(hDc, rc->left, rc->bottom, NULL);
 		//LineTo(hDc, rc->right, rc->bottom);
@@ -172,11 +172,11 @@ MyCellCharacterFactory::~MyCellCharacterFactory()
 
 void MyCellCharacterFactory::setFont(HDC hdc, HFONT font, int tabSize)
 {
-	// ¼ÇÂ¼²ÎÊı
+	// è®°å½•å‚æ•°
 	_hdc = hdc;
 	_hFont = font;
 
-	// »ñÈ¡×ÖÌåÏà¹ØµÄĞÅÏ¢
+	// è·å–å­—ä½“ç›¸å…³çš„ä¿¡æ¯
 	LOGFONT lf = {0};
 	GetObject(font, sizeof(LOGFONT), &lf);
 
@@ -189,7 +189,7 @@ void MyCellCharacterFactory::setFont(HDC hdc, HFONT font, int tabSize)
 	_charHeight = lf.lfHeight;
 	if(_charHeight == 0)
 	{
-		// Ä¬ÈÏĞĞ¸ß 16 ÏñËØ
+		// é»˜è®¤è¡Œé«˜ 16 åƒç´ 
 		_charHeight = 16;
 	}
 	else if(_charHeight > 0)
@@ -200,7 +200,7 @@ void MyCellCharacterFactory::setFont(HDC hdc, HFONT font, int tabSize)
 		_charHeight *= -1;
 	}
 
-	// ¸üĞÂËùÓĞMyCellCharacter µÄ×Ö·û¿í¶ÈºÍ¸ß¶È
+	// æ›´æ–°æ‰€æœ‰MyCellCharacter çš„å­—ç¬¦å®½åº¦å’Œé«˜åº¦
 	for(int i = 0; i < _blocksLen; ++i)
 	{
 		if(_blocks[i].buf)
@@ -251,7 +251,7 @@ int MyCellCharacterFactory::reserve(int len, MyCellCharacter** buf)
 	{
 		assert(_curIndex < _blockSize);
 
-		// µÚÒ»´Î·ÃÎÊ×Ö·û¿éÖ®Ç°³õÊ¼»¯Ö®
+		// ç¬¬ä¸€æ¬¡è®¿é—®å­—ç¬¦å—ä¹‹å‰åˆå§‹åŒ–ä¹‹
 		if(_blocks[_curBlock].buf == NULL)
 		{
 			assert(_curIndex == 0);
@@ -259,7 +259,7 @@ int MyCellCharacterFactory::reserve(int len, MyCellCharacter** buf)
 			_blocks[_curBlock].buf = new MyCellCharacter[_blockSize];
 		}
 
-		// Ö±½Ó°Ñµ±Ç°×Ö·û¿éÊ£ÓàµÄ×Ö·û·µ»Ø,³¤¶È¿ÉÄÜĞ¡ÓÚ len
+		// ç›´æ¥æŠŠå½“å‰å­—ç¬¦å—å‰©ä½™çš„å­—ç¬¦è¿”å›,é•¿åº¦å¯èƒ½å°äº len
 		rlen = _blockSize - _curIndex;
 		if(rlen > len) rlen = len;
 
@@ -269,7 +269,7 @@ int MyCellCharacterFactory::reserve(int len, MyCellCharacter** buf)
 
 		assert(_blocks[_curBlock].ref <= _curIndex);
 
-		// µ±Ç°×Ö·û¿éÒÑ¾­ÓÃÍê
+		// å½“å‰å­—ç¬¦å—å·²ç»ç”¨å®Œ
 		if(_curIndex >= _blockSize)
 		{
 			_curBlock++;
@@ -278,8 +278,8 @@ int MyCellCharacterFactory::reserve(int len, MyCellCharacter** buf)
 	}
 	else
 	{
-		// µ±Ç°×Ö·û¿éÒÑ¾­ÓÃÍê,·ÖÅäÒ»¸öĞÂµÄ×Ö·û¿é
-		// 1. È·±£×Ö·û¿éË÷Òı¿ÉÓÃ
+		// å½“å‰å­—ç¬¦å—å·²ç»ç”¨å®Œ,åˆ†é…ä¸€ä¸ªæ–°çš„å­—ç¬¦å—
+		// 1. ç¡®ä¿å­—ç¬¦å—ç´¢å¼•å¯ç”¨
 		charsblock_t* tmp = new charsblock_t[_blocksLen + BLOCK_INDEX_INC];
 		memset(tmp, 0, sizeof(charsblock_t) * (_blocksLen + BLOCK_INDEX_INC));
 		if(_blocks)
@@ -290,7 +290,7 @@ int MyCellCharacterFactory::reserve(int len, MyCellCharacter** buf)
 		_blocks = tmp;
 		_blocksLen += BLOCK_INDEX_INC;
 
-		// 2. ´ÓĞÂ×Ö·û¿éÖĞ·µ»Ø
+		// 2. ä»æ–°å­—ç¬¦å—ä¸­è¿”å›
 		return reserve(len, buf);
 	}
 	return rlen;
@@ -298,7 +298,7 @@ int MyCellCharacterFactory::reserve(int len, MyCellCharacter** buf)
 
 int MyCellCharacterFactory::alloc(const wchar_t* ch, int len, COLORREF fgClr, COLORREF bkClr, MyCellCharacter** chCells, int* cellLen)
 {
-	// ×ÜÊÇÔÊĞí·ÖÅä¸ü¶àµÄÄÚ´æ,×î´óÄÚ´æÏŞÖÆÓÉÊ¹ÓÃ MyCellCharacterFactory µÄ MyVirtualImage ¿ØÖÆ
+	// æ€»æ˜¯å…è®¸åˆ†é…æ›´å¤šçš„å†…å­˜,æœ€å¤§å†…å­˜é™åˆ¶ç”±ä½¿ç”¨ MyCellCharacterFactory çš„ MyVirtualImage æ§åˆ¶
 	*cellLen = reserve(len, chCells);
 	assert(*cellLen > 0);
 	for(int i = 0; i < *cellLen; ++i)
@@ -323,7 +323,7 @@ int MyCellCharacterFactory::findBlock(MyCellCharacter* ch)
 
 void MyCellCharacterFactory::recycle(MyCellCharacter** chs, int len)
 {
-	// ÕÒµ½×Ö·û¶ÔÓ¦µÄ×Ö·û¿é
+	// æ‰¾åˆ°å­—ç¬¦å¯¹åº”çš„å­—ç¬¦å—
 	int blockIdx = 0;
 	charsblock_t* blockPtr = NULL;
 
@@ -338,34 +338,34 @@ void MyCellCharacterFactory::recycle(MyCellCharacter** chs, int len)
 			blockPtr = &_blocks[blockIdx];
 		}
 
-		// °Ñ×Ö·û¿éµÄÒıÓÃ¼ÆÊı - 1
+		// æŠŠå­—ç¬¦å—çš„å¼•ç”¨è®¡æ•° - 1
 		blockPtr->ref--;
 
-		// Èç¹û×Ö·û¿é¿ÕÏĞ(¼´ÒıÓÃ¼ÆÊı = 0)Ôò°Ñ¸Ã×Ö·û¿éÒÆ¶¯µ½¶ÓÎ²,×¼±¸ÏÂ´ÎÊ¹ÓÃ
+		// å¦‚æœå­—ç¬¦å—ç©ºé—²(å³å¼•ç”¨è®¡æ•° = 0)åˆ™æŠŠè¯¥å­—ç¬¦å—ç§»åŠ¨åˆ°é˜Ÿå°¾,å‡†å¤‡ä¸‹æ¬¡ä½¿ç”¨
 		if(0 == blockPtr->ref)
 		{
 			assert(blockIdx <= _curBlock);
 
 			if(blockIdx == _curBlock)
 			{
-				// ÊÍ·ÅµÄ×Ö·û¿é¾ÍÊÇµ±Ç°×Ö·û¿é,Ôò°Ñ _curIndex ¹éÁã¾Í±íÊ¾×Ö·û¿éÓÖ¿ÉÓÃÁË.
+				// é‡Šæ”¾çš„å­—ç¬¦å—å°±æ˜¯å½“å‰å­—ç¬¦å—,åˆ™æŠŠ _curIndex å½’é›¶å°±è¡¨ç¤ºå­—ç¬¦å—åˆå¯ç”¨äº†.
 				_curIndex = 0;
 			}
 			else if(blockIdx == _curBlock - 1)
 			{
-				// ÊÍ·ÅµÄ×Ö·û¿éÊÇµ±Ç°×Ö·û¿éµÄÇ°Ò»¸ö,Ö»Òª×öÒ»´Î½»»»
+				// é‡Šæ”¾çš„å­—ç¬¦å—æ˜¯å½“å‰å­—ç¬¦å—çš„å‰ä¸€ä¸ª,åªè¦åšä¸€æ¬¡äº¤æ¢
 				swapBlock(blockIdx, _curBlock);
 				_curBlock--;
 			}
 			else
 			{
-				// ÆäËüÇé¿öĞèÒª×öÁ½´Î½»»»:ÏÈ°Ñ¿ÕÏĞ×Ö·û¿é½»»»µ½µ±Ç°¿éµÄÇ°Ò»¸öÎ»ÖÃ,È»ºóÔÙ°Ñµ±Ç°¿éºÍÇ°Ò»¿é½»»»
+				// å…¶å®ƒæƒ…å†µéœ€è¦åšä¸¤æ¬¡äº¤æ¢:å…ˆæŠŠç©ºé—²å­—ç¬¦å—äº¤æ¢åˆ°å½“å‰å—çš„å‰ä¸€ä¸ªä½ç½®,ç„¶åå†æŠŠå½“å‰å—å’Œå‰ä¸€å—äº¤æ¢
 				swapBlock(blockIdx, _curBlock - 1);
 				swapBlock(_curBlock - 1, _curBlock);
 				_curBlock--;
 			}
 
-			// Èç¹û¿ÕÏĞµÄ×Ö·û¿éÌ«¶àÁË,ÔòÉ¾³ıÒ»Ğ©
+			// å¦‚æœç©ºé—²çš„å­—ç¬¦å—å¤ªå¤šäº†,åˆ™åˆ é™¤ä¸€äº›
 			// ..
 			// ..
 		}
@@ -384,16 +384,16 @@ void MyCellCharacterFactory::swapBlock(int i, int j)
 MyVirtualImage::MyVirtualImage(int maxChars, const POINT& windowSz, bool autoWrap, HDC hdc)
 	:_charFactory(BLOCK_SIZE)
 {
-	// Ä¬ÈÏµÄ×ÖÌåÊÇºÍÏµÍ³¿ØÖÆÌ¨´°¿ÚÒ»ÑùµÄµÈ¿í×ÖÌå
+	// é»˜è®¤çš„å­—ä½“æ˜¯å’Œç³»ç»Ÿæ§åˆ¶å°çª—å£ä¸€æ ·çš„ç­‰å®½å­—ä½“
 	_hdc = CreateCompatibleDC(hdc);
 
-	// ĞĞÁĞ×ÖÌåµÄ³õÊ¼×´Ì¬-Î´ÉèÖÃ
+	// è¡Œåˆ—å­—ä½“çš„åˆå§‹çŠ¶æ€-æœªè®¾ç½®
 	_rowSpacing = 0;
 	_colSpacing = 0;
 	_alignMode = MYALIGN_TOP;
 	_autoWrap = autoWrap;
 
-	// ÆğÊ¼´°¿ÚµÄ´óĞ¡ºÍÎ»ÖÃ
+	// èµ·å§‹çª—å£çš„å¤§å°å’Œä½ç½®
 	_hbmp = NULL;
 	_windowPos.x = 0;
 	_windowPos.y = 0;
@@ -402,29 +402,29 @@ MyVirtualImage::MyVirtualImage(int maxChars, const POINT& windowSz, bool autoWra
 	_windowBkBrush = NULL;
 	_sel.x = 0;
 	_sel.y = 0;
-	_dirtyRange.x = 0;		// Õû¸öÇøÓò³õÊ¼×´Ì¬¶¼ÊÇÔàµÄ
+	_dirtyRange.x = 0;		// æ•´ä¸ªåŒºåŸŸåˆå§‹çŠ¶æ€éƒ½æ˜¯è„çš„
 	_dirtyRange.y = -1;
 
-	// ×Ö·û»º³å
+	// å­—ç¬¦ç¼“å†²
 	_cells = NULL;
 	_curCellPos = 0;
 	_cellBufLen = 0;
 	_maxCellLen = maxChars;
 	
-	// ÆğÊ¼ĞĞ»º³å,Ğ´µÄÊ±ºòµ÷ÓÃ setRowInfo »á×Ô¶¯Î¬»¤ĞĞ»º³åµÄÄÚÈİ
+	// èµ·å§‹è¡Œç¼“å†²,å†™çš„æ—¶å€™è°ƒç”¨ setRowInfo ä¼šè‡ªåŠ¨ç»´æŠ¤è¡Œç¼“å†²çš„å†…å®¹
 	_rowInfo = NULL;
 	_rowIndexBufLen = 0;
 	_widestRowIndex = 0;
 	_sentryRowPos = 0;
 	setRowInfo(0, 0, 0, 0, MASK_ROWWIDTH | MASK_ROWINDEX | MASK_ROWY);
 	
-	// ÉèÖÃÄ¬ÈÏ¸ñÊ½ SYSTEM_FIXED_FONT / DEFAULT_GUI_FONT
+	// è®¾ç½®é»˜è®¤æ ¼å¼ SYSTEM_FIXED_FONT / DEFAULT_GUI_FONT
 	setFont((HFONT)GetStockObject(SYSTEM_FIXED_FONT), 0, 0, 4);
 	setBkBrush((HBRUSH)GetStockObject(BLACK_BRUSH));
-	//setBkMode(OPAQUE);  // Ä¬ÈÏÄ£Ê½¾ÍÊÇ OPAQUE
+	//setBkMode(OPAQUE);  // é»˜è®¤æ¨¡å¼å°±æ˜¯ OPAQUE
 	//setSelColour(RGB(173,214,255));
 
-	// ·ÖÅä×Ö·û»º³å
+	// åˆ†é…å­—ç¬¦ç¼“å†²
 	setWindowSize(windowSz);
 }
 
@@ -438,15 +438,15 @@ MyVirtualImage::~MyVirtualImage()
 
 HFONT MyVirtualImage::setFont(HFONT font, int rowSpacing, int colSpacing, int tabSize)
 {
-	// 1. ¼ÇÂ¼²ÎÊı
+	// 1. è®°å½•å‚æ•°
 	_colSpacing = colSpacing;
 	_rowSpacing = rowSpacing;
 
-	// 2. Ñ¡ÖĞ×ÖÌå,¸üĞÂËùÓĞ×Ö·ûµÄ¿í¶È
+	// 2. é€‰ä¸­å­—ä½“,æ›´æ–°æ‰€æœ‰å­—ç¬¦çš„å®½åº¦
 	HFONT oldFont = (HFONT)SelectObject(_hdc, font);
 	_charFactory.setFont(_hdc, font, tabSize);
 	
-	// 3. ¸ù¾İĞÂµÄ²ÎÊıÖØ½¨ĞĞË÷ÒıÖ®ºóÖØ»­
+	// 3. æ ¹æ®æ–°çš„å‚æ•°é‡å»ºè¡Œç´¢å¼•ä¹‹åé‡ç”»
 	rebuildRowIndex();
 	redraw();
 
@@ -499,14 +499,14 @@ int MyVirtualImage::size() const
 	return _curCellPos;
 }
 
-// »ñÈ¡ĞĞ·¶Î§: ÓÉÓÚÉÚ±øµÄ´æÔÚ,×ÜÊÇ¿ÉÒÔÍ¨¹ı»ñÈ¡ÏÂÒ»ĞĞµÄÆğÊ¼Î»ÖÃÀ´¼ÆËãº¬·¶Î§.
+// è·å–è¡ŒèŒƒå›´: ç”±äºå“¨å…µçš„å­˜åœ¨,æ€»æ˜¯å¯ä»¥é€šè¿‡è·å–ä¸‹ä¸€è¡Œçš„èµ·å§‹ä½ç½®æ¥è®¡ç®—å«èŒƒå›´.
 POINT MyVirtualImage::getRowRange(int row) const
 {
 	assert(row >= 0 && row < _sentryRowPos);
 	return {getRowInfo(row, MASK_ROWINDEX), getRowInfo(row + 1, MASK_ROWINDEX)};
 }
 
-// ×Ö·ûĞòºÅ -> ĞĞÁĞĞòºÅ.ÓÉÓÚµ¥Ôª¸ñ°üº¬ÁËÒ»¸ö·´ÏòË÷ÒıËùÒÔ¿ÉÒÔÖ±½ÓµÃµ½ĞĞĞòºÅ,·ñÔòĞèÒªÓÃ¶ş·Ö²éÕÒËã·¨É¨ÃèĞĞË÷ÒıÖ±µ½ÕÒµ½¶ÔÓ¦ĞòºÅµÄĞĞ.
+// å­—ç¬¦åºå· -> è¡Œåˆ—åºå·.ç”±äºå•å…ƒæ ¼åŒ…å«äº†ä¸€ä¸ªåå‘ç´¢å¼•æ‰€ä»¥å¯ä»¥ç›´æ¥å¾—åˆ°è¡Œåºå·,å¦åˆ™éœ€è¦ç”¨äºŒåˆ†æŸ¥æ‰¾ç®—æ³•æ‰«æè¡Œç´¢å¼•ç›´åˆ°æ‰¾åˆ°å¯¹åº”åºå·çš„è¡Œ.
 int MyVirtualImage::getRowCol(int pos, int* row, int* col) const
 {
 	assert(pos >= 0 && pos <= _curCellPos);
@@ -538,15 +538,15 @@ int MyVirtualImage::getRowCol(int pos, int* row, int* col) const
 	return 0;
 }
 
-// ×Ö·ûĞòºÅ -> ĞéÄâÍ¼ÏñÀïµÄ×ø±ê(leftTop)
-// pos µÄÓĞĞ§·¶Î§ÊÇ [0, _curCellPos] µ± pos = _curCellPos Ê±·µ»Ø×îºóÒ»¸ö×Ö·ûºóÊä³öµÄÎ»ÖÃ,ÕâÊÇÒ»¸öÌØÊâÇé¿öµÄÓÃÍ¾
+// å­—ç¬¦åºå· -> è™šæ‹Ÿå›¾åƒé‡Œçš„åæ ‡(leftTop)
+// pos çš„æœ‰æ•ˆèŒƒå›´æ˜¯ [0, _curCellPos] å½“ pos = _curCellPos æ—¶è¿”å›æœ€åä¸€ä¸ªå­—ç¬¦åè¾“å‡ºçš„ä½ç½®,è¿™æ˜¯ä¸€ä¸ªç‰¹æ®Šæƒ…å†µçš„ç”¨é€”
 POINT MyVirtualImage::getPoint(int pos) const
 {
 	assert(pos >= 0 && pos <= _curCellPos);
 	POINT pt = {0, 0};
 	if(pos >= _curCellPos)
 	{
-		// ·µ»Ø×îºóÒ»¸ö×Ö·ûµÄÏÂÒ»¸ö×Ö·ûµÄÊä³öÎ»ÖÃ
+		// è¿”å›æœ€åä¸€ä¸ªå­—ç¬¦çš„ä¸‹ä¸€ä¸ªå­—ç¬¦çš„è¾“å‡ºä½ç½®
 		if(_curCellPos > 0)
 		{
 			if(_cells[_curCellPos - 1]->wrap())
@@ -568,7 +568,7 @@ POINT MyVirtualImage::getPoint(int pos) const
 	}
 	else
 	{
-		// ·µ»Ø¶ÔÓ¦×Ö·ûµÄÎ»ÖÃ
+		// è¿”å›å¯¹åº”å­—ç¬¦çš„ä½ç½®
 		int row;
 		getRowCol(pos, &row, NULL);
 		pt.x = 0;
@@ -583,10 +583,10 @@ POINT MyVirtualImage::getPoint(int pos) const
 	return pt;
 }
 
-// ²âÊÔĞéÄâÍ¼ÏñÖĞµÄÒ»¸ö×ø±ê,·µ»Ø¶ÔÓ¦µÄ×Ö·ûµÄĞĞÁĞĞòºÅ. Õâ¸öÂß¼­Ò»¶¨ÒªºÏ·û×ÔÈ»,·ñÔò»áÓĞ¸÷ÖÖ"Òì³£"Çé¿ö.
-// Ê×ÏÈ¶¨Î»ĞĞ,Èç¹û³¬³öÓĞĞ§·¶Î§,Ôò·µ»Ø _curCellPos; Èç¹û³¬³öÁĞµÄÓĞĞ§·¶Î§,Ôò·µ»Ø¸ÃĞĞµÄ×îºóÒ»¸ö×Ö·ûµÄĞòºÅ,Èç¹û¸ÃĞĞÊÇ¿ÕĞĞÔò·µ»Ø _curCellPos,Ëü¿Ï¶¨ÊÇ×îºóÒ»¸ö¿ÕĞĞ
-// (ÔÚÖĞ¼äµÄ"¿ÕĞĞ"²¢²»ÊÇÕæÕıµÄ¿ÕĞĞ,¶øÊÇ×Ö·û´®"\r\n", ×îºóÒ»¸ö»»ĞĞ¶¯×÷µ¼ÖÂĞÂÔöµÄÒ»¸öĞĞË÷ÒıÏî²úÉúµÄ²ÅÊÇÕæÕıµÄ¿ÕĞĞ,Ê²Ã´¶¼Ã»ÓĞ,Ö»ÊÇÕ¼ÓÃÁËÒ»¸öĞĞË÷ÒıÏî)
-// hitTest() µÄÂß¼­²»ÄÜËæÒâ±ä¶¯,ÒòÎª updateWindow() ºÍ MyEdit µÄÊó±ê¶¯×÷ÒÀ¾İ±¾º¯ÊıµÄÂß¼­.
+// æµ‹è¯•è™šæ‹Ÿå›¾åƒä¸­çš„ä¸€ä¸ªåæ ‡,è¿”å›å¯¹åº”çš„å­—ç¬¦çš„è¡Œåˆ—åºå·. è¿™ä¸ªé€»è¾‘ä¸€å®šè¦åˆç¬¦è‡ªç„¶,å¦åˆ™ä¼šæœ‰å„ç§"å¼‚å¸¸"æƒ…å†µ.
+// é¦–å…ˆå®šä½è¡Œ,å¦‚æœè¶…å‡ºæœ‰æ•ˆèŒƒå›´,åˆ™è¿”å› _curCellPos; å¦‚æœè¶…å‡ºåˆ—çš„æœ‰æ•ˆèŒƒå›´,åˆ™è¿”å›è¯¥è¡Œçš„æœ€åä¸€ä¸ªå­—ç¬¦çš„åºå·,å¦‚æœè¯¥è¡Œæ˜¯ç©ºè¡Œåˆ™è¿”å› _curCellPos,å®ƒè‚¯å®šæ˜¯æœ€åä¸€ä¸ªç©ºè¡Œ
+// (åœ¨ä¸­é—´çš„"ç©ºè¡Œ"å¹¶ä¸æ˜¯çœŸæ­£çš„ç©ºè¡Œ,è€Œæ˜¯å­—ç¬¦ä¸²"\r\n", æœ€åä¸€ä¸ªæ¢è¡ŒåŠ¨ä½œå¯¼è‡´æ–°å¢çš„ä¸€ä¸ªè¡Œç´¢å¼•é¡¹äº§ç”Ÿçš„æ‰æ˜¯çœŸæ­£çš„ç©ºè¡Œ,ä»€ä¹ˆéƒ½æ²¡æœ‰,åªæ˜¯å ç”¨äº†ä¸€ä¸ªè¡Œç´¢å¼•é¡¹)
+// hitTest() çš„é€»è¾‘ä¸èƒ½éšæ„å˜åŠ¨,å› ä¸º updateWindow() å’Œ MyEdit çš„é¼ æ ‡åŠ¨ä½œä¾æ®æœ¬å‡½æ•°çš„é€»è¾‘.
 int MyVirtualImage::hitTest(const POINT& pt, unsigned int* htc) const
 {
 	assert(pt.y >= 0);
@@ -600,7 +600,7 @@ int MyVirtualImage::hitTest(const POINT& pt, unsigned int* htc) const
 	}
 	else
 	{
-		// ÔËĞĞÒ»´Î¶ş·Ö²éÕÒ,´ÓÉıĞòµÄĞĞË÷ÒıµÄyÖµ²éÕÒ³ö pt.y ËùÔÚµÄĞĞĞòºÅ( pt.y < ÉÚ±øyÖµ¾ÍÒ»¶¨ÄÜÕÒµ½Ò»¸öÆ¥ÅäĞĞ)
+		// è¿è¡Œä¸€æ¬¡äºŒåˆ†æŸ¥æ‰¾,ä»å‡åºçš„è¡Œç´¢å¼•çš„yå€¼æŸ¥æ‰¾å‡º pt.y æ‰€åœ¨çš„è¡Œåºå·( pt.y < å“¨å…µyå€¼å°±ä¸€å®šèƒ½æ‰¾åˆ°ä¸€ä¸ªåŒ¹é…è¡Œ)
 		int rowPos = 0;
 		int rowFrom = 0, rowTo = _sentryRowPos;
 		do
@@ -608,10 +608,10 @@ int MyVirtualImage::hitTest(const POINT& pt, unsigned int* htc) const
 			int rowMiddle = rowFrom + (rowTo - rowFrom) / 2;
 			if(pt.y < getRowInfo(rowFrom + 1, MASK_ROWY))
 			{
-				// ĞĞÎ»ÖÃÆ¥Åä,ÕÒµ½ËùÔÚĞĞ
+				// è¡Œä½ç½®åŒ¹é…,æ‰¾åˆ°æ‰€åœ¨è¡Œ
 				rowPos = rowFrom;
 
-				// È·¶¨hitTestÇøÓò
+				// ç¡®å®šhitTeståŒºåŸŸ
 				int rowH = getRowHeight(rowPos);
 				if(pt.y >= getRowInfo(rowPos, MASK_ROWY) + rowH / 2)
 				{
@@ -634,7 +634,7 @@ int MyVirtualImage::hitTest(const POINT& pt, unsigned int* htc) const
 			}
 		}while(1);
 
-		// ¸ù¾İĞĞË÷Òı¶¨Î»ÁĞĞòºÅ
+		// æ ¹æ®è¡Œç´¢å¼•å®šä½åˆ—åºå·
 		POINT rng = getRowRange(rowPos);
 		int rowX = 0;
 		for(pos = rng.x; pos < rng.y; ++pos)
@@ -645,7 +645,7 @@ int MyVirtualImage::hitTest(const POINT& pt, unsigned int* htc) const
 			}
 			else
 			{
-				// ²âËã hitTest ÇøÓò
+				// æµ‹ç®— hitTest åŒºåŸŸ
 				if(pt.x > rowX + _cells[pos]->width() / 2)
 				{
 					hitTestCode |= MYHTC_RIGHT;
@@ -658,7 +658,7 @@ int MyVirtualImage::hitTest(const POINT& pt, unsigned int* htc) const
 			}
 		}
 
-		// Èç¹û³¬³öÁĞµÄÓĞĞ§·¶Î§Ôò·µ»Ø¸ÃĞĞµÄ×îºóÒ»¸ö×Ö·û
+		// å¦‚æœè¶…å‡ºåˆ—çš„æœ‰æ•ˆèŒƒå›´åˆ™è¿”å›è¯¥è¡Œçš„æœ€åä¸€ä¸ªå­—ç¬¦
 		if(pos == rng.y)
 		{
 			hitTestCode |= MYHTC_COLOVF;
@@ -670,7 +670,7 @@ int MyVirtualImage::hitTest(const POINT& pt, unsigned int* htc) const
 	return pos;
 }
 
-// ĞĞÁĞ×ª»»Îª×Ö·ûĞòºÅ,×ª»»½á¹û·¶Î§ [0, _curCellPos]
+// è¡Œåˆ—è½¬æ¢ä¸ºå­—ç¬¦åºå·,è½¬æ¢ç»“æœèŒƒå›´ [0, _curCellPos]
 int MyVirtualImage::hitTest(int row, int col, unsigned int* htc) const
 {
 	assert(row >= 0);
@@ -679,7 +679,7 @@ int MyVirtualImage::hitTest(int row, int col, unsigned int* htc) const
 
 	do
 	{
-		// ³¬³öĞĞË÷ÒıµÄÓĞĞ§·¶Î§·µ»Ø×îºóÒ»¸ö×Ö·ûµÄÏÂÒ»¸ö×Ö·ûµÄĞòºÅ
+		// è¶…å‡ºè¡Œç´¢å¼•çš„æœ‰æ•ˆèŒƒå›´è¿”å›æœ€åä¸€ä¸ªå­—ç¬¦çš„ä¸‹ä¸€ä¸ªå­—ç¬¦çš„åºå·
 		if(row >= _sentryRowPos)
 		{
 			pos = _curCellPos;
@@ -712,14 +712,14 @@ int MyVirtualImage::hitTest(int row, int col, unsigned int* htc) const
 	return pos;
 }
 
-// ÉèÖÃĞĞ»º³åµÄÄÚÈİ: »»»º³å´æ·ÅÖ¸¶¨ĞĞµÄµ¥Ôª¸ñĞòºÅ,±ÈÈç _rowInfo[1] ´æ·ÅµÚ1ĞĞµÄµÚÒ»¸ö×Ö·ûµÄĞòºÅ
+// è®¾ç½®è¡Œç¼“å†²çš„å†…å®¹: æ¢ç¼“å†²å­˜æ”¾æŒ‡å®šè¡Œçš„å•å…ƒæ ¼åºå·,æ¯”å¦‚ _rowInfo[1] å­˜æ”¾ç¬¬1è¡Œçš„ç¬¬ä¸€ä¸ªå­—ç¬¦çš„åºå·
 int MyVirtualImage::setRowInfo(int row, int pos, int width, int y, unsigned int mask)
 {
 	if(row >= _rowIndexBufLen)
 	{
 		assert(row == _rowIndexBufLen);
 
-		// ÖØĞÂ·ÖÅäĞĞ»º³å
+		// é‡æ–°åˆ†é…è¡Œç¼“å†²
 		rowinfo_t* newRowIndex = new rowinfo_t[_rowIndexBufLen + ROWINDEX_INC];
 		if(!newRowIndex)
 		{
@@ -728,7 +728,7 @@ int MyVirtualImage::setRowInfo(int row, int pos, int width, int y, unsigned int 
 		}
 		else
 		{
-			// ¸´ÖÆÄÚÈİ
+			// å¤åˆ¶å†…å®¹
 			memcpy(newRowIndex, _rowInfo, sizeof(rowinfo_t) * _rowIndexBufLen);
 			memset(newRowIndex + _rowIndexBufLen, 0, sizeof(rowinfo_t) * ROWINDEX_INC);
 
@@ -778,7 +778,7 @@ int MyVirtualImage::getRowHeight(int row) const
 	return getRowInfo(row + 1, MASK_ROWY) - getRowInfo(row, MASK_ROWY);
 }
 
-// ÔÚÖ¸¶¨·¶Î§ÄÚËÑË÷×î³¤µÄĞĞ
+// åœ¨æŒ‡å®šèŒƒå›´å†…æœç´¢æœ€é•¿çš„è¡Œ
 int MyVirtualImage::getWidestRow(const POINT& rng) const
 {
 	int widest = 0;
@@ -796,85 +796,85 @@ int MyVirtualImage::getWidestRow(const POINT& rng) const
 	return widestRowPos;
 }
 /*
-* ÔöÁ¿¹¹½¨ĞĞË÷Òı - ´Ó pos Î»ÖÃ¿ªÊ¼Ìí¼Ó³¤¶ÈÎª len µÄ×Ö·û
-* ²åÈëĞÂ×Ö·û´®Ê±,²¢²»ÊÇËùÓĞµÄĞĞË÷Òı¶¼ÒªÖØ½¨:
-* 1. ²åÈëÎ»ÖÃÖ®Ç°µÄ×Ö·ûµÄĞĞË÷Òı¼ÌĞøÓĞĞ§
-* 2. ´Ó²åÈëËùÔÚĞĞ¿ªÊ¼Öğ¸öÌîÈë×Ö·û,Ö±µ½ÓĞÒ»ĞĞ¿ÉÒÔÈİÄÉÏÂĞèÒªÌí¼ÓµÄÊ£ÓàµÄ×Ö·û,ÔòÖ®ºóµÄĞĞË÷ÒıÖ»ÒªÒÀ´Î +len ¼´¿É.
+* å¢é‡æ„å»ºè¡Œç´¢å¼• - ä» pos ä½ç½®å¼€å§‹æ·»åŠ é•¿åº¦ä¸º len çš„å­—ç¬¦
+* æ’å…¥æ–°å­—ç¬¦ä¸²æ—¶,å¹¶ä¸æ˜¯æ‰€æœ‰çš„è¡Œç´¢å¼•éƒ½è¦é‡å»º:
+* 1. æ’å…¥ä½ç½®ä¹‹å‰çš„å­—ç¬¦çš„è¡Œç´¢å¼•ç»§ç»­æœ‰æ•ˆ
+* 2. ä»æ’å…¥æ‰€åœ¨è¡Œå¼€å§‹é€ä¸ªå¡«å…¥å­—ç¬¦,ç›´åˆ°æœ‰ä¸€è¡Œå¯ä»¥å®¹çº³ä¸‹éœ€è¦æ·»åŠ çš„å‰©ä½™çš„å­—ç¬¦,åˆ™ä¹‹åçš„è¡Œç´¢å¼•åªè¦ä¾æ¬¡ +len å³å¯.
 *
-* buildRowIndex() µÄĞ§ÂÊÖÁ¹ØÖØÒª,´¦Àí´ó×Ö·û´®Ê±Ö±½ÓÓ°ÏìÓÃ»§ÌåÑé.
-* ĞĞË÷ÒıÊÇ MyVirtualImage Ğ§ÂÊµÄºËĞÄ.
+* buildRowIndex() çš„æ•ˆç‡è‡³å…³é‡è¦,å¤„ç†å¤§å­—ç¬¦ä¸²æ—¶ç›´æ¥å½±å“ç”¨æˆ·ä½“éªŒ.
+* è¡Œç´¢å¼•æ˜¯ MyVirtualImage æ•ˆç‡çš„æ ¸å¿ƒ.
 * 
 * 2015.4.2
-* updateRowIndex() µÄÄ¿µÄÊÇ¸üĞÂË÷Òı²¢¼ÆËã³öÔàÇøÓò.
-* ¼ÆËã³ö×Ü¼ÆĞèÒªÌîÈëµÄ³¤¶È pos * charWidth * len 
+* updateRowIndex() çš„ç›®çš„æ˜¯æ›´æ–°ç´¢å¼•å¹¶è®¡ç®—å‡ºè„åŒºåŸŸ.
+* è®¡ç®—å‡ºæ€»è®¡éœ€è¦å¡«å…¥çš„é•¿åº¦ pos * charWidth * len 
 *
-* 2015.4.3 - Ë¯Ç°Ë¼¿¼½á¹û
-* 1. Ê¹ÓÃ insertLen ±íÊ¾ĞèÒª²åÈëµÄ×Ö·ûµÄ¸öÊıËæ×ÅĞŞÕıµÄ½ø³ÌÔö¼õÖ±µ½0. (²»ÄÜÓÃ strWidth, Åöµ½³¤¶ÈÎª 0 µÄ×Ö·û»áÓĞÎÊÌâ)
-* 2. insertLen ĞèÒª°üº¬²åÈëĞĞ pos Ö®ºóÖ±µ½ĞĞ½áÎ²µÄ×Ö·û.
+* 2015.4.3 - ç¡å‰æ€è€ƒç»“æœ
+* 1. ä½¿ç”¨ insertLen è¡¨ç¤ºéœ€è¦æ’å…¥çš„å­—ç¬¦çš„ä¸ªæ•°éšç€ä¿®æ­£çš„è¿›ç¨‹å¢å‡ç›´åˆ°0. (ä¸èƒ½ç”¨ strWidth, ç¢°åˆ°é•¿åº¦ä¸º 0 çš„å­—ç¬¦ä¼šæœ‰é—®é¢˜)
+* 2. insertLen éœ€è¦åŒ…å«æ’å…¥è¡Œ pos ä¹‹åç›´åˆ°è¡Œç»“å°¾çš„å­—ç¬¦.
 *
 * 2015.4.7
-* ÕæÕıµÄ¹Ø¼üºËĞÄº¯Êı·Ç´ËÄªÊô,¾À½áÄÇÃ´¶àÌìÖ»ÎªĞ´³öÓÅÑÅ,¸ßĞ§µÄÊµÏÖ.
-* 1. updateRowIndex() ´Ó pos Î»ÖÃ¿ªÊ¼µ½½áÎ²ÖØÅÅ,Ö±µ½ÓĞÒ»ĞĞµÄĞÂĞòºÅ = ÀÏĞòºÅ + len ¾Í±íÊ¾Íê³É(É¾³ıÊ± len < 0, Õâ¸öÅĞ¶ÏÌõ¼şÒ²ÊÊÓÃ), È»ºóºóĞøµÄĞĞĞòºÅÖ±½Ó += len¾Í½áÊø.
+* çœŸæ­£çš„å…³é”®æ ¸å¿ƒå‡½æ•°éæ­¤è«å±,çº ç»“é‚£ä¹ˆå¤šå¤©åªä¸ºå†™å‡ºä¼˜é›…,é«˜æ•ˆçš„å®ç°.
+* 1. updateRowIndex() ä» pos ä½ç½®å¼€å§‹åˆ°ç»“å°¾é‡æ’,ç›´åˆ°æœ‰ä¸€è¡Œçš„æ–°åºå· = è€åºå· + len å°±è¡¨ç¤ºå®Œæˆ(åˆ é™¤æ—¶ len < 0, è¿™ä¸ªåˆ¤æ–­æ¡ä»¶ä¹Ÿé€‚ç”¨), ç„¶ååç»­çš„è¡Œåºå·ç›´æ¥ += lenå°±ç»“æŸ.
 
-ĞĞË÷ÒıµÄ½á¹¹
-[0] = 0 -> µÚ0ĞĞµÄÆğÊ¼ĞòºÅ
-[1] = 7 -> µÚ1ĞĞµÄÆğÊ¼ĞòºÅ
-[n] = m -> µÚnĞĞµÄÆğÊ¼ĞòºÅ
+è¡Œç´¢å¼•çš„ç»“æ„
+[0] = 0 -> ç¬¬0è¡Œçš„èµ·å§‹åºå·
+[1] = 7 -> ç¬¬1è¡Œçš„èµ·å§‹åºå·
+[n] = m -> ç¬¬nè¡Œçš„èµ·å§‹åºå·
  .
  .
  .
-[_curRowPos] = x »òÕß _curCellPos. ×îºóÒ»ĞĞµÄ³¤¶ÈÎª _curCellPos - [_curRowPos].
+[_curRowPos] = x æˆ–è€… _curCellPos. æœ€åä¸€è¡Œçš„é•¿åº¦ä¸º _curCellPos - [_curRowPos].
 
-ĞĞ½á¹¹µÄYÖµ:
+è¡Œç»“æ„çš„Yå€¼:
 [0].y = 0;
-[1].y = 16; -> µÚ1ĞĞµÄÆğÊ¼Êä³öYÖáÎ»ÖÃ
+[1].y = 16; -> ç¬¬1è¡Œçš„èµ·å§‹è¾“å‡ºYè½´ä½ç½®
 [2].y = 32;
  .
  .
  .
-[_sentryPos].y = y ×îºóÒ»ĞĞµÄÏÂÒ»ĞĞµÄÊä³öÎ»ÖÃ,ºÍÉÏÒ»ĞĞµÄyÖµÏà¼õµÃµ½×îºóÒ»ĞĞµÄ¸ß¶È
+[_sentryPos].y = y æœ€åä¸€è¡Œçš„ä¸‹ä¸€è¡Œçš„è¾“å‡ºä½ç½®,å’Œä¸Šä¸€è¡Œçš„yå€¼ç›¸å‡å¾—åˆ°æœ€åä¸€è¡Œçš„é«˜åº¦
 [_sentryPos].width = 0;
-[_sentryPos].index = _curCellPos; ºÍÉÏÒ»ĞĞµÄ index ÖµÏà¼õµÃµ½×îºóÒ»ĞĞµÄ³¤¶È
+[_sentryPos].index = _curCellPos; å’Œä¸Šä¸€è¡Œçš„ index å€¼ç›¸å‡å¾—åˆ°æœ€åä¸€è¡Œçš„é•¿åº¦
 
 
 *
 * 2015.4.9
-* 1. ÕÒ³ö×î³¤µÄĞĞµÄĞ§ÂÊÎÊÌâ: 3¸ö½×¶ÎÕÒ 1. 0 ~ rowTarget; 2. rowTarget ~ rowPos; 3. rowPos ~ _curRowPos;
-* 2. rowTarget ~ rowPos ÖĞµÄ×î³¤ĞĞÔÚÖØÅÅ¹ı³ÌÖĞµÃµ½
-* 3. Ö®ºó,Èç¹ûÔ­À´µÄ×î³¤ĞĞÔÚ 0 ~ rowTarget ||  rowPos ~ _curRowPos, ÔòÖ±½ÓºÍ²½Öè2µÄ½á¹û±È½Ï; ·ñÔòÔÚÉÏÊö·¶Î§ÄÚÖØĞÂ²éÕÒ×î³¤ĞĞ,²¢ºÍ²½Öè2µÄ½á¹û±È½Ï.
+* 1. æ‰¾å‡ºæœ€é•¿çš„è¡Œçš„æ•ˆç‡é—®é¢˜: 3ä¸ªé˜¶æ®µæ‰¾ 1. 0 ~ rowTarget; 2. rowTarget ~ rowPos; 3. rowPos ~ _curRowPos;
+* 2. rowTarget ~ rowPos ä¸­çš„æœ€é•¿è¡Œåœ¨é‡æ’è¿‡ç¨‹ä¸­å¾—åˆ°
+* 3. ä¹‹å,å¦‚æœåŸæ¥çš„æœ€é•¿è¡Œåœ¨ 0 ~ rowTarget ||  rowPos ~ _curRowPos, åˆ™ç›´æ¥å’Œæ­¥éª¤2çš„ç»“æœæ¯”è¾ƒ; å¦åˆ™åœ¨ä¸Šè¿°èŒƒå›´å†…é‡æ–°æŸ¥æ‰¾æœ€é•¿è¡Œ,å¹¶å’Œæ­¥éª¤2çš„ç»“æœæ¯”è¾ƒ.
 
 * 2015.4.20
-* ²åÈëÊ±,Õû¸öĞĞË÷Òı·ÖÎª3¸ö²¿·Ö
-* 1. Ä¿±êĞĞ rowTarget Ö®Ç°²»ĞèÒª¸Ä¶¯ [pos, ipos)
-* 2. Ä¿±êĞĞ¿ªÊ¼Ö±µ½Ä³¸öĞĞµÄĞĞÊ× spos Î´±ä»¯ [ipos, spos)
-* 3. [spos, size()) Ö»ĞèÒª¸üĞÂĞĞË÷ÒıµÄÖµ
+* æ’å…¥æ—¶,æ•´ä¸ªè¡Œç´¢å¼•åˆ†ä¸º3ä¸ªéƒ¨åˆ†
+* 1. ç›®æ ‡è¡Œ rowTarget ä¹‹å‰ä¸éœ€è¦æ”¹åŠ¨ [pos, ipos)
+* 2. ç›®æ ‡è¡Œå¼€å§‹ç›´åˆ°æŸä¸ªè¡Œçš„è¡Œé¦– spos æœªå˜åŒ– [ipos, spos)
+* 3. [spos, size()) åªéœ€è¦æ›´æ–°è¡Œç´¢å¼•çš„å€¼
 */
 int MyVirtualImage::updateRowIndex(int pos, int len)
 {
 	if(len == 0) return 0;
 
-	// ×î³¤µÄĞĞ3¸ö·¶Î§
+	// æœ€é•¿çš„è¡Œ3ä¸ªèŒƒå›´
 	int rowA, rowB, rowC;
 
 	/*
-	* ÉèÖÃ³õÊ¼Öµ,¶¨Î»Ä¿±êĞĞ,Èç¹ûÄ¿±êĞĞÒÑ¾­ÓĞ»»ĞĞ·ûÔòÔÚÏÂÒ»ĞĞ²åÈë,·ñÔòÔÚÄ¿±êĞĞµÄÖ¸¶¨Î»ÖÃ¿ªÊ¼²åÈë.
+	* è®¾ç½®åˆå§‹å€¼,å®šä½ç›®æ ‡è¡Œ,å¦‚æœç›®æ ‡è¡Œå·²ç»æœ‰æ¢è¡Œç¬¦åˆ™åœ¨ä¸‹ä¸€è¡Œæ’å…¥,å¦åˆ™åœ¨ç›®æ ‡è¡Œçš„æŒ‡å®šä½ç½®å¼€å§‹æ’å…¥.
 	*/
-	// ÉèÖÃ³õÊ¼Öµ,¶¨Î»Ä¿±êĞĞ,Èç¹ûÄ¿±êĞĞÒÑ¾­ÓĞ»»ĞĞ·ûÔòÔÚÏÂÒ»ĞĞ²åÈë,·ñÔòÔÚÄ¿±êĞĞµÄÖ¸¶¨Î»ÖÃ¿ªÊ¼²åÈë.
+	// è®¾ç½®åˆå§‹å€¼,å®šä½ç›®æ ‡è¡Œ,å¦‚æœç›®æ ‡è¡Œå·²ç»æœ‰æ¢è¡Œç¬¦åˆ™åœ¨ä¸‹ä¸€è¡Œæ’å…¥,å¦åˆ™åœ¨ç›®æ ‡è¡Œçš„æŒ‡å®šä½ç½®å¼€å§‹æ’å…¥.
 	int rowPos = 0, rowWidth = 0, rowY = 0, rowHeight = 0;
 	if(pos > 0)
 	{
-		// ¸ù¾İ²åÈëÎ»ÖÃµÄÇ°Ò»¸ö×Ö·û»ñÈ¡Ä¿±êĞĞ(Ç°Ò»¸ö×Ö·ûµÄĞÅÏ¢ÒòÎªÃ»ÓĞ±ä¶¯,ËùÒÔÊÇÓĞĞ§µÄ. pos Î»µÄ×Ö·ûÊÇĞÂ²åÈëµÄ×Ö·û,¸ù¾İËü²»ÄÜÈ¡µ½ÓĞĞ§Êı¾İ)
+		// æ ¹æ®æ’å…¥ä½ç½®çš„å‰ä¸€ä¸ªå­—ç¬¦è·å–ç›®æ ‡è¡Œ(å‰ä¸€ä¸ªå­—ç¬¦çš„ä¿¡æ¯å› ä¸ºæ²¡æœ‰å˜åŠ¨,æ‰€ä»¥æ˜¯æœ‰æ•ˆçš„. pos ä½çš„å­—ç¬¦æ˜¯æ–°æ’å…¥çš„å­—ç¬¦,æ ¹æ®å®ƒä¸èƒ½å–åˆ°æœ‰æ•ˆæ•°æ®)
 		int colPos;
 		getRowCol(pos - 1, &rowPos, &colPos);
 		if(_cells[pos - 1]->wrap())
 		{
-			// ²åÈëĞÂµÄÒ»ĞĞ,ÉèÖÃĞÂĞĞµÄ³õÊ¼Öµ(ĞòºÅºÍ³¤¶È = 0),rowY = ÏÂÒ»ĞĞµÄ rowY »òÕß ÉÚ±øµÄ rowY,ËùÒÔ²»ĞèÒªÉèÖÃ
+			// æ’å…¥æ–°çš„ä¸€è¡Œ,è®¾ç½®æ–°è¡Œçš„åˆå§‹å€¼(åºå·å’Œé•¿åº¦ = 0),rowY = ä¸‹ä¸€è¡Œçš„ rowY æˆ–è€… å“¨å…µçš„ rowY,æ‰€ä»¥ä¸éœ€è¦è®¾ç½®
 			rowPos++;
 			setRowInfo(rowPos, pos, 0, 0, MASK_ROWINDEX | MASK_ROWWIDTH);
 		}
 		else
 		{
-			// Ä¿±êĞĞ´Ó [rowRng.x, pos) ÊÇÓĞĞ§µÄ. ÉèÖÃÄ¿±êĞĞµÄ³õÊ¼×´Ì¬(ĞĞ³¤¶ÈºÍ×î´ó¸ß¶È),ÔÙ¿ªÊ¼²åÈë.
+			// ç›®æ ‡è¡Œä» [rowRng.x, pos) æ˜¯æœ‰æ•ˆçš„. è®¾ç½®ç›®æ ‡è¡Œçš„åˆå§‹çŠ¶æ€(è¡Œé•¿åº¦å’Œæœ€å¤§é«˜åº¦),å†å¼€å§‹æ’å…¥.
 			POINT rowRng = getRowRange(rowPos);
 			for(int i = rowRng.x; i < pos; ++i)
 			{
@@ -882,52 +882,52 @@ int MyVirtualImage::updateRowIndex(int pos, int len)
 				if(_cells[i]->height() > rowHeight) rowHeight = _cells[i]->height();
 			}
 
-			// ÔÚÄ¿±êĞĞ²åÈë,ÉèÖÃÄ¿±êĞĞµÄ³õÊ¼Öµ(ĞòºÅ±£³Ö²»±ä,YÖµ±£³Ö²»±ä,³¤¶ÈÎª rowRng.x -> pos)
+			// åœ¨ç›®æ ‡è¡Œæ’å…¥,è®¾ç½®ç›®æ ‡è¡Œçš„åˆå§‹å€¼(åºå·ä¿æŒä¸å˜,Yå€¼ä¿æŒä¸å˜,é•¿åº¦ä¸º rowRng.x -> pos)
 			setRowInfo(rowPos, 0, rowWidth, 0, MASK_ROWWIDTH);
 		}
 		rowY = getRowInfo(rowPos, MASK_ROWY);
 	}
 	else
 	{
-		// Ä¿±êĞĞÊÇµÚÒ»ĞĞ
+		// ç›®æ ‡è¡Œæ˜¯ç¬¬ä¸€è¡Œ
 		setRowInfo(rowPos, 0, 0, 0, MASK_ROWWIDTH | MASK_ROWINDEX | MASK_ROWY);
 	}
 	rowA = 0;
 	rowB = rowPos;
 
 	/*
-	* ĞèÒª±ä¶¯µÄ²¿·Ö
+	* éœ€è¦å˜åŠ¨çš„éƒ¨åˆ†
 	*/
-	// ´Ó pos Î»ÖÃ¿ªÊ¼¸üĞÂË÷Òı,Ö±µ½ ĞĞµÄË÷ÒıÖµ = ¸ÃĞĞÔ­Ë÷ÒıÖµ + len
+	// ä» pos ä½ç½®å¼€å§‹æ›´æ–°ç´¢å¼•,ç›´åˆ° è¡Œçš„ç´¢å¼•å€¼ = è¯¥è¡ŒåŸç´¢å¼•å€¼ + len
 	int ipos = pos;
 	int irowPos = rowPos;
 	bool adj = false;
-	for(ipos = pos; ipos < _curCellPos; ++ipos)		// updateRowIndex() ¸ºÔğÎ¬»¤ĞĞË÷Òı, Ëü¿ÉÒÔÖ±½ÓÊ¹ÓÃĞĞË÷ÒıÏà¹ØµÄÄÚ²¿±äÁ¿, µ«ÊÇ¶Ô×Ö·ûÊı×é²»¹ØĞÄ,ËùÒÔÊ¹ÓÃ size() ¶ø²»ÊÇ _curCellPos
+	for(ipos = pos; ipos < _curCellPos; ++ipos)		// updateRowIndex() è´Ÿè´£ç»´æŠ¤è¡Œç´¢å¼•, å®ƒå¯ä»¥ç›´æ¥ä½¿ç”¨è¡Œç´¢å¼•ç›¸å…³çš„å†…éƒ¨å˜é‡, ä½†æ˜¯å¯¹å­—ç¬¦æ•°ç»„ä¸å…³å¿ƒ,æ‰€ä»¥ä½¿ç”¨ size() è€Œä¸æ˜¯ _curCellPos
 	{
-		// µ±Ç°ĞĞÔö¼ÓÒ»¸öµ¥Ôª¸ñ:³¤¶ÈÔö¼Ó,²¢¼ÇÂ¼×î´ó¸ß¶È
+		// å½“å‰è¡Œå¢åŠ ä¸€ä¸ªå•å…ƒæ ¼:é•¿åº¦å¢åŠ ,å¹¶è®°å½•æœ€å¤§é«˜åº¦
 		rowWidth += _cells[ipos]->width();
 		rowWidth += _colSpacing;
 		if(_cells[ipos]->height() > rowHeight) rowHeight = _cells[ipos]->height();
 
-		// ¼ÇÂ¼·´ÏòË÷ÒıĞĞĞòºÅ
+		// è®°å½•åå‘ç´¢å¼•è¡Œåºå·
 		_cells[ipos]->setRowIndex(rowPos);
 		
-		// Óöµ½»»ĞĞ·û»òÕßĞĞµÄ³¤¶È³¬³ö´°¿ÚµÄ³¤¶È,²¢ÇÒ×Ô¶¯»»ĞĞ±ê¼Ç´ò¿ªÊ±,Ö´ĞĞ»»ĞĞ²Ù×÷
+		// é‡åˆ°æ¢è¡Œç¬¦æˆ–è€…è¡Œçš„é•¿åº¦è¶…å‡ºçª—å£çš„é•¿åº¦,å¹¶ä¸”è‡ªåŠ¨æ¢è¡Œæ ‡è®°æ‰“å¼€æ—¶,æ‰§è¡Œæ¢è¡Œæ“ä½œ
 		if(_cells[ipos]->wrap())
 		{
-			// ¼ÇÂ¼µ±Ç°ĞĞµÄ³¤¶È
+			// è®°å½•å½“å‰è¡Œçš„é•¿åº¦
 			setRowInfo(rowPos, 0, rowWidth, 0, MASK_ROWWIDTH);
 
-			// ÉèÖÃĞÂµÄÒ»ĞĞµÄ³õÖµ(ĞÂĞĞ»¹ÊÇÒ»¸ö¿ÕĞĞ,¸ß¶È³õÖµÎªÄ¬ÈÏµÄ×Ö·û¸ß¶È)
+			// è®¾ç½®æ–°çš„ä¸€è¡Œçš„åˆå€¼(æ–°è¡Œè¿˜æ˜¯ä¸€ä¸ªç©ºè¡Œ,é«˜åº¦åˆå€¼ä¸ºé»˜è®¤çš„å­—ç¬¦é«˜åº¦)
 			++rowPos;
 			rowY += rowHeight + _rowSpacing;
 			rowHeight = _charFactory.getCharHeight();
 			rowWidth = 0;
 
-			// Èç¹ûÏÂÒ»ĞĞµÄĞĞÊ×ĞòºÅÇ¡ºÃµÈÓÚÔ­À´µÄÖµ+±ä¸üµÄ³¤¶Èlen,ÄÇÃ´ËµÃ÷ºóĞø²»ĞèÒªÖØĞÂ¼ÆËãÅÅÁĞ,ĞòºÅ+=len,È»ºó±£³ÖÔ­ÓĞÖÈĞò¼´¿É.
+			// å¦‚æœä¸‹ä¸€è¡Œçš„è¡Œé¦–åºå·æ°å¥½ç­‰äºåŸæ¥çš„å€¼+å˜æ›´çš„é•¿åº¦len,é‚£ä¹ˆè¯´æ˜åç»­ä¸éœ€è¦é‡æ–°è®¡ç®—æ’åˆ—,åºå·+=len,ç„¶åä¿æŒåŸæœ‰ç§©åºå³å¯.
 			if(rowPos < _sentryRowPos && getRowInfo(rowPos, MASK_ROWINDEX) + len == ipos + 1)
 			{
-				// ipos Ö¸ÏòµÚÒ»¸ö²»ĞèÒªÖØ»­µÄ×Ö·û,µ÷ÕûÊ£ÓàµÄ²»ĞèÒªÖØ»­µ«ÊÇĞèÒª¸üĞÂË÷ÒıµÄĞĞ
+				// ipos æŒ‡å‘ç¬¬ä¸€ä¸ªä¸éœ€è¦é‡ç”»çš„å­—ç¬¦,è°ƒæ•´å‰©ä½™çš„ä¸éœ€è¦é‡ç”»ä½†æ˜¯éœ€è¦æ›´æ–°ç´¢å¼•çš„è¡Œ
 				++ipos;
 				adj = true;
 				break;
@@ -939,17 +939,17 @@ int MyVirtualImage::updateRowIndex(int pos, int len)
 		}
 		else if(_autoWrap && _windowSize.x > 0 && rowWidth > _windowSize.x)
 		{
-			// ×Ô¶¯»»ĞĞ. µ±Ç°×Ö·ûÊÇĞÂĞĞµÄµÚÒ»¸ö×Ö·û,ËùÒÔĞÂĞĞµÄ³õÊ¼ÖµÒÔ´ËÎª»ù×¼.
+			// è‡ªåŠ¨æ¢è¡Œ. å½“å‰å­—ç¬¦æ˜¯æ–°è¡Œçš„ç¬¬ä¸€ä¸ªå­—ç¬¦,æ‰€ä»¥æ–°è¡Œçš„åˆå§‹å€¼ä»¥æ­¤ä¸ºåŸºå‡†.
 			++rowPos;
 			rowWidth = _cells[ipos]->width() + _colSpacing;
 			rowY += rowHeight + _rowSpacing;
 			rowHeight = _cells[ipos]->height();
 			_cells[ipos]->setRowIndex(rowPos);
 
-			// ÏÂÒ»ĞĞĞĞÊ×Î´±ä
+			// ä¸‹ä¸€è¡Œè¡Œé¦–æœªå˜
 			if(rowPos < _sentryRowPos && getRowInfo(rowPos, MASK_ROWINDEX) + len == ipos)
 			{
-				// ipos ÒÑ¾­Ö¸ÏòµÚÒ»¸ö²»ĞèÒªÖØ»­µÄ×Ö·û
+				// ipos å·²ç»æŒ‡å‘ç¬¬ä¸€ä¸ªä¸éœ€è¦é‡ç”»çš„å­—ç¬¦
 				adj = true;
 				break;
 			}
@@ -960,34 +960,34 @@ int MyVirtualImage::updateRowIndex(int pos, int len)
 		}
 		else
 		{
-			// µ±Ç°ĞĞĞÂÔöÒ»¸ö×Ö·û,¸üĞÂ³¤¶È
+			// å½“å‰è¡Œæ–°å¢ä¸€ä¸ªå­—ç¬¦,æ›´æ–°é•¿åº¦
 			setRowInfo(rowPos, 0, rowWidth, 0, MASK_ROWWIDTH);
 		}
 	}
 	
 	/*
-	* ºóĞøµÄĞĞÔÚĞéÄâÍ¼ÏñÖĞ²»ÒÆ¶¯,Ö»ÊÇË÷ÒıÖµ±ä»¯
+	* åç»­çš„è¡Œåœ¨è™šæ‹Ÿå›¾åƒä¸­ä¸ç§»åŠ¨,åªæ˜¯ç´¢å¼•å€¼å˜åŒ–
 	*/
 	if(adj)
 	{
 		rowC = rowPos;
 
-		// ºóĞøµÄĞĞ°üÀ¨ÉÚ±øµÄĞĞË÷Òı¶¼ĞèÒªµ÷Õû.(rowWidht ºÍ rowY Ôò±£´æ²»±ä)
+		// åç»­çš„è¡ŒåŒ…æ‹¬å“¨å…µçš„è¡Œç´¢å¼•éƒ½éœ€è¦è°ƒæ•´.(rowWidht å’Œ rowY åˆ™ä¿å­˜ä¸å˜)
 		for(; rowPos <= _sentryRowPos; ++rowPos)
 		{
 			setRowInfo(rowPos, getRowInfo(rowPos, MASK_ROWINDEX) + len, 0, 0, MASK_ROWINDEX);
 		}
-		// ĞĞÊı±£³Ö²»±ä,²»ĞèÒªÉèÖÃĞÂµÄĞĞÊı
+		// è¡Œæ•°ä¿æŒä¸å˜,ä¸éœ€è¦è®¾ç½®æ–°çš„è¡Œæ•°
 
-		// ÔàÇøÓò [pos, ipos)
+		// è„åŒºåŸŸ [pos, ipos)
 		markDirtyRange({pos, ipos});
 	}
 	else
 	{
-		// ÉèÖÃÉÚ±øµÄĞÅÏ¢
+		// è®¾ç½®å“¨å…µçš„ä¿¡æ¯
 		if(0 == _curCellPos)
 		{
-			// ×îºóÒ»ĞĞÊÇ¿ÕĞĞ,¾ÍµØÉèÖÃÎªÉÚ±ø
+			// æœ€åä¸€è¡Œæ˜¯ç©ºè¡Œ,å°±åœ°è®¾ç½®ä¸ºå“¨å…µ
 			assert(rowPos == 0);
 			_sentryRowPos = rowPos;
 		}
@@ -999,16 +999,16 @@ int MyVirtualImage::updateRowIndex(int pos, int len)
 			setRowInfo(_sentryRowPos, ipos, 0, rowY, MASK_ROWINDEX | MASK_ROWWIDTH | MASK_ROWY);
 		}
 
-		// ±ê¼ÇÔàÇøÓò [pos, ¿ÉÊÓ´°¿ÚµÄ½áÎ²) - ÖØÅÅÒ»Ö±µ½½áÎ²,ºóĞøµÄ¿Õ°×Ò²ÊÇÔàÇøÓò
+		// æ ‡è®°è„åŒºåŸŸ [pos, å¯è§†çª—å£çš„ç»“å°¾) - é‡æ’ä¸€ç›´åˆ°ç»“å°¾,åç»­çš„ç©ºç™½ä¹Ÿæ˜¯è„åŒºåŸŸ
 		markDirtyRange({pos, -1});
 
 		rowC = _sentryRowPos;
 	}
 
 	/*
-	* ÖØĞÂ²éÕÒ×î³¤µÄĞĞ:±ä¶¯µÄ²¿·Ö·ÖÎª3¸ö·¶Î§, ±ä¶¯Ö®Ç°ĞĞ1, ±ä¶¯µÄĞĞ2, Ö®ºóµÄĞĞ3.
-	* Èç¹ûÔ­×î³¤ĞĞÔÚ·¶Î§1 »ò ·¶Î§3, ÔòºÍ B ±È½Ï,´óÕßÎªĞÂµÄ×î³¤ĞĞ
-	* Èç¹ûÔ­×î³¤ĞĞÔÚ·¶Î§2, Ôò¼ÆËã·¶Î§1µÄ×î³¤ĞĞA,ºÍ·¶Î§3µÄ×î³¤ĞĞC È¡3ÕßµÄ×î´óÕß.
+	* é‡æ–°æŸ¥æ‰¾æœ€é•¿çš„è¡Œ:å˜åŠ¨çš„éƒ¨åˆ†åˆ†ä¸º3ä¸ªèŒƒå›´, å˜åŠ¨ä¹‹å‰è¡Œ1, å˜åŠ¨çš„è¡Œ2, ä¹‹åçš„è¡Œ3.
+	* å¦‚æœåŸæœ€é•¿è¡Œåœ¨èŒƒå›´1 æˆ– èŒƒå›´3, åˆ™å’Œ B æ¯”è¾ƒ,å¤§è€…ä¸ºæ–°çš„æœ€é•¿è¡Œ
+	* å¦‚æœåŸæœ€é•¿è¡Œåœ¨èŒƒå›´2, åˆ™è®¡ç®—èŒƒå›´1çš„æœ€é•¿è¡ŒA,å’ŒèŒƒå›´3çš„æœ€é•¿è¡ŒC å–3è€…çš„æœ€å¤§è€….
 	*/
 	if(_widestRowIndex >= 0 && _widestRowIndex < rowB || _widestRowIndex >= rowC && _widestRowIndex < _sentryRowPos)
 	{
@@ -1043,30 +1043,30 @@ int MyVirtualImage::markDirtyRange(const POINT& rng)
 
 int MyVirtualImage::updateWindow()
 {
-	// ´°¿ÚÇøÎŞĞ§,²»ĞèÒªÊä³ö
+	// çª—å£åŒºæ— æ•ˆ,ä¸éœ€è¦è¾“å‡º
 	if(_windowSize.x <= 0 || _windowSize.y <= 0 || _dirtyRange.x == _dirtyRange.y)
 	{
 	}
 	else
 	{
 		/*
-		* ĞŞÕıÔàÇøÓòµÄ·¶Î§
+		* ä¿®æ­£è„åŒºåŸŸçš„èŒƒå›´
 		*/
 		if(_dirtyRange.x < 0) _dirtyRange.x = 0;
 		if(_dirtyRange.y > _curCellPos || _dirtyRange.y < 0) _dirtyRange.y = _curCellPos;
 
 		/*
-		* »­±³¾°
+		* ç”»èƒŒæ™¯
 		*/
 		RECT rcWindow = {0, 0, _windowSize.x, _windowSize.y};
 		FillRect(_hdc, &rcWindow, _windowBkBrush);
 
 		/*
-		* »æÖÆ¿ÉÊÓµÄ×Ö·û
+		* ç»˜åˆ¶å¯è§†çš„å­—ç¬¦
 		*/
 		do
 		{
-			// ¶¨Î»Êä³öÆğÊ¼ĞĞºÍ½áÊøĞĞ
+			// å®šä½è¾“å‡ºèµ·å§‹è¡Œå’Œç»“æŸè¡Œ
 			int rowFrom , rowTo;
 			int posFrom = hitTest({0, _windowPos.y});
 			if(posFrom >= _curCellPos)
@@ -1085,11 +1085,11 @@ int MyVirtualImage::updateWindow()
 				rowTo = _cells[posTo]->getRowIndex() + 1;
 			}
 
-			// °Ñ·ûºÏ·¶Î§µÄ×Ö·ûÊä³öµ½ÄÚ´æ bmp
+			// æŠŠç¬¦åˆèŒƒå›´çš„å­—ç¬¦è¾“å‡ºåˆ°å†…å­˜ bmp
 			int x = 0, y = 0;
 			for(int i = rowFrom; i < rowTo; ++i)
 			{
-				// Êä³öÒ»ĞĞ
+				// è¾“å‡ºä¸€è¡Œ
 				x = 0 - _windowPos.x;
 				y = getRowInfo(i, MASK_ROWY) - _windowPos.y;
 
@@ -1098,16 +1098,16 @@ int MyVirtualImage::updateWindow()
 				{
 					if (x + _cells[j]->width() + _colSpacing < 0)
 					{
-						// Õû¸öµ¥ÔªÍêÈ«ÔÚ´°¿ÚµÄ×ó±ß
+						// æ•´ä¸ªå•å…ƒå®Œå…¨åœ¨çª—å£çš„å·¦è¾¹
 					}
 					else if(x + _cells[j]->width() > _windowSize.x)
 					{
-						// Õû¸ö×Ö·ûÍêÈ«ÔÚ´°¿ÚµÄÓÒ±ß(×îÓÒ±ßÎ»ÖÃÖ»Òª¹»×Ö·û±¾Éí¼´¿É,ÒòÎªÔÙÍùÓÒ²»ÔÙÊä³ö×Ö·û,ËùÒÔ×Ö¼ä¾àÃ»ÓĞÒâÒå)¿ªÊ¼Êä³öÏÂÒ»ĞĞ
+						// æ•´ä¸ªå­—ç¬¦å®Œå…¨åœ¨çª—å£çš„å³è¾¹(æœ€å³è¾¹ä½ç½®åªè¦å¤Ÿå­—ç¬¦æœ¬èº«å³å¯,å› ä¸ºå†å¾€å³ä¸å†è¾“å‡ºå­—ç¬¦,æ‰€ä»¥å­—é—´è·æ²¡æœ‰æ„ä¹‰)å¼€å§‹è¾“å‡ºä¸‹ä¸€è¡Œ
 						break;
 					}
 					else
 					{
-						// »æÖÆ×Ö·û
+						// ç»˜åˆ¶å­—ç¬¦
 						drawc(j, {x, y});
 					}
 					x += _cells[j]->width();
@@ -1118,7 +1118,7 @@ int MyVirtualImage::updateWindow()
 		while(0);
 	}
 
-	// ÔàÇøÓòÇåÁã
+	// è„åŒºåŸŸæ¸…é›¶
 	_dirtyRange.x = -1;
 	_dirtyRange.y = -1;
 	return 0;
@@ -1133,7 +1133,7 @@ int MyVirtualImage::drawc(int pos, const POINT& pt)
 
 int MyVirtualImage::insert(int pos, MyCell** cells, int len)
 {
-	// È·±£¿Õ¼ä×ã¹»
+	// ç¡®ä¿ç©ºé—´è¶³å¤Ÿ
 	int s = reserve(len);
 	if(s < len)
 	{
@@ -1141,22 +1141,22 @@ int MyVirtualImage::insert(int pos, MyCell** cells, int len)
 	}
 	len = s;
 
-	// ÕÒµ½²åÈëÎ»ÖÃ
+	// æ‰¾åˆ°æ’å…¥ä½ç½®
 	if(pos > _curCellPos)
 	{
 		pos = _curCellPos;
 	}
 	else
 	{
-		// ÒÆ¶¯ pos Ö®ºóµÄÊı¾İ,¿Õ³ö×ã¹»µÄ¿Õ¼äÒÔ²åÈë×Ö·û
+		// ç§»åŠ¨ pos ä¹‹åçš„æ•°æ®,ç©ºå‡ºè¶³å¤Ÿçš„ç©ºé—´ä»¥æ’å…¥å­—ç¬¦
 		memmove(_cells + pos + len, _cells + pos, sizeof(MyCell*) * (_curCellPos - pos));
 	}
 
-	// ÌîÈë×Ö·û,¼ÇÂ¼ĞÂµÄ³¤¶È
+	// å¡«å…¥å­—ç¬¦,è®°å½•æ–°çš„é•¿åº¦
 	memcpy(_cells + pos, cells, sizeof(MyCell*) * len);
 	_curCellPos += len;
 
-	// ĞŞÕıÑ¡Çø·¶Î§
+	// ä¿®æ­£é€‰åŒºèŒƒå›´
 	int selPos, selLen;
 	getSel(&selPos, &selLen);
 	if(selLen > 0)
@@ -1171,17 +1171,17 @@ int MyVirtualImage::insert(int pos, MyCell** cells, int len)
 		}
 		else
 		{
-			// ²»±ä
+			// ä¸å˜
 		}
 		setSel(selPos, selLen);
 	}
 
-	// ¸üĞÂĞĞË÷Òı
+	// æ›´æ–°è¡Œç´¢å¼•
 	this->updateRowIndex(pos, len);
 	return len;
 }
 
-// ÔÚ pos Î»ÖÃÖ®Ç°²åÈë³¤¶ÈÎª len µÄ×Ö·û´® STATICBUF_LEN_INSERT > 2048
+// åœ¨ pos ä½ç½®ä¹‹å‰æ’å…¥é•¿åº¦ä¸º len çš„å­—ç¬¦ä¸² STATICBUF_LEN_INSERT > 2048
 // 
 int MyVirtualImage::insert(int pos, const wchar_t* ch, int len, const COLORREF& fg, const COLORREF& bk)
 {
@@ -1214,34 +1214,34 @@ int MyVirtualImage::remove(int pos, int len)
 
 	if(pos < 0 || len <= 0) return 0;
 
-	// Í¨ÖªMyCell->remove()
+	// é€šçŸ¥MyCell->remove()
 	for(int i = 0; i < len; ++i)
 	{
 		_cells[pos + i]->remove();
 	}
 
-	// ÒÆ¶¯Êı¾İ¼ÇÂ¼ĞÂµÄ³¤¶È
+	// ç§»åŠ¨æ•°æ®è®°å½•æ–°çš„é•¿åº¦
 	memmove(_cells + pos, _cells + pos + len, sizeof(MyCell*) * (_curCellPos - len - pos));
 	_curCellPos -= len;
 
 	/*
-	* ĞŞÕıÑ¡Çø·¶Î§(¼õÈ¥ÖØµş²¿·Ö)
+	* ä¿®æ­£é€‰åŒºèŒƒå›´(å‡å»é‡å éƒ¨åˆ†)
 	*/
 	int selPos, selLen;
 	getSel(&selPos, &selLen);
 	if(selLen > 0)
 	{
-		// µ÷ÕûÑ¡ÇøµÄÆğÊ¼Î»ÖÃ
+		// è°ƒæ•´é€‰åŒºçš„èµ·å§‹ä½ç½®
 		int selPosMv = selPos - pos;
 		if(selPosMv > len) selPosMv = len;
 		if(selPosMv > 0) selPos -= selPosMv;
 
-		// µ÷ÕûÑ¡ÇøµÄ³¤¶È¼õÈ¥Ñ¡ÇøºÍÉ¾³ıÇøÖØºÏµÄ²¿·Ö(¼¸ºÎÑ§:¼ÆËãÁ½ÌõÏß¶ÎÖØºÏ²¿·ÖµÄ³¤¶È)
+		// è°ƒæ•´é€‰åŒºçš„é•¿åº¦å‡å»é€‰åŒºå’Œåˆ é™¤åŒºé‡åˆçš„éƒ¨åˆ†(å‡ ä½•å­¦:è®¡ç®—ä¸¤æ¡çº¿æ®µé‡åˆéƒ¨åˆ†çš„é•¿åº¦)
 		int frontPos = MIN(selPos, pos);
 		int backPos = MAX(selPos + selLen, pos + len);
 		if(backPos - frontPos >= selLen + len)
 		{
-			// Ã»ÓĞÖØµşµÄ²¿·Ö
+			// æ²¡æœ‰é‡å çš„éƒ¨åˆ†
 		}
 		else
 		{
@@ -1250,7 +1250,7 @@ int MyVirtualImage::remove(int pos, int len)
 		setSel(selPos, selLen);
 	}
 
-	// ¸üĞÂĞĞË÷Òı
+	// æ›´æ–°è¡Œç´¢å¼•
 	this->updateRowIndex(pos, -1 * len);
 	return len;
 }
@@ -1281,7 +1281,7 @@ int MyVirtualImage::getText(int pos, int len, wchar_t* dest, int destLen) const
 	int destPos = 0;
 	if(NULL == dest)
 	{
-		// ¼ÆËã³¤¶È
+		// è®¡ç®—é•¿åº¦
 		for(int i = 0; i < len; ++i)
 		{
 			destPos += _cells[pos + i]->getText(NULL, 0);
@@ -1289,7 +1289,7 @@ int MyVirtualImage::getText(int pos, int len, wchar_t* dest, int destLen) const
 	}
 	else
 	{
-		// Êµ¼Ê¶ÁÈ¡
+		// å®é™…è¯»å–
 		for(int i = 0; i < len && destPos < destLen; ++i)
 		{
 			destPos += _cells[pos + i]->getText(dest + destPos, destLen - destPos);
@@ -1301,16 +1301,16 @@ int MyVirtualImage::getText(int pos, int len, wchar_t* dest, int destLen) const
 
 int MyVirtualImage::setSel(int pos, int len)
 {
-	// ĞŞÕı²ÎÊıÈ·±£Ñ¡ÇøµÄ·¶Î§ÊÇ [0, size()]
+	// ä¿®æ­£å‚æ•°ç¡®ä¿é€‰åŒºçš„èŒƒå›´æ˜¯ [0, size()]
 	assert(pos >= 0 && pos <= _curCellPos);
 	if(-1 == len) len = _curCellPos;
 	if(pos + len > _curCellPos) len = _curCellPos - pos;
 	
-	// Çå³ıÔ­À´µÄÑ¡ÖĞÇø
+	// æ¸…é™¤åŸæ¥çš„é€‰ä¸­åŒº
 	markDirtyRange(_sel);
 
-	// ¼ÆËãÓĞ±ä»¯µÄÇøÓò,µ÷ÓÃ MyCell::select() »òÕß MyCell::unselect()
-	// ²ÉÓÃÂß¼­¼òµ¥µÄËã·¨: ÀÏÑ¡ÇøÄÚÃ¿¸öµ¥Ôª,Èç¹ûËü²»ÔÚĞÂÑ¡ÇøÄÚ,Ôòµ÷ÓÃ unselect(); ĞÂÑ¡ÇøÄÚµÄÃ¿¸öµ¥Ôª,ÈôËü²»ÔÚÀÏÑ¡ÇøÄÚ,Ôòµ÷ÓÃ select()
+	// è®¡ç®—æœ‰å˜åŒ–çš„åŒºåŸŸ,è°ƒç”¨ MyCell::select() æˆ–è€… MyCell::unselect()
+	// é‡‡ç”¨é€»è¾‘ç®€å•çš„ç®—æ³•: è€é€‰åŒºå†…æ¯ä¸ªå•å…ƒ,å¦‚æœå®ƒä¸åœ¨æ–°é€‰åŒºå†…,åˆ™è°ƒç”¨ unselect(); æ–°é€‰åŒºå†…çš„æ¯ä¸ªå•å…ƒ,è‹¥å®ƒä¸åœ¨è€é€‰åŒºå†…,åˆ™è°ƒç”¨ select()
 	//POINT newSel = {pos, pos + len};
 	//POINT oldSel = _sel;
 	//for(int i = oldSel.x; i < oldSel.y; ++i)
@@ -1322,7 +1322,7 @@ int MyVirtualImage::setSel(int pos, int len)
 	//	if(!is_in_range(i, oldSel)) _cells[i]->select();
 	//}
 
-	// ÖØ»­ĞÂµÄÑ¡ÖĞÇø
+	// é‡ç”»æ–°çš„é€‰ä¸­åŒº
 	_sel = {pos, pos + len};
 	markDirtyRange(_sel);
 	return len;
@@ -1339,7 +1339,7 @@ int MyVirtualImage::reserve(int len)
 {
 	if(_cellBufLen - _curCellPos > len)
 	{
-		// ¿Õ¼ä×ã¹»
+		// ç©ºé—´è¶³å¤Ÿ
 	}
 	else
 	{
@@ -1367,13 +1367,13 @@ int MyVirtualImage::reserve(int len)
 	return len;
 }
 
-// Êä³ö¿ÉÊÓ´°¿ÚµÄÍ¼Ïñ
+// è¾“å‡ºå¯è§†çª—å£çš„å›¾åƒ
 int MyVirtualImage::render(HDC hdc, const RECT& dest)
 {
-	// ¸üĞÂĞéÄâÍ¼Ïñ
+	// æ›´æ–°è™šæ‹Ÿå›¾åƒ
 	updateWindow();
 
-	// °ÑÄÚ´æbmpÌùµ½Ö¸¶¨Î»ÖÃ
+	// æŠŠå†…å­˜bmpè´´åˆ°æŒ‡å®šä½ç½®
 	BitBlt(hdc, dest.left, dest.top, (dest.right - dest.left), (dest.bottom - dest.top), _hdc, 0, 0, SRCCOPY);
 	return 0;
 }
@@ -1385,14 +1385,14 @@ int MyVirtualImage::setWindowSize(const POINT& sz)
 
 	if(_windowSize.x == 0 || _windowSize.y == 0)
 	{
-		// ÎŞĞ§µÄ´°¿Ú´óĞ¡
+		// æ— æ•ˆçš„çª—å£å¤§å°
 		return 0;
 	}
 
 	/*
-	* ÕâÀïÒ»¶¨ÒªÈ¡µ½ÆÁÄ»»òÕß´°¿ÚµÄDC,²»ÄÜÓÃÄÚ´æDC×÷Îª CreateCompatibleBitmap µÄ²ÎÊı
-	* ÒòÎªÄÚ´æDC´´½¨ºóÊÇµ¥É«µÄ,Ö»ÓĞÒ»¸öÏñËØ´óĞ¡,Èç¹ûÒÔ´ËÎª²ÎÊı´´½¨ÏàÓ¦µÄ bmp,ÄÇÃ´ bmp
-	* Ò²ÊÇµ¥É«µÄ. Õâ¸öÎÊÌâ²îµã¿Óµ½ÎÒ.(2015.1.25)
+	* è¿™é‡Œä¸€å®šè¦å–åˆ°å±å¹•æˆ–è€…çª—å£çš„DC,ä¸èƒ½ç”¨å†…å­˜DCä½œä¸º CreateCompatibleBitmap çš„å‚æ•°
+	* å› ä¸ºå†…å­˜DCåˆ›å»ºåæ˜¯å•è‰²çš„,åªæœ‰ä¸€ä¸ªåƒç´ å¤§å°,å¦‚æœä»¥æ­¤ä¸ºå‚æ•°åˆ›å»ºç›¸åº”çš„ bmp,é‚£ä¹ˆ bmp
+	* ä¹Ÿæ˜¯å•è‰²çš„. è¿™ä¸ªé—®é¢˜å·®ç‚¹å‘åˆ°æˆ‘.(2015.1.25)
 	*/
 	if(_hbmp) DeleteObject(_hbmp);
 	_hbmp = NULL;
@@ -1402,21 +1402,21 @@ int MyVirtualImage::setWindowSize(const POINT& sz)
 	SelectObject(_hdc, (HGDIOBJ)_hbmp);
 	ReleaseDC(NULL, screenDc);
 
-	// ¸Ä±ä¿í¶ÈµÄ´óĞ¡»áµ¼ÖÂÖØĞÂÅÅÁĞ(×Ô¶¯»»ĞĞ´ò¿ªµÄ»°)
-	// ÖØĞÂÉú³ÉĞĞË÷Òı
+	// æ”¹å˜å®½åº¦çš„å¤§å°ä¼šå¯¼è‡´é‡æ–°æ’åˆ—(è‡ªåŠ¨æ¢è¡Œæ‰“å¼€çš„è¯)
+	// é‡æ–°ç”Ÿæˆè¡Œç´¢å¼•
 	rebuildRowIndex();
 
-	// ÖØ»­
+	// é‡ç”»
 	redraw();
 	return 0;
 }
 
 /*
-* ÔÚÄÚ´æDCÄÚÖØ»­
+* åœ¨å†…å­˜DCå†…é‡ç”»
 */
 int MyVirtualImage::redraw()
 {
-	// Õû¸ö¿ÉÊÓ´°¿Ú±ê¼ÇÎªÔàÇøÓò
+	// æ•´ä¸ªå¯è§†çª—å£æ ‡è®°ä¸ºè„åŒºåŸŸ
 	markDirtyRange({0, -1});
 	return 0;
 }
@@ -1449,7 +1449,7 @@ bool MyVirtualImage::enableAutoWrap(bool autoWrap)
 	bool oldVal = _autoWrap;
 	if(autoWrap != _autoWrap)
 	{
-		// ÇĞ»»×Ô¶¯»»ĞĞÄ£Ê½ºóÒªÖØ»­
+		// åˆ‡æ¢è‡ªåŠ¨æ¢è¡Œæ¨¡å¼åè¦é‡ç”»
 		_autoWrap = autoWrap;
 		rebuildRowIndex();
 		redraw();

@@ -1,19 +1,19 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 #include <vector>
 #include "MyCell.h"
 
 /*
-* attach() ¶ÔÏûÏ¢µÄ´¦Àí·½Ê½: 
+* attach() å¯¹æ¶ˆæ¯çš„å¤„ç†æ–¹å¼: 
 */
-// MODE_INTERCEPT ½ØÁô: MyEdit »áÀ¹½Ø WM_ERASEBKGND,WM_SIZE,WM_VSCROLL,WM_HSCROLL,WM_MOUSEWHEEL,WM_MOUSEHWHEEL,WM_KEYDOWN,WM_PAINT
-// MODE_FORWARD ×ª·¢: MyEdit ´¦ÀíÉÏÊöÏûÏ¢Ö®ºó»á¼ÌĞøµ÷ÓÃÔ­´°¿Ú´¦Àíº¯Êı
+// MODE_INTERCEPT æˆªç•™: MyEdit ä¼šæ‹¦æˆª WM_ERASEBKGND,WM_SIZE,WM_VSCROLL,WM_HSCROLL,WM_MOUSEWHEEL,WM_MOUSEHWHEEL,WM_KEYDOWN,WM_PAINT
+// MODE_FORWARD è½¬å‘: MyEdit å¤„ç†ä¸Šè¿°æ¶ˆæ¯ä¹‹åä¼šç»§ç»­è°ƒç”¨åŸçª—å£å¤„ç†å‡½æ•°
 #define MESSAGE_MODE_INTERCEPT 0
 #define MESSAGE_MODE_FORWARD 1
 
 /*
-* ¹¦ÄÜÏûÏ¢IDÒÔ¼°ËùĞèµÄ½á¹¹Ìå¶¨Òå
-* MyEdit / MyConsole µÄÖ÷ÒªĞĞÎª¶¼¿ÉÒÔÍ¨¹ı SendMessage µÄ·½Ê½¿ØÖÆ
+* åŠŸèƒ½æ¶ˆæ¯IDä»¥åŠæ‰€éœ€çš„ç»“æ„ä½“å®šä¹‰
+* MyEdit / MyConsole çš„ä¸»è¦è¡Œä¸ºéƒ½å¯ä»¥é€šè¿‡ SendMessage çš„æ–¹å¼æ§åˆ¶
 */
 #define WM_EDIT_SETSEL (WM_USER + 100)
 #define WM_EDIT_INSERT (WM_USER + 102)
@@ -34,7 +34,7 @@
 #define WM_CONSOLE_EVENT (WM_USER + 204)
 #define WM_CONSOLE_GETINPUT (WM_USER + 205)
 
-// ÎÄ±¾Ïà¹ØµÄÏûÏ¢Ê¹ÓÃµÄ½á¹¹ WM_EDIT_INSERT / WM_CONSOLE_READ / WM_CONSOLE_WRITE
+// æ–‡æœ¬ç›¸å…³çš„æ¶ˆæ¯ä½¿ç”¨çš„ç»“æ„ WM_EDIT_INSERT / WM_CONSOLE_READ / WM_CONSOLE_WRITE
 typedef struct
 {
 	int pos;
@@ -45,7 +45,7 @@ typedef struct
 	COLORREF bk;
 }MYEDIT_CELLS;
 
-// »ñÈ¡ÎÄ±¾
+// è·å–æ–‡æœ¬
 typedef struct
 {
 	int pos;
@@ -55,33 +55,33 @@ typedef struct
 	int chLen;
 }MYEDIT_CELLSBUF;
 
-// WM_EDIT_REMOVE Ö±½ÓÊ¹ÓÃ POINT ½á¹¹
+// WM_EDIT_REMOVE ç›´æ¥ä½¿ç”¨ POINT ç»“æ„
 
-// Ñ¡ÇøÏà¹ØµÄ½á¹¹ Ö±½ÓÊ¹ÓÃ POINT ½á¹¹ - WM_EDIT_SETSEL / WM_EDIT_GETSEL
+// é€‰åŒºç›¸å…³çš„ç»“æ„ ç›´æ¥ä½¿ç”¨ POINT ç»“æ„ - WM_EDIT_SETSEL / WM_EDIT_GETSEL
 
-// ÓÃ»§ĞèÒª´¦ÀíµÄ¿ØÖÆÌ¨ÊÂ¼ş - WM_CONSOLE_EVENT ¶ÔÓ¦µÄÀàĞÍ
+// ç”¨æˆ·éœ€è¦å¤„ç†çš„æ§åˆ¶å°äº‹ä»¶ - WM_CONSOLE_EVENT å¯¹åº”çš„ç±»å‹
 #define CONSOLE_EVENT_NONE				0x0000
-#define CONSOLE_EVENT_CHAR				0x0001	// ÊäÈëÁËÒ»¸ö×Ö·û
-#define CONSOLE_EVENT_RETRUN			0x0002	// ÓÃ»§·¢ËÍÁËÒ»¸öÃüÁî »Ø³µ.
-#define CONSOLE_EVENT_CTRL_RETRUN		0x0004	// ÓÃ»§·¢ËÍÁËÒ»¸öÃüÁî CTRL + »Ø³µ.
-#define CONSOLE_EVENT_ALT_RETRUN		0x0010	// ÓÃ»§·¢ËÍÁËÒ»¸öÃüÁî ALT + »Ø³µ.
+#define CONSOLE_EVENT_CHAR				0x0001	// è¾“å…¥äº†ä¸€ä¸ªå­—ç¬¦
+#define CONSOLE_EVENT_RETRUN			0x0002	// ç”¨æˆ·å‘é€äº†ä¸€ä¸ªå‘½ä»¤ å›è½¦.
+#define CONSOLE_EVENT_CTRL_RETRUN		0x0004	// ç”¨æˆ·å‘é€äº†ä¸€ä¸ªå‘½ä»¤ CTRL + å›è½¦.
+#define CONSOLE_EVENT_ALT_RETRUN		0x0010	// ç”¨æˆ·å‘é€äº†ä¸€ä¸ªå‘½ä»¤ ALT + å›è½¦.
 
-// ¿ØÖÆÌ¨Ä£Ê½ - WM_CONSOLE_SWITCHMODE
+// æ§åˆ¶å°æ¨¡å¼ - WM_CONSOLE_SWITCHMODE
 #define CONSOLEMODE_OUTPUT 0
 #define	CONSOLEMODE_INPUT 1
 
 /*
-* ÆäËüÔ¤¶¨Òå³£Êı
+* å…¶å®ƒé¢„å®šä¹‰å¸¸æ•°
 */
-// IME ºòÑ¡×Ö·û»º³å, Èç¹û IME ·¢ËÍÀ´µÄ³¤¶È³¬¹ıÕâ¸öÖµ½«Ê¹ÓÃ¶Ñ
+// IME å€™é€‰å­—ç¬¦ç¼“å†², å¦‚æœ IME å‘é€æ¥çš„é•¿åº¦è¶…è¿‡è¿™ä¸ªå€¼å°†ä½¿ç”¨å †
 #define IME_BUF_LEN 256
 #define IME_CHAR_COLOR RGB(128,128,128)
 
-// Ô¤¶¨ÒåµÄ×ÖÌåÇ°¾°É«ºÍ±³¾°É«
+// é¢„å®šä¹‰çš„å­—ä½“å‰æ™¯è‰²å’ŒèƒŒæ™¯è‰²
 #define CONSOLECOLOR_DEFAULT 0xFF000000
 
 /*
-* EDIT ¿Ø¼şÊµÏÖ
+* EDIT æ§ä»¶å®ç°
 */
 class MyEdit
 {
@@ -90,42 +90,42 @@ protected:
 	LONG _wndData;
 	HWND _hWnd;
 
-	// ĞéÄâÍ¼Ïñ
+	// è™šæ‹Ÿå›¾åƒ
 	MyVirtualImage* _vImage;
 
-	// ÁÙÊ±×´Ì¬Öµ - Êó±ê¹ö¶¯µÄÀÛ¼ÓÖµ,Ã¿ 120 ÏòÏÂ¹ö¶¯Ò»ĞĞ,»òÕßÏòÓÒ¹ö¶¯Á½ÁĞ
+	// ä¸´æ—¶çŠ¶æ€å€¼ - é¼ æ ‡æ»šåŠ¨çš„ç´¯åŠ å€¼,æ¯ 120 å‘ä¸‹æ»šåŠ¨ä¸€è¡Œ,æˆ–è€…å‘å³æ»šåŠ¨ä¸¤åˆ—
 	int _scrollLines;
 	int _vDeltaAccr;
 	int _hDeltaAccr;
 	int _selFrom;
 	bool _mouseMoved;
 
-	// µ±Ç°×´Ì¬ºÍÉèÖÃ
-	int _curCaretPos;		// ¹â±êÎ»ÖÃ
+	// å½“å‰çŠ¶æ€å’Œè®¾ç½®
+	int _curCaretPos;		// å…‰æ ‡ä½ç½®
 	POINT _windowPos;
 	POINT _windowSize;
 	COLORREF _dftFgColor;
 	COLORREF _dftBkColor;
-	int _margin;			// ±ß¿ò
+	int _margin;			// è¾¹æ¡†
 	HBRUSH _marginBrush;
-	int _messageHandleMode;	// ÏûÏ¢¹ıÂËÄ£Ê½
+	int _messageHandleMode;	// æ¶ˆæ¯è¿‡æ»¤æ¨¡å¼
 	bool _readOnly;
 	HCURSOR _hIbeam;
 	int _imeStartPos;
 	int _imeLen;
-	bool _dirty;			// Ôà±ê¼Ç
+	bool _dirty;			// è„æ ‡è®°
 	
-	// ¹¤¾ßº¯Êı
+	// å·¥å…·å‡½æ•°
 	int hitTest(const POINT& pt) const;			// point -> postion
 	int hitTest(int row, int col) const;		// row, col -> postion
-	int adjHitTest(int pos, int htc) const;		// ¶Ô MyVirtualImage::hitTest ½á¹û×÷Ò»¸öĞŞÕıÒÔ·ûºÏ Edit µÄÊ¹ÓÃÏ°¹ß
-	int adjPos(int pos, bool forward) const;	// ÏòÇ°»òÕßÏòºóµ÷ÕûĞòºÅÊ¹µÃ \r\n Ê¼ÖÕ×÷ÎªÒ»¸öÕûÌå
+	int adjHitTest(int pos, int htc) const;		// å¯¹ MyVirtualImage::hitTest ç»“æœä½œä¸€ä¸ªä¿®æ­£ä»¥ç¬¦åˆ Edit çš„ä½¿ç”¨ä¹ æƒ¯
+	int adjPos(int pos, bool forward) const;	// å‘å‰æˆ–è€…å‘åè°ƒæ•´åºå·ä½¿å¾— \r\n å§‹ç»ˆä½œä¸ºä¸€ä¸ªæ•´ä½“
 	void redraw();
 	void updateScrollInfo();
 	int scrollto(const POINT& pos);
 	void markDirty();
 
-	// ´°¿Úº¯Êı
+	// çª—å£å‡½æ•°
 	virtual LRESULT wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK StaticWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -133,7 +133,7 @@ protected:
 	MyEdit(const MyEdit&) = delete;
 	MyEdit& operator = (const MyEdit&) = delete;
 
-	// Êµ¼Ê²Ù×÷Ğéº¯Êı(»áÉèÖÃÔà±ê¼Ç,²»»áË¢ĞÂ´°¿Ú)
+	// å®é™…æ“ä½œè™šå‡½æ•°(ä¼šè®¾ç½®è„æ ‡è®°,ä¸ä¼šåˆ·æ–°çª—å£)
 	virtual int vmakeVisible(int pos);
 
 	virtual int vsetSel(int pos, int len);
@@ -143,13 +143,13 @@ protected:
 	virtual int vhideCaret();
 	virtual int vsetCaretPos(int pos);
 	virtual int vgetCaretPos() const;
-	virtual int vrefreshCaret();		// ÉèÖÃ¹â±êµÄÏÔÊ¾Î»ÖÃ
+	virtual int vrefreshCaret();		// è®¾ç½®å…‰æ ‡çš„æ˜¾ç¤ºä½ç½®
 
 	virtual int vinsert(int pos, const wchar_t* ch, int len, COLORREF fg = CONSOLECOLOR_DEFAULT, COLORREF bk = CONSOLECOLOR_DEFAULT);
 	virtual int vremove(int pos, int len);
 	virtual int vgetText(int pos, int len, wchar_t* ch, int destLen) const;
 
-	// ·½±ãµÄ×éºÏº¯Êı(×Ô¶¯Ë¢ĞÂ)
+	// æ–¹ä¾¿çš„ç»„åˆå‡½æ•°(è‡ªåŠ¨åˆ·æ–°)
 	virtual int vreplaceSel(const wchar_t* ch, int len, COLORREF fg = CONSOLECOLOR_DEFAULT, COLORREF bk = CONSOLECOLOR_DEFAULT);
 public:
 	MyEdit(int maxChars, bool autoWrap, HDC hdc);
@@ -159,41 +159,41 @@ public:
 	HWND detach();
 	MyVirtualImage* getVImage() { return _vImage; }
 
-	// ÉèÖÃÆÁÄ»»º³åÊä³öºÍ´°Ìå±ß¿ò¼äµÄ¼ä¾à
+	// è®¾ç½®å±å¹•ç¼“å†²è¾“å‡ºå’Œçª—ä½“è¾¹æ¡†é—´çš„é—´è·
 	int setMargin(int margin, COLORREF clr);
 	int setDefaultColor(COLORREF fgColor, COLORREF bkColor);
 	void enableReadOnly(bool r);
 	int refresh();
 
-	// ĞĞÁĞ <-> ĞòºÅ
+	// è¡Œåˆ— <-> åºå·
 	int size() const;
 	int lines() const;
 	int getLineCol(int pos, int* ln, int* col) const;
 	int getPosition(int ln, int col) const;
 	int getLineLength(int ln) const;
 
-	// ¼ôÌù°å
+	// å‰ªè´´æ¿
 	int copy() const;
 	int cut();
 	int paste();
 
 	/*
-	* Í¨¹ı SendMessage() ÊµÏÖµÄ²Ù×÷
+	* é€šè¿‡ SendMessage() å®ç°çš„æ“ä½œ
 	*/
-	// È·±£¿É¼û
+	// ç¡®ä¿å¯è§
 	int makeVisible(int pos);
 
-	// Ñ¡Çø
+	// é€‰åŒº
 	int setSel(int pos, int len);
 	int getSel(int* pos, int* len) const;
 
-	// ¿ØÖÆ¹â±ê
+	// æ§åˆ¶å…‰æ ‡
 	int showCaret();
 	int hideCaret();
 	int setCaretPos(int pos);
 	int getCaretPos() const;
 
-	// ±à¼­ÎÄ±¾
+	// ç¼–è¾‘æ–‡æœ¬
 	int insert(int pos, const wchar_t* ch, int len, COLORREF fg = CONSOLECOLOR_DEFAULT, COLORREF bk = CONSOLECOLOR_DEFAULT);
 	int remove(int pos, int len);
 	int replaceSel(const wchar_t* ch, int len, COLORREF fg = CONSOLECOLOR_DEFAULT, COLORREF bk = CONSOLECOLOR_DEFAULT);
@@ -201,21 +201,21 @@ public:
 };
 
 /*
-* ¿ØÖÆÌ¨¿Ø¼şÊµÏÖ
+* æ§åˆ¶å°æ§ä»¶å®ç°
 */
 class MyConsole : private MyEdit
 {
 private:
-	HWND _hEvWnd;		// ÊÂ¼ş½ÓÊÕ´°¿Ú,ÓÅÏÈ¼¶: ÓÃ»§Ö¸¶¨µÄ´°¿Ú -> ¸¸´°¿Ú -> µ±Ç°´°¿Ú
-	UINT _evMessageId;	// ÊÂ¼ş ID
-	UINT _evMask;		// ÊÂ¼şÆÁ±Î×Ö
+	HWND _hEvWnd;		// äº‹ä»¶æ¥æ”¶çª—å£,ä¼˜å…ˆçº§: ç”¨æˆ·æŒ‡å®šçš„çª—å£ -> çˆ¶çª—å£ -> å½“å‰çª—å£
+	UINT _evMessageId;	// äº‹ä»¶ ID
+	UINT _evMask;		// äº‹ä»¶å±è”½å­—
 	
-	int _messageHandleMode;	// ÏûÏ¢¹ıÂËÄ£Ê½
-	int _mode;				// ÊäÈëÄ£Ê½»òÕßÊä³öÄ£Ê½
-	wchar_t* _promptStr;	// ÃüÁîĞĞÌáÊ¾·û
-	int _inputStartPos;		// ÊäÈëÄ£Ê½µÄÆğÊ¼Î»ÖÃ
+	int _messageHandleMode;	// æ¶ˆæ¯è¿‡æ»¤æ¨¡å¼
+	int _mode;				// è¾“å…¥æ¨¡å¼æˆ–è€…è¾“å‡ºæ¨¡å¼
+	wchar_t* _promptStr;	// å‘½ä»¤è¡Œæç¤ºç¬¦
+	int _inputStartPos;		// è¾“å…¥æ¨¡å¼çš„èµ·å§‹ä½ç½®
 
-	// ÃüÁîĞĞÀúÊ·¼ÇÂ¼
+	// å‘½ä»¤è¡Œå†å²è®°å½•
 	int _maxHistory;
 	int _curHistoryIndex;
 	std::wstring _curInput;
@@ -223,24 +223,24 @@ private:
 
 	int getInputStartPos() const;
 	void appendPrompt();
-	int getWritableSel(int* pos, int* len) const; // ·µ»Ø¿ÉĞ´²¿·ÖµÄÑ¡Çø
+	int getWritableSel(int* pos, int* len) const; // è¿”å›å¯å†™éƒ¨åˆ†çš„é€‰åŒº
 	
-	// ¸ù¾İ¿ØÖÆÌ¨µÄÒªÇóÖØÔØ¹â±ê¿ØÖÆºÍÎÄ±¾ĞŞ¸Äº¯Êı
+	// æ ¹æ®æ§åˆ¶å°çš„è¦æ±‚é‡è½½å…‰æ ‡æ§åˆ¶å’Œæ–‡æœ¬ä¿®æ”¹å‡½æ•°
 	virtual int vshowCaret();
 	virtual int vhideCaret();
-	virtual int vsetCaretPos(int pos);		// ÖØĞÂÊµÏÖÎª¹â±êÖ»³öÏÖÔÚÓÃ»§ÊäÈëÇø»òÕß²»³öÏÖ(Êä³öÄ£Ê½)
+	virtual int vsetCaretPos(int pos);		// é‡æ–°å®ç°ä¸ºå…‰æ ‡åªå‡ºç°åœ¨ç”¨æˆ·è¾“å…¥åŒºæˆ–è€…ä¸å‡ºç°(è¾“å‡ºæ¨¡å¼)
 	virtual int vrefreshCaret();
-	virtual int vreplaceSel(const wchar_t* ch, int len, COLORREF fg = CONSOLECOLOR_DEFAULT, COLORREF bk = CONSOLECOLOR_DEFAULT); // ÖØĞÂÊµÏÖÎªÖ»Ìæ»»¿ÉĞ´²¿·Ö
+	virtual int vreplaceSel(const wchar_t* ch, int len, COLORREF fg = CONSOLECOLOR_DEFAULT, COLORREF bk = CONSOLECOLOR_DEFAULT); // é‡æ–°å®ç°ä¸ºåªæ›¿æ¢å¯å†™éƒ¨åˆ†
 
-	// ÊµÏÖ¹¦ÄÜµÄÄÚ²¿º¯Êı
+	// å®ç°åŠŸèƒ½çš„å†…éƒ¨å‡½æ•°
 	int doSwitchMode(int m, bool quiet = false);
-	int doWrite(const wchar_t* ch, int len = -1, COLORREF fg = CONSOLECOLOR_DEFAULT, COLORREF bk = CONSOLECOLOR_DEFAULT);	// Ğ´¿ØÖÆÌ¨(Êä³öÄ£Ê½ÊÇ×·¼Óµ½Ä©Î²;ÊäÈëÄ£Ê½¹¦ÄÜÍ¬ replaceSel()
+	int doWrite(const wchar_t* ch, int len = -1, COLORREF fg = CONSOLECOLOR_DEFAULT, COLORREF bk = CONSOLECOLOR_DEFAULT);	// å†™æ§åˆ¶å°(è¾“å‡ºæ¨¡å¼æ˜¯è¿½åŠ åˆ°æœ«å°¾;è¾“å…¥æ¨¡å¼åŠŸèƒ½åŒ replaceSel()
 	int doRead(wchar_t* buf, int len) const;
 	std::wstring doGetInput() const;
 	int doClearInput();
 	int doClear();
 
-	// ´°¿Úº¯Êı
+	// çª—å£å‡½æ•°
 	virtual LRESULT wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	MyConsole() = delete;
@@ -253,21 +253,21 @@ public:
 	int attach(HWND hwnd, int m);
 	HWND detach();
 	int setMargin(int margin, COLORREF clr);
-	int setEventHandler(HWND hWnd, unsigned int msgid);	// ¿ØÖÆÌ¨ÊÂ¼ş½ÓÊÕ´°¿Ú
+	int setEventHandler(HWND hWnd, unsigned int msgid);	// æ§åˆ¶å°äº‹ä»¶æ¥æ”¶çª—å£
 	int setEventMask(unsigned int mask);
-	int setPrompt(const wchar_t* str);			// ÃüÁîĞĞÌáÊ¾·û,Ä¬ÈÏ:[µ±Ç°Ê±¼ä]$
+	int setPrompt(const wchar_t* str);			// å‘½ä»¤è¡Œæç¤ºç¬¦,é»˜è®¤:[å½“å‰æ—¶é—´]$
 	int enableHistory(int maxRecords);
 
-	int write(const wchar_t* ch, int len = -1, COLORREF fg = CONSOLECOLOR_DEFAULT, COLORREF bk = CONSOLECOLOR_DEFAULT);	// Ğ´¿ØÖÆÌ¨(Êä³öÄ£Ê½ÊÇ×·¼Óµ½Ä©Î²;ÊäÈëÄ£Ê½¹¦ÄÜÍ¬ replaceSel()
-	int read(wchar_t* buf, int len) const;		// ¶Á¿ØÖÆÌ¨ read(NULL, 0) ·µ»ØÊäÈë»º³åµÄ³¤¶È
-	int switchMode(int m, bool quiet = false);	// ÇĞ»»Ä£Ê½ 0: Êä³ö; ÇĞ»»ÖÁÊä³öÄ£Ê½Ê±,×·¼Ó»»ĞĞ·û,Òş²Ø¹â±ê. 1: ÊäÈë. ÇĞ»»ÖÁÊäÈëÄ£Ê½Ê±,×·¼ÓÃüÁîĞĞÌáÊ¾·ûºÍ¹â±ê. ³õÊ¼»¯Ê±³öÓÚÊä³öÄ£Ê½.
+	int write(const wchar_t* ch, int len = -1, COLORREF fg = CONSOLECOLOR_DEFAULT, COLORREF bk = CONSOLECOLOR_DEFAULT);	// å†™æ§åˆ¶å°(è¾“å‡ºæ¨¡å¼æ˜¯è¿½åŠ åˆ°æœ«å°¾;è¾“å…¥æ¨¡å¼åŠŸèƒ½åŒ replaceSel()
+	int read(wchar_t* buf, int len) const;		// è¯»æ§åˆ¶å° read(NULL, 0) è¿”å›è¾“å…¥ç¼“å†²çš„é•¿åº¦
+	int switchMode(int m, bool quiet = false);	// åˆ‡æ¢æ¨¡å¼ 0: è¾“å‡º; åˆ‡æ¢è‡³è¾“å‡ºæ¨¡å¼æ—¶,è¿½åŠ æ¢è¡Œç¬¦,éšè—å…‰æ ‡. 1: è¾“å…¥. åˆ‡æ¢è‡³è¾“å…¥æ¨¡å¼æ—¶,è¿½åŠ å‘½ä»¤è¡Œæç¤ºç¬¦å’Œå…‰æ ‡. åˆå§‹åŒ–æ—¶å‡ºäºè¾“å‡ºæ¨¡å¼.
 	int mode() const;
 	std::wstring getInput() const;
 	int clearInput();
-	int clear();								// ÇåÆÁ
+	int clear();								// æ¸…å±
 };
 
-// ÏûÏ¢Ñ­»· - °ÑÏûÏ¢¶ÓÁĞÖĞµÄËùÓĞÏûÏ¢´¦Àíµôºó·µ»Ø
-// ÓÃÓÚÁ¬ĞøÊä³öÊ±±ÜÃâÆäËüÏûÏ¢ÎŞ·¨´¦Àíµ¼ÖÂ½çÃæÎŞÏìÓ¦
+// æ¶ˆæ¯å¾ªç¯ - æŠŠæ¶ˆæ¯é˜Ÿåˆ—ä¸­çš„æ‰€æœ‰æ¶ˆæ¯å¤„ç†æ‰åè¿”å›
+// ç”¨äºè¿ç»­è¾“å‡ºæ—¶é¿å…å…¶å®ƒæ¶ˆæ¯æ— æ³•å¤„ç†å¯¼è‡´ç•Œé¢æ— å“åº”
 int EatMessage();
 void EatAllMessage();

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include <assert.h>
 #include <Imm.h>
 #include "MyConsole.h"
@@ -7,15 +7,15 @@
 
 
 /*
-* ³£Êı¶¨Òå
+* å¸¸æ•°å®šä¹‰
 */
-#define LINES_PER_DELTA 3		// Êó±ê¹ö¶¯Ê±,Ã¿¸ö DELTA Öµ¶ÔÓ¦µÄĞĞÊı
-#define CARET_HEIGHT 2			// ¹â±êµÄ¸ß¶È
+#define LINES_PER_DELTA 3		// é¼ æ ‡æ»šåŠ¨æ—¶,æ¯ä¸ª DELTA å€¼å¯¹åº”çš„è¡Œæ•°
+#define CARET_HEIGHT 2			// å…‰æ ‡çš„é«˜åº¦
 
 
 
 /*
-* ÏûÏ¢Ñ­»·,ÓÃÓÚÔÚÁ¬ĞøÊä³öÊ±°´ĞèÒªµ÷ÓÃ,ÕâÑùÆäËüÏûÏ¢²ÅÓĞ»ú»áµÃµ½´¦Àí,½çÃæ¿¨¶ÙµÄÎÊÌâÄÜ»º½â
+* æ¶ˆæ¯å¾ªç¯,ç”¨äºåœ¨è¿ç»­è¾“å‡ºæ—¶æŒ‰éœ€è¦è°ƒç”¨,è¿™æ ·å…¶å®ƒæ¶ˆæ¯æ‰æœ‰æœºä¼šå¾—åˆ°å¤„ç†,ç•Œé¢å¡é¡¿çš„é—®é¢˜èƒ½ç¼“è§£
 */
 int EatMessage()
 {
@@ -144,12 +144,12 @@ int MyEdit::setMargin(int mr, COLORREF clr)
 
 	markDirty();
 
-	// Ë¢ĞÂ´°¿Ú
+	// åˆ·æ–°çª—å£
 	refresh();
 	return 0;
 }
 
-// Ö»ÄÜÓ°ÏìÖ®ºóµÄÊä³ö
+// åªèƒ½å½±å“ä¹‹åçš„è¾“å‡º
 int MyEdit::setDefaultColor(COLORREF fgColor, COLORREF bkColor)
 {
 	_dftFgColor = fgColor;
@@ -157,7 +157,7 @@ int MyEdit::setDefaultColor(COLORREF fgColor, COLORREF bkColor)
 	return 0;
 }
 
-// µ±ÎÄ±¾(ĞéÄâÍ¼Ïñ)µÄ´óĞ¡·¢Éú±ä»¯Ê±,¸ù¾İĞÂµÄ´óĞ¡¸üĞÂ¹ö¶¯ÌõµÄĞÅÏ¢
+// å½“æ–‡æœ¬(è™šæ‹Ÿå›¾åƒ)çš„å¤§å°å‘ç”Ÿå˜åŒ–æ—¶,æ ¹æ®æ–°çš„å¤§å°æ›´æ–°æ»šåŠ¨æ¡çš„ä¿¡æ¯
 void MyEdit::updateScrollInfo()
 {
 	HWND hWnd = _hWnd;
@@ -177,7 +177,7 @@ void MyEdit::updateScrollInfo()
 		_vImage->setWindowSize(_windowSize);
 		int lineHeight = _vImage->getCharHeight() + _vImage->getRowSpacing();
 
-		// ÉèÖÃ¹ö¶¯ÌõµÄĞÅÏ¢
+		// è®¾ç½®æ»šåŠ¨æ¡çš„ä¿¡æ¯
 		POINT lagetSz = _vImage->getImageSize();
 		POINT windowPos = {0, 0};
 					
@@ -185,7 +185,7 @@ void MyEdit::updateScrollInfo()
 		scrInfo.cbSize = sizeof(SCROLLBARINFO);
 
 		/*
-		* ´¹Ö±¹ö¶¯Ìõ. ´¹Ö±¹ö¶¯ÌõµÄ×î´óÖµÊÇ Visual Studio ·½Ê½µÄ¶àÒ»Ò³ÉÙÒ»ĞĞ, ¶ø²»ÊÇ Edit ·½Ê½µÄ×îºóÒ»Ò³×îºóÒ»ĞĞ
+		* å‚ç›´æ»šåŠ¨æ¡. å‚ç›´æ»šåŠ¨æ¡çš„æœ€å¤§å€¼æ˜¯ Visual Studio æ–¹å¼çš„å¤šä¸€é¡µå°‘ä¸€è¡Œ, è€Œä¸æ˜¯ Edit æ–¹å¼çš„æœ€åä¸€é¡µæœ€åä¸€è¡Œ
 		*/
 		scrInfo.fMask = SIF_RANGE | SIF_PAGE;
 		scrInfo.nMin = 0;
@@ -193,43 +193,43 @@ void MyEdit::updateScrollInfo()
 		scrInfo.nPage = rcClient.bottom - rcClient.top;
 		SetScrollInfo(hWnd, SB_VERT, &scrInfo, TRUE);
 
-		// È¡»ØĞÂÖµ
+		// å–å›æ–°å€¼
 		scrInfo.fMask = SIF_POS;
 		GetScrollInfo(hWnd, SB_VERT, &scrInfo);
 		windowPos.y = scrInfo.nPos;
 		
 		/*
-		* Ë®Æ½¹ö¶¯Ìõ
+		* æ°´å¹³æ»šåŠ¨æ¡
 		*/
 		scrInfo.fMask = SIF_RANGE | SIF_PAGE;
 		scrInfo.nMin = 0;
-		scrInfo.nMax = lagetSz.x - 1;					// scrInfo.nMax = lagetSz.x µÄ»°,Ë®Æ½¹ö¶¯Ìõ»áÔÚ²»ĞèÒªµÄÊ±ºò³öÏÖ.
+		scrInfo.nMax = lagetSz.x - 1;					// scrInfo.nMax = lagetSz.x çš„è¯,æ°´å¹³æ»šåŠ¨æ¡ä¼šåœ¨ä¸éœ€è¦çš„æ—¶å€™å‡ºç°.
 		scrInfo.nPage = rcClient.right - rcClient.left;
 		SetScrollInfo(hWnd, SB_HORZ, &scrInfo, TRUE);
 
-		// È¡»ØĞÂÖµ
+		// å–å›æ–°å€¼
 		scrInfo.fMask = SIF_POS;
 		GetScrollInfo(hWnd, SB_HORZ, &scrInfo);
 		windowPos.x = scrInfo.nPos;
 
-		// ÖØĞÂÉèÖÃ´°¿ÚÎ»ÖÃ
+		// é‡æ–°è®¾ç½®çª—å£ä½ç½®
 		if(scrollto(windowPos))
 		{
-			// ÓÉÓÚ¸Ä±ä´°¿Ú´óĞ¡¿ÉÄÜµ¼ÖÂ»»ĞĞ,ËùÒÔĞèÒªË¢ĞÂ¹â±êÎ»ÖÃ
+			// ç”±äºæ”¹å˜çª—å£å¤§å°å¯èƒ½å¯¼è‡´æ¢è¡Œ,æ‰€ä»¥éœ€è¦åˆ·æ–°å…‰æ ‡ä½ç½®
 			vrefreshCaret();
 		}
 	}
 }
 
-// °ÑĞéÄâÍ¼Ïñ¹öµ½Ö¸¶¨Î»ÖÃ(²»»á×Ô¶¯Ë¢ĞÂ´°¿Ú)
+// æŠŠè™šæ‹Ÿå›¾åƒæ»šåˆ°æŒ‡å®šä½ç½®(ä¸ä¼šè‡ªåŠ¨åˆ·æ–°çª—å£)
 int MyEdit::scrollto(const POINT& ppos)
 {
 	POINT pos = ppos;
 
 	/*
-	* Í¨¹ı GetScrollInfo() º¯ÊıÈ·±£ pos ÉèÖÃµÄ·¶Î§Ê¼ÖÕÊÇÓĞĞ§µÄ. ËùÒÔ×îÖÕ
+	* é€šè¿‡ GetScrollInfo() å‡½æ•°ç¡®ä¿ pos è®¾ç½®çš„èŒƒå›´å§‹ç»ˆæ˜¯æœ‰æ•ˆçš„. æ‰€ä»¥æœ€ç»ˆ
 	*/
-	// Ë®Æ½¹ö¶¯Ìõ
+	// æ°´å¹³æ»šåŠ¨æ¡
 	if(pos.x != _windowPos.x)
 	{
 		SCROLLINFO si = {0};
@@ -241,7 +241,7 @@ int MyEdit::scrollto(const POINT& ppos)
 		pos.x = si.nPos;
 	}
 
-	// ´¹Ö±¹ö¶¯Ìõ
+	// å‚ç›´æ»šåŠ¨æ¡
 	if(pos.y != _windowPos.y)
 	{
 		SCROLLINFO si = {0};
@@ -253,10 +253,10 @@ int MyEdit::scrollto(const POINT& ppos)
 		pos.y = si.nPos;
 	}
 
-	// ¹ö¶¯µ½Ö¸¶¨Î»ÖÃ
+	// æ»šåŠ¨åˆ°æŒ‡å®šä½ç½®
 	if(_windowPos.x == pos.x && _windowPos.y == pos.y)
 	{
-		// ²»ĞèÒª¹ö¶¯
+		// ä¸éœ€è¦æ»šåŠ¨
 		return 1;
 	}
 	else
@@ -264,22 +264,22 @@ int MyEdit::scrollto(const POINT& ppos)
 		_windowPos = pos;
 		_vImage->setWindowPos(_windowPos);
 
-		// Ë¢ĞÂ¹â±êÎ»ÖÃ
+		// åˆ·æ–°å…‰æ ‡ä½ç½®
 		vrefreshCaret();
 
-		// ÉèÖÃÔà±ê¼Ç
+		// è®¾ç½®è„æ ‡è®°
 		markDirty();
 		return 0;
 	}
 }
 
-// ÓÃ×îÉÙµÄ¹ö¶¯È·±£Ö¸¶¨Î»ÖÃµÄ×Ö·û¿É¼û
+// ç”¨æœ€å°‘çš„æ»šåŠ¨ç¡®ä¿æŒ‡å®šä½ç½®çš„å­—ç¬¦å¯è§
 int MyEdit::makeVisible(int pos)
 {
 	return SendMessage(_hWnd, WM_EDIT_MAKEVISIBLE, 0, (LPARAM)pos);
 }
 
-// ·µ»Ø1 ±íÊ¾ÒÑ¾­¿É¼û,²»ĞèÒªË¢ĞÂ;·ñÔòĞèÒªË¢ĞÂ´°¿Ú
+// è¿”å›1 è¡¨ç¤ºå·²ç»å¯è§,ä¸éœ€è¦åˆ·æ–°;å¦åˆ™éœ€è¦åˆ·æ–°çª—å£
 int MyEdit::vmakeVisible(int pos)
 {
 	int row = 0, col = 0;
@@ -293,15 +293,15 @@ int MyEdit::vmakeVisible(int pos)
 	if((pt.x >= _windowPos.x && (pt.x + cellSz.x) <= (_windowPos.x + _windowSize.x)) 
 		&& (pt.y >= _windowPos.y && (pt.y + cellSz.y) <= (_windowPos.y + _windowSize.y)))
 	{
-		// ÒÑ¾­¿É¼û
+		// å·²ç»å¯è§
 		return 1;
 	}
 	else
 	{
 		POINT ptNewPos;
 
-		// ¹ö¶¯µ½ºÏÊÊÎ»ÖÃÊ¹ pos ×Ö·û¿É¼û
-		// Ô­Ôò: pt ÔÚ´°¿ÚÉÏÔòÍùÉÏ¹ö¶¯µ½¸Õ¸ÕÄÜÏÔÊ¾ptÎªÖ¹; ÔÚ×ó±ßÍù×ó¹ö¶¯; ÓÒ±ßÔòÍùÓÒ¹ö¶¯; ÏÂ±ßÔòÍùÏÂ¹ö¶¯. ÓÃ×îÉÙµÄ¹ö¶¯¾àÀëÏÔÊ¾³öÀ´¼´¿É.
+		// æ»šåŠ¨åˆ°åˆé€‚ä½ç½®ä½¿ pos å­—ç¬¦å¯è§
+		// åŸåˆ™: pt åœ¨çª—å£ä¸Šåˆ™å¾€ä¸Šæ»šåŠ¨åˆ°åˆšåˆšèƒ½æ˜¾ç¤ºptä¸ºæ­¢; åœ¨å·¦è¾¹å¾€å·¦æ»šåŠ¨; å³è¾¹åˆ™å¾€å³æ»šåŠ¨; ä¸‹è¾¹åˆ™å¾€ä¸‹æ»šåŠ¨. ç”¨æœ€å°‘çš„æ»šåŠ¨è·ç¦»æ˜¾ç¤ºå‡ºæ¥å³å¯.
 		if(pt.x < _windowPos.x)
 		{
 			ptNewPos.x = pt.x;
@@ -312,7 +312,7 @@ int MyEdit::vmakeVisible(int pos)
 		}
 		else
 		{
-			// x ×ø±êÔÚ¿ÉÊÓ·¶Î§ÄÚ
+			// x åæ ‡åœ¨å¯è§†èŒƒå›´å†…
 			ptNewPos.x = _windowPos.x;
 		}
 		
@@ -329,13 +329,13 @@ int MyEdit::vmakeVisible(int pos)
 			ptNewPos.y = _windowPos.y;
 		}
 
-		// ¹ö¶¯µ½Ö¸¶¨Î»ÖÃ
+		// æ»šåŠ¨åˆ°æŒ‡å®šä½ç½®
 		return scrollto(ptNewPos);
 	}
 }
 
-// MyEdit ¹ØÁªµ½Ò»¸ö´°¿Ú¾ä±ú,»áÕ¼ÓÃ GWL_USERDATA ×Ö¶Î
-// int m: MESSAGE_MODE_INTERCEPT / MESSAGE_MODE_FORWARD ·Ö±ğ¶ÔÓ¦À¹½ØºÍ×ª·¢ÏûÏ¢´¦ÀíÄ£Ê½.
+// MyEdit å…³è”åˆ°ä¸€ä¸ªçª—å£å¥æŸ„,ä¼šå ç”¨ GWL_USERDATA å­—æ®µ
+// int m: MESSAGE_MODE_INTERCEPT / MESSAGE_MODE_FORWARD åˆ†åˆ«å¯¹åº”æ‹¦æˆªå’Œè½¬å‘æ¶ˆæ¯å¤„ç†æ¨¡å¼.
 int MyEdit::attach(HWND hWnd, int m)
 {
 	_messageHandleMode = m;
@@ -365,7 +365,7 @@ HWND MyEdit::detach()
 	return hwnd;
 }
 
-// ¸üĞÂ¹â±êµÄÎ»ÖÃ
+// æ›´æ–°å…‰æ ‡çš„ä½ç½®
 int MyEdit::vrefreshCaret()
 {
 	if(vgetCaretPos() >= 0 && vgetCaretPos() <= size())
@@ -380,7 +380,7 @@ int MyEdit::vrefreshCaret()
 	return 0;
 }
 
-// ´´½¨²¢ÏÔÊ¾¹â±ê
+// åˆ›å»ºå¹¶æ˜¾ç¤ºå…‰æ ‡
 int MyEdit::showCaret()
 {
 	return SendMessage(_hWnd, WM_EDIT_SHOWCARET, 0, 0);
@@ -388,7 +388,7 @@ int MyEdit::showCaret()
 
 int MyEdit::vshowCaret()
 {
-	// ´´½¨¹â±ê
+	// åˆ›å»ºå…‰æ ‡
 	if(!CreateCaret(_hWnd, NULL, 1, _vImage->getCharHeight()))
 	{
 		assert(0);
@@ -412,7 +412,7 @@ int MyEdit::vhideCaret()
 	return 0;
 }
 
-// ÉèÖÃ¹â±êµÄÎ»ÖÃ
+// è®¾ç½®å…‰æ ‡çš„ä½ç½®
 int MyEdit::setCaretPos(int pos)
 {
 	return SendMessage(_hWnd, WM_EDIT_SETCARETPOS, 0, pos);
@@ -420,7 +420,7 @@ int MyEdit::setCaretPos(int pos)
 
 int MyEdit::vsetCaretPos(int pos)
 {
-	// ĞŞÕıÓĞĞ§·¶Î§,¹â±êµÄÓĞĞ§·¶Î§ÊÇ [0, size()]
+	// ä¿®æ­£æœ‰æ•ˆèŒƒå›´,å…‰æ ‡çš„æœ‰æ•ˆèŒƒå›´æ˜¯ [0, size()]
 	if(pos < 0) pos = 0;
 	else if(pos > size()) pos = size();
 
@@ -436,7 +436,7 @@ int MyEdit::vsetCaretPos(int pos)
 	return _curCaretPos;
 }
 
-// »ñÈ¡¹â±êÎ»ÖÃ(²»ĞèÒªÍ¨¹ı·¢ËÍÏûÏ¢)
+// è·å–å…‰æ ‡ä½ç½®(ä¸éœ€è¦é€šè¿‡å‘é€æ¶ˆæ¯)
 int MyEdit::getCaretPos() const
 {
 	return vgetCaretPos();
@@ -447,7 +447,7 @@ int MyEdit::vgetCaretPos() const
 	return _curCaretPos;
 }
 
-// ÏòÇ°»òÕßÏòºóµ÷ÕûÎ»ÖÃÊ¹µÃ \r\n Ê¼ÖÕÊÇÒ»¸öÕûÌå
+// å‘å‰æˆ–è€…å‘åè°ƒæ•´ä½ç½®ä½¿å¾— \r\n å§‹ç»ˆæ˜¯ä¸€ä¸ªæ•´ä½“
 int MyEdit::adjPos(int pos, bool forward) const
 {
 	wchar_t chn = 0, chr = 0;
@@ -478,33 +478,33 @@ int MyEdit::adjHitTest(int pos, int htc) const
 {
 	do
 	{
-		// ĞĞÒç³ö 
+		// è¡Œæº¢å‡º 
 		if(htc & MYHTC_ROWOVF)
 		{
 			assert(pos == size());
 			break;
 		}
 
-		// ÁĞÒç³ö: ·µ»ØÖµÒÑ¾­Ö¸Ïò¸ÃĞĞµÄ×îºóÒ»¸ö×Ö·û
+		// åˆ—æº¢å‡º: è¿”å›å€¼å·²ç»æŒ‡å‘è¯¥è¡Œçš„æœ€åä¸€ä¸ªå­—ç¬¦
 		if(htc & MYHTC_COLOVF)
 		{
-			// Èç¹ûµã»÷·¶Î§ÊôÓÚÒ»¸ö»»ĞĞ·ûµÄÎ»ÖÃ,Ôò°Ñ¹â±êÖ¸Ïò»»ĞĞ·ûÇ°ÃæÒÔ±ã°ÑĞÂ×Ö·û²åÈëµ½»»ĞĞ·ûÖ®Ç°
+			// å¦‚æœç‚¹å‡»èŒƒå›´å±äºä¸€ä¸ªæ¢è¡Œç¬¦çš„ä½ç½®,åˆ™æŠŠå…‰æ ‡æŒ‡å‘æ¢è¡Œç¬¦å‰é¢ä»¥ä¾¿æŠŠæ–°å­—ç¬¦æ’å…¥åˆ°æ¢è¡Œç¬¦ä¹‹å‰
 			const MyCell* c = _vImage->getCell(pos);
 			if(c && c->wrap())
 			{
-				// Èç¹û¹â±êÖ¸Ïò \n ²¢ÇÒÖ®Ç°ÓĞÒ»¸ö \r Ôòµ÷Õû¹â±êÎ»ÖÃ. \r\n ×÷ÎªÒ»¸öÕûÌå,ÖĞ¼ä²»ÄÜ²åÈëÆäËü×Ö·û.
+				// å¦‚æœå…‰æ ‡æŒ‡å‘ \n å¹¶ä¸”ä¹‹å‰æœ‰ä¸€ä¸ª \r åˆ™è°ƒæ•´å…‰æ ‡ä½ç½®. \r\n ä½œä¸ºä¸€ä¸ªæ•´ä½“,ä¸­é—´ä¸èƒ½æ’å…¥å…¶å®ƒå­—ç¬¦.
 				pos = adjPos(pos, false);
 			}
 			else
 			{
-				// ·ñÔò¹â±êÒÆµ½ÏÂÒ»¸ö×Ö·û(Ö»ÓĞÔÚ×îºóÒ»ĞĞµÄÌØÀı²Å»á·¢Éú)
+				// å¦åˆ™å…‰æ ‡ç§»åˆ°ä¸‹ä¸€ä¸ªå­—ç¬¦(åªæœ‰åœ¨æœ€åä¸€è¡Œçš„ç‰¹ä¾‹æ‰ä¼šå‘ç”Ÿ)
 				pos++;
 				//assert(pos == size());
 			}
 			break;
 		}
 
-		// Êó±êµãÔÚµ¥Ôª¸ñ(×Ö·û)µÄÓÒ°ë±ßËãÏÂÒ»¸ö×Ö·û
+		// é¼ æ ‡ç‚¹åœ¨å•å…ƒæ ¼(å­—ç¬¦)çš„å³åŠè¾¹ç®—ä¸‹ä¸€ä¸ªå­—ç¬¦
 		if(htc & MYHTC_RIGHT)
 		{
 			pos++;
@@ -516,7 +516,7 @@ int MyEdit::adjHitTest(int pos, int htc) const
 
 int MyEdit::hitTest(const POINT& pt) const
 {
-	// ¸ù¾İµã hitTest ²âËã¹â±êµÄÎ»ÖÃ
+	// æ ¹æ®ç‚¹ hitTest æµ‹ç®—å…‰æ ‡çš„ä½ç½®
 	unsigned int htc = 0;
 	int pos = _vImage->hitTest(pt, &htc);
 	return adjHitTest(pos, htc);
@@ -537,17 +537,17 @@ int MyEdit::setSel(int pos, int len)
 
 int MyEdit::vsetSel(int pos, int len)
 {
-	// ¹ıÂËÑ¡ÇøÃ»ÓĞ±ä»¯µÄÇé¿ö,±ÜÃâÎŞÓÃË¢ĞÂ
+	// è¿‡æ»¤é€‰åŒºæ²¡æœ‰å˜åŒ–çš„æƒ…å†µ,é¿å…æ— ç”¨åˆ·æ–°
 	int curSelPos, curSelLen;
 	vgetSel(&curSelPos, &curSelLen);
 	if(curSelPos == pos && curSelLen == len) return 1;
 
-	// ĞŞÕı²ÎÊı,È·±£ÓĞĞ§ĞÔ
+	// ä¿®æ­£å‚æ•°,ç¡®ä¿æœ‰æ•ˆæ€§
 	if(len < 0) len = size();
 	if(pos < 0) pos = 0;
 	if(pos + len > size()) len = size() - pos;
 
-	// Îª \r\n ¶øµ÷Õû
+	// ä¸º \r\n è€Œè°ƒæ•´
 	if(len > 0)
 	{
 		int posTo = pos + len - 1;
@@ -556,13 +556,13 @@ int MyEdit::vsetSel(int pos, int len)
 		len = posTo - pos + 1;
 	}
 
-	// ÉèÖÃĞÂÑ¡Çø
+	// è®¾ç½®æ–°é€‰åŒº
 	_vImage->setSel(pos, len);
 	markDirty();
 	return 0;
 }
 
-// »ñÈ¡È«²¿Ñ¡Çø»òÕß¿ÉĞ´µÄÑ¡Çø
+// è·å–å…¨éƒ¨é€‰åŒºæˆ–è€…å¯å†™çš„é€‰åŒº
 int MyEdit::getSel(int* pos, int* len) const
 {
 	POINT sel;
@@ -600,7 +600,7 @@ int MyEdit::vgetText(int pos, int len, wchar_t* ch, int destLen) const
 	return _vImage->getText(pos, len, ch, destLen);
 }
 
-// ÔÚÖ¸¶¨Î»ÖÃÇ°²åÈëÎÄ±¾,Íê³ÉºóĞèÒª¸üĞÂÑ¡ÇøºÍ¹â±êµÄÎ»ÖÃ
+// åœ¨æŒ‡å®šä½ç½®å‰æ’å…¥æ–‡æœ¬,å®Œæˆåéœ€è¦æ›´æ–°é€‰åŒºå’Œå…‰æ ‡çš„ä½ç½®
 int MyEdit::insert(int pos, const wchar_t* ch, int len, COLORREF fg, COLORREF bk)
 {
 	MYEDIT_CELLS cellInfo;
@@ -620,24 +620,24 @@ int MyEdit::vinsert(int pos, const wchar_t* ch, int len, COLORREF fg, COLORREF b
 	if(CONSOLECOLOR_DEFAULT == fg) fg = _dftFgColor;
 	if(CONSOLECOLOR_DEFAULT == bk) bk = _dftBkColor;
 
-	// ĞŞÕıÎ»ÖÃ
+	// ä¿®æ­£ä½ç½®
 	if(pos < 0) pos = 0;
 	if(pos > size()) pos = size();
 
-	// ²åÈëÎÄ±¾
+	// æ’å…¥æ–‡æœ¬
 	len = _vImage->insert(pos, ch, len, fg, bk);
 
-	// ¸üĞÂ¹â±êÎ»ÖÃ
+	// æ›´æ–°å…‰æ ‡ä½ç½®
 	if(pos <= vgetCaretPos())
 	{
 		vsetCaretPos(vgetCaretPos() + len);
 	}
 	else
 	{
-		// ¹â±ê±£³Ö²»±ä
+		// å…‰æ ‡ä¿æŒä¸å˜
 	}
 
-	// ¿ÉÒÔ¼ÆËãµÃ³öÊÇ·ñĞÎ³ÉÔàÇøÓò
+	// å¯ä»¥è®¡ç®—å¾—å‡ºæ˜¯å¦å½¢æˆè„åŒºåŸŸ
 	markDirty();
 	return len;
 }
@@ -656,7 +656,7 @@ int MyEdit::replaceSel(const wchar_t* ch, int len, COLORREF fg, COLORREF bk)
 
 int MyEdit::vreplaceSel(const wchar_t* ch, int len, COLORREF fg, COLORREF bk)
 {
-	// É¾³ıÑ¡ÇøÄÚµÄÎÄ±¾,Èç¹ûÓĞÑ¡ÇøµÄ»°
+	// åˆ é™¤é€‰åŒºå†…çš„æ–‡æœ¬,å¦‚æœæœ‰é€‰åŒºçš„è¯
 	int pos = 0;
 	int selPos, selLen;
 	vgetSel(&selPos, &selLen);
@@ -670,21 +670,21 @@ int MyEdit::vreplaceSel(const wchar_t* ch, int len, COLORREF fg, COLORREF bk)
 		pos = vgetCaretPos();
 	}
 
-	// ÔÚÔ­Ñ¡Çø»òÕß¹â±êÎ»ÖÃ²åÈëĞÂÎÄ±¾
+	// åœ¨åŸé€‰åŒºæˆ–è€…å…‰æ ‡ä½ç½®æ’å…¥æ–°æ–‡æœ¬
 	if(len > 0)
 	{
 		len = vinsert(pos, ch, len, fg, bk);
 	}
 
-	// ÏÈ¸üĞÂ¹ö¶¯ÌõĞÅÏ¢
+	// å…ˆæ›´æ–°æ»šåŠ¨æ¡ä¿¡æ¯
 	updateScrollInfo();
 
-	// È·±£¹â±ê¿É¼û
+	// ç¡®ä¿å…‰æ ‡å¯è§
 	if(!vmakeVisible(vgetCaretPos()))
 	{
 	}
 
-	// Ë¢ĞÂ´°¿Ú
+	// åˆ·æ–°çª—å£
 	redraw();
 
 	return len;
@@ -701,19 +701,19 @@ int MyEdit::vremove(int pos, int len)
 {
 	if(_readOnly) return 0;
 
-	// ĞŞÕı²ÎÊı,È·±£ÓĞĞ§ĞÔ
+	// ä¿®æ­£å‚æ•°,ç¡®ä¿æœ‰æ•ˆæ€§
 	if(pos < 0) pos = 0;
 	if(pos > size()) pos = size();
 	if(len < 0) len = size();
 	if(pos + len > size()) len = size() - pos;
 
-	// É¾³ıÎÄ±¾
+	// åˆ é™¤æ–‡æœ¬
 	len = _vImage->remove(pos, len);
 
-	// ¸üĞÂ¹â±êÎ»ÖÃ
+	// æ›´æ–°å…‰æ ‡ä½ç½®
 	if(vgetCaretPos() <= pos)
 	{
-		// ¹â±êÔÚ±»É¾³ıµÄÎÄ±¾Ö®Ç°,²»ĞèÒªÒÆ¶¯
+		// å…‰æ ‡åœ¨è¢«åˆ é™¤çš„æ–‡æœ¬ä¹‹å‰,ä¸éœ€è¦ç§»åŠ¨
 	}
 	else if(vgetCaretPos() > pos && vgetCaretPos() <= pos + len)
 	{
@@ -724,7 +724,7 @@ int MyEdit::vremove(int pos, int len)
 		vsetCaretPos(vgetCaretPos() - len);
 	}
 
-	// ¼ÆËãÊÇ·ñĞÎ³ÉÔàÇøÓò
+	// è®¡ç®—æ˜¯å¦å½¢æˆè„åŒºåŸŸ
 	markDirty();
 	return len;
 }
@@ -746,14 +746,14 @@ void MyEdit::redraw()
 
 int MyEdit::refresh()
 {
-	// ¸üĞÂ¹ö¶¯ÌõĞÅÏ¢
+	// æ›´æ–°æ»šåŠ¨æ¡ä¿¡æ¯
 	updateScrollInfo();
 	redraw();
 
 	return 0;
 }
 
-// ²»¹Ü´¦ÓÚÊäÈëÄ£Ê½»¹ÊÇÊä³öÄ£Ê½,ÔÊĞíÑ¡ÖĞÈÎºÎ×Ö·û, CTRL + C Ôò°ÑÕâĞ©×Ö·ûĞ´Èë¼ôÌù°å
+// ä¸ç®¡å¤„äºè¾“å…¥æ¨¡å¼è¿˜æ˜¯è¾“å‡ºæ¨¡å¼,å…è®¸é€‰ä¸­ä»»ä½•å­—ç¬¦, CTRL + C åˆ™æŠŠè¿™äº›å­—ç¬¦å†™å…¥å‰ªè´´æ¿
 int MyEdit::copy() const
 {
 	int pos, len;
@@ -779,7 +779,7 @@ int MyEdit::copy() const
 	return 0;
 }
 
-// ¶Á²¿·ÖÍ¬ copy(), É¾³ı²¿·ÖÖ»ÓĞ´¦ÓÚÊäÈë×´Ì¬ÖĞÓÃ»§ÊäÈëµÄ×Ö·û¿ÉÒÔÉ¾³ı
+// è¯»éƒ¨åˆ†åŒ copy(), åˆ é™¤éƒ¨åˆ†åªæœ‰å¤„äºè¾“å…¥çŠ¶æ€ä¸­ç”¨æˆ·è¾“å…¥çš„å­—ç¬¦å¯ä»¥åˆ é™¤
 int MyEdit::cut()
 {
 	copy();
@@ -806,7 +806,7 @@ int MyEdit::paste()
 }
 
 /*
-* ½Ø»ñÏÔÊ¾,¹ö¶¯Ïà¹ØµÄÏûÏ¢
+* æˆªè·æ˜¾ç¤º,æ»šåŠ¨ç›¸å…³çš„æ¶ˆæ¯
 */
 LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -815,7 +815,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		case WM_ERASEBKGND:
 			{
-				// Ö»»­ setMargin() Ö¸¶¨µÄ±ß¿ò.
+				// åªç”» setMargin() æŒ‡å®šçš„è¾¹æ¡†.
 				if(_margin > 0)
 				{
 					HDC hdc = (HDC)wParam;
@@ -840,14 +840,14 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				if(wParam == SIZE_MAXIMIZED || wParam == SIZE_RESTORED)
 				{
-					// MSDN: WM_SIZE ÏûÏ¢¿ÉÄÜ»á´¥·¢ WM_PAIN Ò²¿ÉÄÜ²»»á, ²»ĞèÒªµ÷ÓÃ refresh() ÖØ¸´Ë¢ĞÂ,Ö»ĞèÒª¸üĞÂ¹ö¶¯ÌõÉèÖÃ¼´¿É
+					// MSDN: WM_SIZE æ¶ˆæ¯å¯èƒ½ä¼šè§¦å‘ WM_PAIN ä¹Ÿå¯èƒ½ä¸ä¼š, ä¸éœ€è¦è°ƒç”¨ refresh() é‡å¤åˆ·æ–°,åªéœ€è¦æ›´æ–°æ»šåŠ¨æ¡è®¾ç½®å³å¯
 					updateScrollInfo();
 				}
 			}
 			break;
 		case WM_SETCURSOR:
 			{
-				// WM_SETCURSOR µÄÏûÏ¢ÌØÊâ´¦Àí
+				// WM_SETCURSOR çš„æ¶ˆæ¯ç‰¹æ®Šå¤„ç†
 				if(LOWORD(lParam) == HTCLIENT)
 				{
 					SetCursor(_hIbeam);
@@ -859,7 +859,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			if(_vImage)
 			{
-				// »ñÈ¡»òÕß¼ÆËãĞÂµÄÎ»ÖÃ
+				// è·å–æˆ–è€…è®¡ç®—æ–°çš„ä½ç½®
 				SCROLLINFO si = {0};
 				si.cbSize = sizeof(SCROLLINFO);
 				si.fMask = SIF_ALL;
@@ -871,7 +871,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 				switch(LOWORD(wParam))
 				{
-					// ×÷Îª´°¿ÚµÄ¹ö¶¯Ìõ(¹ö¶¯ÌõÒ²¿ÉÒÔÊÇÒ»¸ö¶ÀÁ¢µÄ´°¿Ú)²»»áÊÕµ½ SB_TOP, SB_BOTTOM, SB_LEFT, SB_RIGHT,³ı·ÇÖ÷¶¯·¢ËÍ¹ö¶¯µ½µ×²¿µÄÏûÏ¢
+					// ä½œä¸ºçª—å£çš„æ»šåŠ¨æ¡(æ»šåŠ¨æ¡ä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªç‹¬ç«‹çš„çª—å£)ä¸ä¼šæ”¶åˆ° SB_TOP, SB_BOTTOM, SB_LEFT, SB_RIGHT,é™¤éä¸»åŠ¨å‘é€æ»šåŠ¨åˆ°åº•éƒ¨çš„æ¶ˆæ¯
 					case SB_TOP:
 					{
 						vPos = si.nMin;
@@ -979,14 +979,14 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 		case WM_MOUSEWHEEL:
 		{
-			// ¹öÂÖÏûÏ¢×ª»¯Îª ¹ö¶¯ÌõÏûÏ¢
+			// æ»šè½®æ¶ˆæ¯è½¬åŒ–ä¸º æ»šåŠ¨æ¡æ¶ˆæ¯
 			if(_vImage)
 			{
-				// WHEEL_DELTA 120 Õâ¸öÊı×Ö²»ÊÇÎÒ¶¨µÄ,ÓĞÎÊÌâÕÒÎ¢Èí
+				// WHEEL_DELTA 120 è¿™ä¸ªæ•°å­—ä¸æ˜¯æˆ‘å®šçš„,æœ‰é—®é¢˜æ‰¾å¾®è½¯
 				_vDeltaAccr += GET_WHEEL_DELTA_WPARAM(wParam);
 				if(_vDeltaAccr >= WHEEL_DELTA)
 				{
-					// Ã¿¸öDELTA¹ö¶¯3ĞĞ
+					// æ¯ä¸ªDELTAæ»šåŠ¨3è¡Œ
 					_scrollLines = LINES_PER_DELTA * (_vDeltaAccr / WHEEL_DELTA);
 					SendMessage(hWnd, WM_VSCROLL, SB_LINEUP, 0);
 					_scrollLines = 1;
@@ -1032,7 +1032,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 		case WM_KEYDOWN:
 		{
-			// Ö»À¹½Ø¹ö¶¯Ïà¹ØµÄ°´¼ü,ÆäËü°´¼üÊÂ¼ş»¹ÊÇÓĞÔ­À´µÄ´°¿Ú´¦Àíº¯Êı´¦Àí
+			// åªæ‹¦æˆªæ»šåŠ¨ç›¸å…³çš„æŒ‰é”®,å…¶å®ƒæŒ‰é”®äº‹ä»¶è¿˜æ˜¯æœ‰åŸæ¥çš„çª—å£å¤„ç†å‡½æ•°å¤„ç†
 			switch (wParam)
 			{
 				case VK_HOME:
@@ -1063,10 +1063,10 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					}
 					else
 					{
-						// Ê×ÏÈÇå³ıÑ¡Çø
+						// é¦–å…ˆæ¸…é™¤é€‰åŒº
 						vsetSel(0, 0);
 
-						// ¹â±êÉÏÒÆÒ»ĞĞ
+						// å…‰æ ‡ä¸Šç§»ä¸€è¡Œ
 						int l = 0, c = 0;
 						getLineCol(_curCaretPos, &l, &c);
 						if(l > 0)
@@ -1075,7 +1075,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 							vmakeVisible(vgetCaretPos());
 						}
 
-						// Ë¢ĞÂÔàÇøÓò
+						// åˆ·æ–°è„åŒºåŸŸ
 						redraw();
 					}
 				}
@@ -1209,7 +1209,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				break;
 				//case VK_PROCESSKEY:
 				//{
-				//	// ÊäÈë·¨Ô¤Ñ¡
+				//	// è¾“å…¥æ³•é¢„é€‰
 				//}
 				//break;
 				default:
@@ -1234,7 +1234,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 		case WM_LBUTTONDOWN:
 		{
-			// ÉèÖÃ¼üÅÌ½¹µã
+			// è®¾ç½®é”®ç›˜ç„¦ç‚¹
 			if(hWnd != GetFocus())
 			{
 				SetFocus(hWnd);
@@ -1246,7 +1246,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				pt.x += _windowPos.x;
 				pt.y += _windowPos.y;
 				
-				// ¸ù¾İµã hitTest ²âËã¹â±êµÄÎ»ÖÃ
+				// æ ¹æ®ç‚¹ hitTest æµ‹ç®—å…‰æ ‡çš„ä½ç½®
 				_selFrom = hitTest(pt);
 				 vsetCaretPos(_selFrom);
 				 _mouseMoved = false;
@@ -1264,7 +1264,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				int pos = hitTest(pt);
 				if(_mouseMoved)
 				{
-					// ÔÚ×ó¼ü°´ÏÂ,Êó±êÒÆ¶¯µÄ¹ı³ÌÖĞÒÑ¾­ÉèÖÃÁËÑ¡Çø,ÉèÖÃ¹â±êµÄÎ»ÖÃ
+					// åœ¨å·¦é”®æŒ‰ä¸‹,é¼ æ ‡ç§»åŠ¨çš„è¿‡ç¨‹ä¸­å·²ç»è®¾ç½®äº†é€‰åŒº,è®¾ç½®å…‰æ ‡çš„ä½ç½®
 					int selPos = 0, selLen = 0;
 					getSel(&selPos, &selLen);
 					if(selPos < _selFrom)
@@ -1278,7 +1278,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 				else
 				{
-					// °ÑÔ­Ñ¡ÇøÉ¾³ı
+					// æŠŠåŸé€‰åŒºåˆ é™¤
 					vsetSel(0, 0);
 					redraw();
 				}
@@ -1346,7 +1346,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			if(lParam & GCS_RESULTSTR)
 			{
-				// ÊäÈëÊäÈë·¨µÄÊäÈë½á¹û
+				// è¾“å…¥è¾“å…¥æ³•çš„è¾“å…¥ç»“æœ
 				DWORD dwSize = ImmGetCompositionString(hIMC, GCS_RESULTSTR, NULL, 0);
 				dwSize += sizeof(WCHAR);
 				WCHAR* lpstr = sbuf;
@@ -1373,7 +1373,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				if (lParam & GCS_COMPSTR) 
 				{
-					// ÏÔÊ¾ÊäÈë·¨µÄÊäÈë×Ö·û
+					// æ˜¾ç¤ºè¾“å…¥æ³•çš„è¾“å…¥å­—ç¬¦
 					DWORD dwSize = ImmGetCompositionString(hIMC, GCS_COMPSTR, NULL, 0);
 					dwSize += sizeof(WCHAR);
 					WCHAR* lpstr = sbuf;
@@ -1419,7 +1419,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			if(_readOnly) break;
 			
-			// ÊÂ¼ş±»Ä¿±ê´°¿ÚºöÂÔ,¼ÌĞø´¦Àí
+			// äº‹ä»¶è¢«ç›®æ ‡çª—å£å¿½ç•¥,ç»§ç»­å¤„ç†
 			if(_vImage)
 			{
 				switch(wParam)
@@ -1447,7 +1447,7 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 							}
 							else if(_curCaretPos > 0)
 							{
-								// É¾³ı¹â±êÇ°µÄÒ»¸ö×Ö·û
+								// åˆ é™¤å…‰æ ‡å‰çš„ä¸€ä¸ªå­—ç¬¦
 								vsetSel(_curCaretPos - 1, 1); 
 							}
 							vreplaceSel(NULL, 0, 0, 0);
@@ -1532,22 +1532,22 @@ LRESULT MyEdit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 		default:
 		{
-			// ÆäËüÏûÏ¢µ÷ÓÃÔ­À´µÄ´¦Àíº¯Êı
+			// å…¶å®ƒæ¶ˆæ¯è°ƒç”¨åŸæ¥çš„å¤„ç†å‡½æ•°
 			return ((WNDPROC)_wndProc)(hWnd, message, wParam, lParam);
 		}
 	}
 
 	if(MESSAGE_MODE_INTERCEPT == _messageHandleMode)
 	{
-		// ½ØÁôÄ£Ê½ÏÂ, WM_SETCURSOR ÌØÊâ´¦Àí,µ÷ÓÃÄ¬ÈÏ´¦Àíº¯ÊıÀ´ÉèÖÃÄ¬ÈÏÖ¸ÕëÑùÊ½
+		// æˆªç•™æ¨¡å¼ä¸‹, WM_SETCURSOR ç‰¹æ®Šå¤„ç†,è°ƒç”¨é»˜è®¤å¤„ç†å‡½æ•°æ¥è®¾ç½®é»˜è®¤æŒ‡é’ˆæ ·å¼
 		if(message == WM_SETCURSOR) return ((WNDPROC)_wndProc)(hWnd, message, wParam, lParam);
 
-		// ½ØÁôÄ£Ê½
+		// æˆªç•™æ¨¡å¼
 		return 0;
 	}
 	else
 	{
-		// ×ª·¢Ä£Ê½ MODE_FORWARD
+		// è½¬å‘æ¨¡å¼ MODE_FORWARD
 		return ((WNDPROC)_wndProc)(hWnd, message, wParam, lParam);
 	}
 }
@@ -1604,17 +1604,17 @@ int MyConsole::clear()
 
 int MyConsole::doClear()
 {
-	// É¾³ıËùÓĞÎÄ±¾
+	// åˆ é™¤æ‰€æœ‰æ–‡æœ¬
 	vremove(0, -1);
 
 	if(CONSOLEMODE_INPUT == _mode)
 	{
 		_inputStartPos = 0;
 
-		// Ğ´ÃüÁîĞĞÌáÊ¾·û
+		// å†™å‘½ä»¤è¡Œæç¤ºç¬¦
 		appendPrompt();
 
-		// ¼ÇÂ¼ÊäÈëµÄÆğÊ¼Î»ÖÃ
+		// è®°å½•è¾“å…¥çš„èµ·å§‹ä½ç½®
 		_inputStartPos = size();
 		vsetCaretPos(_inputStartPos);
 	}
@@ -1637,7 +1637,7 @@ int MyConsole::setEventMask(unsigned int mask)
 }
 
 
-// ´´½¨²¢ÏÔÊ¾¹â±ê
+// åˆ›å»ºå¹¶æ˜¾ç¤ºå…‰æ ‡
 int MyConsole::vshowCaret()
 {
 	if(CONSOLEMODE_OUTPUT == _mode)
@@ -1645,7 +1645,7 @@ int MyConsole::vshowCaret()
 	}
 	else
 	{
-		// ´´½¨¿ØÖÆÌ¨¹â±ê,²»Í¬ÓÚ Edit ¹â±ê
+		// åˆ›å»ºæ§åˆ¶å°å…‰æ ‡,ä¸åŒäº Edit å…‰æ ‡
 		if(!CreateCaret(_hWnd, NULL, _vImage->getCharAveWidth(), CARET_HEIGHT))
 		{
 			assert(0);
@@ -1670,7 +1670,7 @@ int MyConsole::vhideCaret()
 	return 0;
 }
 
-// ÉèÖÃ¹â±êµÄÎ»ÖÃ
+// è®¾ç½®å…‰æ ‡çš„ä½ç½®
 int MyConsole::vsetCaretPos(int pos)
 {
 	if(CONSOLEMODE_OUTPUT == _mode) return 0;
@@ -1682,7 +1682,7 @@ int MyConsole::vsetCaretPos(int pos)
 	return MyEdit::vsetCaretPos(pos);
 }
 
-//// ¸üĞÂ¹â±êµÄÎ»ÖÃ
+//// æ›´æ–°å…‰æ ‡çš„ä½ç½®
 int MyConsole::vrefreshCaret()
 {
 	if(CONSOLEMODE_INPUT == _mode)
@@ -1724,7 +1724,7 @@ int MyConsole::setPrompt(const wchar_t* str)
 	return 0;
 }
 
-// ×ÜÊÇÔÚ×îºóÌí¼ÓÃüÁîĞĞÌáÊ¾·û
+// æ€»æ˜¯åœ¨æœ€åæ·»åŠ å‘½ä»¤è¡Œæç¤ºç¬¦
 void MyConsole::appendPrompt()
 {
 	if(NULL == _promptStr)
@@ -1756,33 +1756,33 @@ int MyConsole::doSwitchMode(int m, bool quiet)
 	if(m == _mode) return 1;
 	if(CONSOLEMODE_OUTPUT == m)
 	{
-		// Òş²Ø¹â±ê
+		// éšè—å…‰æ ‡
 		vhideCaret();
 		
-		// ÇĞ»»µ½Êä³öÄ£Ê½
+		// åˆ‡æ¢åˆ°è¾“å‡ºæ¨¡å¼
 		_mode = CONSOLEMODE_OUTPUT;
 
-		// ²åÈëÒ»¸ö»»ĞĞ·û
+		// æ’å…¥ä¸€ä¸ªæ¢è¡Œç¬¦
 		if(!quiet)
 		{
 			write(L"\r\n", 2, 0, 0);
 		}
 	}
 	else
-	{	// ×·¼ÓÌáÊ¾·û
+	{	// è¿½åŠ æç¤ºç¬¦
 		if(!quiet)
 		{
 			write(L"\r\n", 2, 0, 0);
 			appendPrompt();
 		}
 
-		// ÇĞ»»µ½ÊäÈëÄ£Ê½
+		// åˆ‡æ¢åˆ°è¾“å…¥æ¨¡å¼
 		_mode = CONSOLEMODE_INPUT;
 
-		// ¼ÇÂ¼ÊäÈëµÄÆğÊ¼Î»ÖÃ
+		// è®°å½•è¾“å…¥çš„èµ·å§‹ä½ç½®
 		_inputStartPos = size();
 
-		// ´´½¨¹â±ê
+		// åˆ›å»ºå…‰æ ‡
 		vshowCaret();
 		vsetCaretPos(_inputStartPos);
 	}
@@ -1791,7 +1791,7 @@ int MyConsole::doSwitchMode(int m, bool quiet)
 
 int MyConsole::vreplaceSel(const wchar_t* ch, int len, COLORREF fg /*= CONSOLECOLOR_DEFAULT*/, COLORREF bk /*= CONSOLECOLOR_DEFAULT*/)
 {
-	// É¾³ıÑ¡ÇøÄÚ¿ÉĞ´ÎÄ±¾ºóÇå¿ÕÑ¡Çø
+	// åˆ é™¤é€‰åŒºå†…å¯å†™æ–‡æœ¬åæ¸…ç©ºé€‰åŒº
 	int pos = 0;
 	int selPos, selLen;
 	getWritableSel(&selPos, &selLen);
@@ -1806,21 +1806,21 @@ int MyConsole::vreplaceSel(const wchar_t* ch, int len, COLORREF fg /*= CONSOLECO
 	}
 	vsetSel(0, 0);
 
-	// ÔÚÔ­Ñ¡Çø»òÕß¹â±êÎ»ÖÃ²åÈëĞÂÎÄ±¾
+	// åœ¨åŸé€‰åŒºæˆ–è€…å…‰æ ‡ä½ç½®æ’å…¥æ–°æ–‡æœ¬
 	if(len > 0)
 	{
 		len = vinsert(pos, ch, len, fg, bk);
 	}
 
-	// ÏÈ¸üĞÂ¹ö¶¯ÌõĞÅÏ¢
+	// å…ˆæ›´æ–°æ»šåŠ¨æ¡ä¿¡æ¯
 	updateScrollInfo();
 
-	// È·±£¹â±ê¿É¼û
+	// ç¡®ä¿å…‰æ ‡å¯è§
 	if(!vmakeVisible(vgetCaretPos()))
 	{
 	}
 
-	// Ë¢ĞÂ´°¿Ú
+	// åˆ·æ–°çª—å£
 	redraw();
 
 	return len;
@@ -1895,7 +1895,7 @@ int MyConsole::doWrite(const wchar_t* ch, int len, const COLORREF fg, const COLO
 
 	if(CONSOLEMODE_OUTPUT == _mode)
 	{
-		// Ö±½Ó×·¼Óµ½Ä©Î²²¢È·±£¿É¼û
+		// ç›´æ¥è¿½åŠ åˆ°æœ«å°¾å¹¶ç¡®ä¿å¯è§
 		vsetSel(0, 0);
 		MyEdit::vinsert(size(), ch, len, fg, bk);
 		updateScrollInfo();
@@ -1937,7 +1937,7 @@ int MyConsole::mode() const
 	return _mode;
 }
 
-// »ñÈ¡È«²¿Ñ¡Çø»òÕß¿ÉĞ´µÄÑ¡Çø
+// è·å–å…¨éƒ¨é€‰åŒºæˆ–è€…å¯å†™çš„é€‰åŒº
 int MyConsole::getWritableSel(int* pos, int* len) const
 {
 	int selPos, selLen;
@@ -1962,7 +1962,7 @@ int MyConsole::getWritableSel(int* pos, int* len) const
 }
 
 /*
-* Ö»ĞèÒª´¦ÀíºÍ MyEdit Âß¼­ÏàÒìµÄ²¿·Ö
+* åªéœ€è¦å¤„ç†å’Œ MyEdit é€»è¾‘ç›¸å¼‚çš„éƒ¨åˆ†
 */
 LRESULT MyConsole::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -1971,13 +1971,13 @@ LRESULT MyConsole::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	{
 		case WM_SETCURSOR:
 		{
-			// Ç¿ÖÆµ÷ÓÃÄ¬ÈÏ´¦Àí¹ı³ÌÉèÖÃÆÕÍ¨µÄ¼ıÍ·Êó±êÖ¸Õë
+			// å¼ºåˆ¶è°ƒç”¨é»˜è®¤å¤„ç†è¿‡ç¨‹è®¾ç½®æ™®é€šçš„ç®­å¤´é¼ æ ‡æŒ‡é’ˆ
 			return ((WNDPROC)_wndProc)(hWnd, message, wParam, lParam);
 		}
 		break;
 		case WM_KEYDOWN:
 		{
-			// Ö»À¹½Ø¹ö¶¯Ïà¹ØµÄ°´¼ü,ÆäËü°´¼üÊÂ¼ş»¹ÊÇÓĞÔ­À´µÄ´°¿Ú´¦Àíº¯Êı´¦Àí
+			// åªæ‹¦æˆªæ»šåŠ¨ç›¸å…³çš„æŒ‰é”®,å…¶å®ƒæŒ‰é”®äº‹ä»¶è¿˜æ˜¯æœ‰åŸæ¥çš„çª—å£å¤„ç†å‡½æ•°å¤„ç†
 			switch (wParam)
 			{
 				case VK_UP:
@@ -1988,13 +1988,13 @@ LRESULT MyConsole::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 					}
 					else
 					{
-						// ¼ÇÂ¼µ±Ç°ÕıÔÚÊäÈëµÄÄÚÈİ
+						// è®°å½•å½“å‰æ­£åœ¨è¾“å…¥çš„å†…å®¹
 						if(_curHistoryIndex >= (int)_history.size())
 						{
 							_curInput = getInput();
 						}
 						
-						// ÏÔÊ¾ÉÏÒ»´ÎµÄÊäÈë¼ÇÂ¼
+						// æ˜¾ç¤ºä¸Šä¸€æ¬¡çš„è¾“å…¥è®°å½•
 						if(_curHistoryIndex > 0)
 						{
 							--_curHistoryIndex;
@@ -2041,7 +2041,7 @@ LRESULT MyConsole::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		{
 			if(CONSOLEMODE_OUTPUT == _mode) break;
 			
-			// Éú³ÉÊÂ¼ş
+			// ç”Ÿæˆäº‹ä»¶
 			int ev = CONSOLE_EVENT_CHAR;
 			if(VK_RETURN == wParam)
 			{
@@ -2058,7 +2058,7 @@ LRESULT MyConsole::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 				}
 			}
 
-			// ±ØÒªµÄ»°°ÑÊÂ¼ş·¢ËÍµ½Ä¿±ê´°¿Ú
+			// å¿…è¦çš„è¯æŠŠäº‹ä»¶å‘é€åˆ°ç›®æ ‡çª—å£
 			ev &= _evMask;
 			if(ev)
 			{
@@ -2068,12 +2068,12 @@ LRESULT MyConsole::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 				if(hDest == NULL) hDest = _hWnd;
 				if(0 != SendMessage(hDest, _evMessageId, ev, wParam))
 				{
-					// °´»Ø³µÊ±¼ÇÂ¼ÀúÊ·¼ÇÂ¼
+					// æŒ‰å›è½¦æ—¶è®°å½•å†å²è®°å½•
 					if(VK_RETURN == wParam)
 					{
 						if(inputStr.empty() || _history.size() > 0 && _history.back() == inputStr)
 						{
-							// ºÍ×îºóÒ»Ìõ¼ÇÂ¼ÏàÍ¬¾Í²»ÔÙ¼ÇÂ¼
+							// å’Œæœ€åä¸€æ¡è®°å½•ç›¸åŒå°±ä¸å†è®°å½•
 							_curHistoryIndex = _history.size();
 						}
 						else
@@ -2090,12 +2090,12 @@ LRESULT MyConsole::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 						}
 					}
 
-					// ÊÂ¼şÒÑ¾­±»Ä¿±ê´°¿Ú´¦Àí,Ìø³ö,½áÊø
+					// äº‹ä»¶å·²ç»è¢«ç›®æ ‡çª—å£å¤„ç†,è·³å‡º,ç»“æŸ
 					break;
 				}
 			}
 			
-			// ÊÂ¼ş±»Ä¿±ê´°¿ÚºöÂÔ,¼ÌĞø´¦Àí
+			// äº‹ä»¶è¢«ç›®æ ‡çª—å£å¿½ç•¥,ç»§ç»­å¤„ç†
 			return MyEdit::wndProc(hWnd, message, wParam, lParam);
 		}
 		break;
@@ -2136,19 +2136,19 @@ LRESULT MyConsole::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		break;
 		default:
 		{
-			// ÆäËüÏûÏ¢µ÷ÓÃÔ­À´µÄ´¦Àíº¯Êı
+			// å…¶å®ƒæ¶ˆæ¯è°ƒç”¨åŸæ¥çš„å¤„ç†å‡½æ•°
 			return MyEdit::wndProc(hWnd, message, wParam, lParam);
 		}
 	}
 
 	if(MESSAGE_MODE_INTERCEPT == _messageHandleMode)
 	{
-		// ½ØÁôÄ£Ê½
+		// æˆªç•™æ¨¡å¼
 		return 0;
 	}
 	else
 	{
-		// ×ª·¢Ä£Ê½ MODE_FORWARD
+		// è½¬å‘æ¨¡å¼ MODE_FORWARD
 		return ((WNDPROC)_wndProc)(hWnd, message, wParam, lParam);
 	}
 }

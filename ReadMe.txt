@@ -151,3 +151,7 @@ mybuffer 不删除 cell,而是调用 remove 后返回,是否删除由cell实现�
 
 由于 MyCell 和 MyConsole 之间隔着 MyBuffer, 无法实现 MyCell -> MyConsole 之间的通信,这不合原则.
 具体需要有各自 MyCell 实现.
+
+2021.6.8
+v1.0.1
+所有文件编码改为 UTF-8 BOM

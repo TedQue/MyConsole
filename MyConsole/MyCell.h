@@ -1,26 +1,26 @@
-#pragma once
+ï»¿#pragma once
 
-/* 2015.6.12 - ÊµÏÖË¼Â·ÃèÊö
+/* 2015.6.12 - å®ç°æ€è·¯æè¿°
 
-Õû¸öÍ¼ÏñÓÉÒ»ÏµÁĞµÄµ¥Ôª¸ñÅÅÁĞºÃ×é³É,µ¥Ôª¸ñ¿ÉÒÔÊÇ×Ö·û»òÕßÆäËüÈÎºÎÖ§³Ö MyCell ½Ó¿ÚµÄÀà.
-Õâ¸öÍ¼ÏñÊÇÒ»¸öĞéÄâÍ¼Ïñ,Ö»ÒÔÄ³ÖÖĞÎÊ½³éÏóµÄ´æÔÚÓÚÄÚ´æÖĞ,½ö½öÏÔÊ¾´°¿Ú·¶Î§ÄÚµÄ²¿·Ö.
+æ•´ä¸ªå›¾åƒç”±ä¸€ç³»åˆ—çš„å•å…ƒæ ¼æ’åˆ—å¥½ç»„æˆ,å•å…ƒæ ¼å¯ä»¥æ˜¯å­—ç¬¦æˆ–è€…å…¶å®ƒä»»ä½•æ”¯æŒ MyCell æ¥å£çš„ç±».
+è¿™ä¸ªå›¾åƒæ˜¯ä¸€ä¸ªè™šæ‹Ÿå›¾åƒ,åªä»¥æŸç§å½¢å¼æŠ½è±¡çš„å­˜åœ¨äºå†…å­˜ä¸­,ä»…ä»…æ˜¾ç¤ºçª—å£èŒƒå›´å†…çš„éƒ¨åˆ†.
 
-1. ËùÓĞµ¥Ôª¸ñ´æ´¢ÔÚÒ»¸öÒ»Î¬Êı×éÖĞ.
-2. Ê¹ÓÃÒ»¸öĞĞË÷ÒıÍ¨¹ı¼ÇÂ¼Ã¿ĞĞµÄÆğÊ¼Î»ÖÃ°ÑÉÏÊöµÄÊı×é½âÊÍ³É¶şÎ¬Êı×é.
-3. Õâ¸ö¶şÎ¬µ¥Ôª¸ñÊı×é°´ĞĞÁĞÅÅÁĞ×îÖÕ×é³ÉÁËÉÏÊöµÄĞéÄâÍ¼Ïñ,ĞéÄâÍ¼ÏñµÄ¸ÅÄîÊÇÊµÏÖµÄ»ù´¡.
-4. ´°¿ÚÏÔÊ¾µÄÄÚÈİÖ»ÊÇĞéÄâÍ¼ÏñÖĞµÄÒ»²¿·Ö»òÕßÈ«²¿,Í¨¹ı¼ÆËã¿ÉÒÔµÃ³öĞèÒªÏÔÊ¾µÄµ¥Ôª¸ñ,ÏÔÊ¾Ê±,ÏÈ°ÑĞèÒªÏÔÊ¾µÄµ¥Ôª¸ñ»æÖÆÔÚÒ»¸öÄÚ´æBMP,È»ºóÔÙ°ÑÕâ¸öBMPÌùµ½´°¿Ú.
-5. ĞĞË÷ÒıÖĞ,Ã¿ĞĞÕ¼ÓÃÒ»Ïî,¼ÇÂ¼¸ÃĞĞ index ÆğÊ¼ĞòºÅ, width ĞĞ¿í¶È,¸ÃĞĞµÄĞéÄâÍ¼ÏñÖĞµÄYÖá y µÄÎ»ÖÃ,²¢ÔÚ×îºóÉèÖÃÒ»¸öÉÚ±øÏî.
-6. ÉÚ±øÏî index = ËùÓĞµ¥Ôª¸ñµÄ¸öÊı, width = 0, y = ĞéÄâÍ¼ÏñµÄ¸ß¶È. ÉÚ±øÏîµÄ´æÔÚÊ¹µÃ×ÜÊÇ¿ÉÒÔÓÃµÚ n + 1 ĞĞµÄË÷ÒıÏî ºÍµÚ n ĞĞµÄË÷ÒıÏîÏà¼õµÃµ½µÚ n ĞĞµÄµ¥Ôª¸ñĞòºÅ·¶Î§,ĞĞ¸ß¶È.
-7. ĞĞË÷Òı¸ù¾İµ¥Ôª¸ñµÄĞÅÏ¢¹¹½¨,¸üĞÂÊ±,¾¡Á¿ÀûÓÃÔ­ÓĞµÄĞÅÏ¢. MyVirtualImage::updateRowIndex() ´úÂëÖĞµÄ×¢ÊÍËµÃ÷ÁËÈçºÎ¾¡¿ÉÄÜÀûÓÃÔ­ÓĞ½á¹¹Î¬»¤ĞĞË÷Òı.
-8. Ã¿¸öµ¥Ôª¸ñ±£´æ¸Ãµ¥Ôª¸ñÔÚĞéÄâÍ¼ÏñÖĞµÄĞĞĞòºÅ,³ÆÎª·´ÏòË÷Òı.
-9. ÓÃ»§Í¨¹ı(ĞĞ,ÁĞ),ÏñËØ×ø±êÀ´·ÃÎÊĞéÄâÍ¼Ïñ; ÄÚ²¿Ê¹ÓÃÒ»Î¬Êı×éµÄĞòºÅ(¼´µ¥Ôª¸ñĞòºÅ)À´·ÃÎÊĞéÄâÍ¼Ïñ.Í¨¹ıĞĞË÷ÒıºÍ·´ÏòË÷Òı¿ÉÒÔÔÚ3¸ö×ø±êÏµÄÚ×ª»».
+1. æ‰€æœ‰å•å…ƒæ ¼å­˜å‚¨åœ¨ä¸€ä¸ªä¸€ç»´æ•°ç»„ä¸­.
+2. ä½¿ç”¨ä¸€ä¸ªè¡Œç´¢å¼•é€šè¿‡è®°å½•æ¯è¡Œçš„èµ·å§‹ä½ç½®æŠŠä¸Šè¿°çš„æ•°ç»„è§£é‡ŠæˆäºŒç»´æ•°ç»„.
+3. è¿™ä¸ªäºŒç»´å•å…ƒæ ¼æ•°ç»„æŒ‰è¡Œåˆ—æ’åˆ—æœ€ç»ˆç»„æˆäº†ä¸Šè¿°çš„è™šæ‹Ÿå›¾åƒ,è™šæ‹Ÿå›¾åƒçš„æ¦‚å¿µæ˜¯å®ç°çš„åŸºç¡€.
+4. çª—å£æ˜¾ç¤ºçš„å†…å®¹åªæ˜¯è™šæ‹Ÿå›¾åƒä¸­çš„ä¸€éƒ¨åˆ†æˆ–è€…å…¨éƒ¨,é€šè¿‡è®¡ç®—å¯ä»¥å¾—å‡ºéœ€è¦æ˜¾ç¤ºçš„å•å…ƒæ ¼,æ˜¾ç¤ºæ—¶,å…ˆæŠŠéœ€è¦æ˜¾ç¤ºçš„å•å…ƒæ ¼ç»˜åˆ¶åœ¨ä¸€ä¸ªå†…å­˜BMP,ç„¶åå†æŠŠè¿™ä¸ªBMPè´´åˆ°çª—å£.
+5. è¡Œç´¢å¼•ä¸­,æ¯è¡Œå ç”¨ä¸€é¡¹,è®°å½•è¯¥è¡Œ index èµ·å§‹åºå·, width è¡Œå®½åº¦,è¯¥è¡Œçš„è™šæ‹Ÿå›¾åƒä¸­çš„Yè½´ y çš„ä½ç½®,å¹¶åœ¨æœ€åè®¾ç½®ä¸€ä¸ªå“¨å…µé¡¹.
+6. å“¨å…µé¡¹ index = æ‰€æœ‰å•å…ƒæ ¼çš„ä¸ªæ•°, width = 0, y = è™šæ‹Ÿå›¾åƒçš„é«˜åº¦. å“¨å…µé¡¹çš„å­˜åœ¨ä½¿å¾—æ€»æ˜¯å¯ä»¥ç”¨ç¬¬ n + 1 è¡Œçš„ç´¢å¼•é¡¹ å’Œç¬¬ n è¡Œçš„ç´¢å¼•é¡¹ç›¸å‡å¾—åˆ°ç¬¬ n è¡Œçš„å•å…ƒæ ¼åºå·èŒƒå›´,è¡Œé«˜åº¦.
+7. è¡Œç´¢å¼•æ ¹æ®å•å…ƒæ ¼çš„ä¿¡æ¯æ„å»º,æ›´æ–°æ—¶,å°½é‡åˆ©ç”¨åŸæœ‰çš„ä¿¡æ¯. MyVirtualImage::updateRowIndex() ä»£ç ä¸­çš„æ³¨é‡Šè¯´æ˜äº†å¦‚ä½•å°½å¯èƒ½åˆ©ç”¨åŸæœ‰ç»“æ„ç»´æŠ¤è¡Œç´¢å¼•.
+8. æ¯ä¸ªå•å…ƒæ ¼ä¿å­˜è¯¥å•å…ƒæ ¼åœ¨è™šæ‹Ÿå›¾åƒä¸­çš„è¡Œåºå·,ç§°ä¸ºåå‘ç´¢å¼•.
+9. ç”¨æˆ·é€šè¿‡(è¡Œ,åˆ—),åƒç´ åæ ‡æ¥è®¿é—®è™šæ‹Ÿå›¾åƒ; å†…éƒ¨ä½¿ç”¨ä¸€ç»´æ•°ç»„çš„åºå·(å³å•å…ƒæ ¼åºå·)æ¥è®¿é—®è™šæ‹Ÿå›¾åƒ.é€šè¿‡è¡Œç´¢å¼•å’Œåå‘ç´¢å¼•å¯ä»¥åœ¨3ä¸ªåæ ‡ç³»å†…è½¬æ¢.
 
-×Ü½áµÄÊ±ºò,ÄÇÃ´¼¸¾ä»°¾ÍËµÍêÁË,Êµ¼Ê±àÂëÖĞÓĞ´óÁ¿µÄÏ¸½ÚÎÊÌâĞèÒª´¦Àí,ÓÈÆäÊÇ¸÷ÖÖÁÙ½çÇé¿ö.
+æ€»ç»“çš„æ—¶å€™,é‚£ä¹ˆå‡ å¥è¯å°±è¯´å®Œäº†,å®é™…ç¼–ç ä¸­æœ‰å¤§é‡çš„ç»†èŠ‚é—®é¢˜éœ€è¦å¤„ç†,å°¤å…¶æ˜¯å„ç§ä¸´ç•Œæƒ…å†µ.
 
 */
 
 /*
-* µ¥Ôª¸ñ½Ó¿Ú
+* å•å…ƒæ ¼æ¥å£
 */
 class MyCell
 {
@@ -32,32 +32,32 @@ protected:
 	virtual ~MyCell() {};
 
 public:
-	// ·´ÏòĞĞË÷Òı
+	// åå‘è¡Œç´¢å¼•
 	void setRowIndex(int idx) { _rowIndex = idx; }
 	int getRowIndex() const {return _rowIndex; }
 
-	// ÖØ»­Ê±ÓÉ¿ò¼Üµ÷ÓÃ(Ê¹ÓÃMyVirtualImage×ø±êÏµ)
+	// é‡ç”»æ—¶ç”±æ¡†æ¶è°ƒç”¨(ä½¿ç”¨MyVirtualImageåæ ‡ç³»)
 	virtual void draw(HDC hDc, const RECT* rc, bool selected) = 0;
 
-	// µ¥Ôª¸ñ´ÓMyVirtualImage ÖĞ±»É¾³ıÊ±ÓÉ¿ò¼Üµ÷ÓÃ
+	// å•å…ƒæ ¼ä»MyVirtualImage ä¸­è¢«åˆ é™¤æ—¶ç”±æ¡†æ¶è°ƒç”¨
 	virtual void remove() = 0;
 
-	// »ñÈ¡µ¥Ôª¸ñµÄÎÄ±¾(str == NULL Ê±¼ÆËã³¤¶È)
+	// è·å–å•å…ƒæ ¼çš„æ–‡æœ¬(str == NULL æ—¶è®¡ç®—é•¿åº¦)
 	virtual int getText(wchar_t* str, int len) const = 0;
 
-	// ÏÔÊ¾µ¥Ôª¸ñºóÊÇ·ñĞèÒª»»ĞĞ
+	// æ˜¾ç¤ºå•å…ƒæ ¼åæ˜¯å¦éœ€è¦æ¢è¡Œ
 	virtual int width() const = 0;
 	virtual int height() const = 0;
 	virtual bool wrap() const = 0;
 };
 
-// ×Ö·ûµ¥Ôª¸ñÊµÏÖ
+// å­—ç¬¦å•å…ƒæ ¼å®ç°
 class MyCellCharacterFactory;
 class MyCellCharacter : public MyCell
 {
 protected:
 	MyCellCharacterFactory* _ownerFactory;
-	int _chIndex;		// ÔÚ MyCellCharacterFactory ÖĞµÄĞòºÅ
+	int _chIndex;		// åœ¨ MyCellCharacterFactory ä¸­çš„åºå·
 	wchar_t _ch;
 	int _width;
 	int _height;
@@ -86,32 +86,32 @@ public:
 };
 
 /*
-* ×Ö·ûµ¥Ôª¸ñ¹¤³§ - Ìá¸ß×Ö·ûµ¥Ôª¸ñµÄĞÔÄÜ,±ÜÃâÆµ·± new delete,Í³Ò»¹ÜÀí×ÖÌåµÈËùÓĞ×Ö·ûµ¥Ôª¸ñÄÜ¹²ÏíµÄ×ÊÔ´
-* ¹ÜÀí×ÖÌå,×Ö·ûÏà¹ØµÄËùÓĞĞÅÏ¢
+* å­—ç¬¦å•å…ƒæ ¼å·¥å‚ - æé«˜å­—ç¬¦å•å…ƒæ ¼çš„æ€§èƒ½,é¿å…é¢‘ç¹ new delete,ç»Ÿä¸€ç®¡ç†å­—ä½“ç­‰æ‰€æœ‰å­—ç¬¦å•å…ƒæ ¼èƒ½å…±äº«çš„èµ„æº
+* ç®¡ç†å­—ä½“,å­—ç¬¦ç›¸å…³çš„æ‰€æœ‰ä¿¡æ¯
 */
 class MyCellCharacterFactory
 {
 private:
 	typedef struct
 	{
-		MyCellCharacter* buf;	// ×Ö·û¿éµÄµØÖ·,³¤¶ÈÎª CHARSBUF_BLOCK_LEN
-		int ref;				// ¸Ã×Ö·û¿éµÄÒıÓÃ¼ÆÊı ref = 0 ¿ÕÏĞ, ref = CHARSBUF_BLOCK_LEN È«²¿±»Õ¼ÓÃ
+		MyCellCharacter* buf;	// å­—ç¬¦å—çš„åœ°å€,é•¿åº¦ä¸º CHARSBUF_BLOCK_LEN
+		int ref;				// è¯¥å­—ç¬¦å—çš„å¼•ç”¨è®¡æ•° ref = 0 ç©ºé—², ref = CHARSBUF_BLOCK_LEN å…¨éƒ¨è¢«å ç”¨
 	}charsblock_t;
-	charsblock_t* _blocks;		// ×Ö·û¿é»º³å
-	int _blockSize;				// Ã¿¸ö×Ö·û¿éµÄ´óĞ¡
-	int _blocksLen;				// ×Ö·û¿é»º³å³¤¶È
-	int _curBlock;				// Ö¸Ïòµ±Ç°×Ö·û¿é
-	int _curIndex;				// Ö¸Ïòµ±Ç°×Ö·û¿éµÄµÚÒ»¸ö¿ÕÏĞ×Ö·ûÎ»ÖÃ
+	charsblock_t* _blocks;		// å­—ç¬¦å—ç¼“å†²
+	int _blockSize;				// æ¯ä¸ªå­—ç¬¦å—çš„å¤§å°
+	int _blocksLen;				// å­—ç¬¦å—ç¼“å†²é•¿åº¦
+	int _curBlock;				// æŒ‡å‘å½“å‰å­—ç¬¦å—
+	int _curIndex;				// æŒ‡å‘å½“å‰å­—ç¬¦å—çš„ç¬¬ä¸€ä¸ªç©ºé—²å­—ç¬¦ä½ç½®
 
 	HDC _hdc;
 	HFONT _hFont;
-	int _charHeight;			// ĞĞ¸ß
-	int _charAveWidth;			// ×Ö·ûµÄÆ½¾ù¿í¶È²Î¿¼Öµ
-	int _tabWidth;				// TAB µÄ¿í¶È(ÏñËØ)
-	int getCharWidth(wchar_t ch) const;						// »ñÈ¡Ò»¸ö×Ö·ûµÄ¿í¶È
-	int reserve(int len, MyCellCharacter** buf);		// ±£Áôlen¸ö×Ö·û
+	int _charHeight;			// è¡Œé«˜
+	int _charAveWidth;			// å­—ç¬¦çš„å¹³å‡å®½åº¦å‚è€ƒå€¼
+	int _tabWidth;				// TAB çš„å®½åº¦(åƒç´ )
+	int getCharWidth(wchar_t ch) const;						// è·å–ä¸€ä¸ªå­—ç¬¦çš„å®½åº¦
+	int reserve(int len, MyCellCharacter** buf);		// ä¿ç•™lenä¸ªå­—ç¬¦
 	int findBlock(MyCellCharacter* ch);
-	void swapBlock(int i, int j);			// ½»»»Î»ÖÃi ºÍ Î»ÖÃj µÄ×Ö·ûµ¥Ôª
+	void swapBlock(int i, int j);			// äº¤æ¢ä½ç½®i å’Œ ä½ç½®j çš„å­—ç¬¦å•å…ƒ
 public:
 	MyCellCharacterFactory(int blockSize);
 	virtual ~MyCellCharacterFactory();
@@ -121,21 +121,21 @@ public:
 	int getCharHeight() const;
 
 	/*
-	* ÎªÁËÌá¸ßĞ§ÂÊ,°´"¿é²Ù×÷"µÄ·½Ê½´´½¨×Ö·ûµ¥Ôª.
+	* ä¸ºäº†æé«˜æ•ˆç‡,æŒ‰"å—æ“ä½œ"çš„æ–¹å¼åˆ›å»ºå­—ç¬¦å•å…ƒ.
 	*/
 	int alloc(const wchar_t* ch, int len, COLORREF fgClr, COLORREF bkClr, MyCellCharacter** chCells, int* cellLen);
 	void recycle(MyCellCharacter** chs, int len);
 };
 
 /*
-* ĞéÄâÍ¼ÏñÊµÏÖ MyVirtualImage
+* è™šæ‹Ÿå›¾åƒå®ç° MyVirtualImage
 */
-// ĞĞÄÚµÄ¶ÔÆë·½Ê½
+// è¡Œå†…çš„å¯¹é½æ–¹å¼
 #define MYALIGN_TOP 0
 #define MYALIGN_CENTER 1
 #define MYALIGN_BOTTOM 2
 
-// Í¨¹ı×ø±ê²âËãÎ»ÖÃÊ±·µ»ØµÄÇøÓò hitTest()
+// é€šè¿‡åæ ‡æµ‹ç®—ä½ç½®æ—¶è¿”å›çš„åŒºåŸŸ hitTest()
 #define MYHTC_LEFT		0x0001
 #define MYHTC_RIGHT		0x0002
 #define MYHTC_TOP		0x0010
@@ -146,55 +146,55 @@ public:
 class MyVirtualImage
 {
 private:
-	MyCell** _cells;			// »º³åÇø(ÓÃÒ»Î¬Êı×éÄ£Äâ¶şÎ¬Êı×é,ÕâÑù±ãÓÚĞŞ¸ÄĞĞºÍÁĞ.
-	int _cellBufLen;			// »º³å³¤¶È
-	int _curCellPos;			// Ö¸ÏòµÚÒ»¸ö¿ÉĞ´µÄµ¥Ôª¸ñÎ»ÖÃ(¼´µ±Ç°µÄ×Ö·ûÊı)
+	MyCell** _cells;			// ç¼“å†²åŒº(ç”¨ä¸€ç»´æ•°ç»„æ¨¡æ‹ŸäºŒç»´æ•°ç»„,è¿™æ ·ä¾¿äºä¿®æ”¹è¡Œå’Œåˆ—.
+	int _cellBufLen;			// ç¼“å†²é•¿åº¦
+	int _curCellPos;			// æŒ‡å‘ç¬¬ä¸€ä¸ªå¯å†™çš„å•å…ƒæ ¼ä½ç½®(å³å½“å‰çš„å­—ç¬¦æ•°)
 	int _maxCellLen;
 	
-	// ĞĞË÷Òı
+	// è¡Œç´¢å¼•
 	typedef struct
 	{
-		int index;				// Ã¿Ò»ĞĞµÄÆğÊ¼ĞòºÅ
-		int width;				// ĞĞ¿í¶È - Ò»ĞĞÖĞËùÓĞµ¥Ôª¸ñµÄ³¤¶ÈÖ®ºÍ(º¬×Ö¼ä¾à)
-		int y;					// ĞĞ×ø±êµÄ y Öµ
+		int index;				// æ¯ä¸€è¡Œçš„èµ·å§‹åºå·
+		int width;				// è¡Œå®½åº¦ - ä¸€è¡Œä¸­æ‰€æœ‰å•å…ƒæ ¼çš„é•¿åº¦ä¹‹å’Œ(å«å­—é—´è·)
+		int y;					// è¡Œåæ ‡çš„ y å€¼
 	}rowinfo_t;
-	rowinfo_t* _rowInfo;		// ĞĞË÷Òı
-	int _sentryRowPos;			// ÉÚ±øÎ»ÖÃ,ÔÚ×îºóÒ»ĞĞµÄºóÒ»ĞĞ,±£´æÒ»Ğ©²ÎÊı,È·±£×ÜÊÇÄÜÍ¨¹ı»ñÈ¡ÓĞĞ§ĞĞµÄÏÂÒ»ĞĞµÃµ½ĞÅÏ¢ÒÔ±ã¼ÆËãĞĞ¸ß,ĞĞ·¶Î§. = ĞĞÊı
-	int _rowIndexBufLen;		// ĞĞË÷Òı»º³åµÄ³¤¶È
-	int _widestRowIndex;		// ×î¿íµÄĞĞµÄĞòºÅ
-	bool _autoWrap;				// ÊÇ·ñ×Ô¶¯»»ĞĞ
+	rowinfo_t* _rowInfo;		// è¡Œç´¢å¼•
+	int _sentryRowPos;			// å“¨å…µä½ç½®,åœ¨æœ€åä¸€è¡Œçš„åä¸€è¡Œ,ä¿å­˜ä¸€äº›å‚æ•°,ç¡®ä¿æ€»æ˜¯èƒ½é€šè¿‡è·å–æœ‰æ•ˆè¡Œçš„ä¸‹ä¸€è¡Œå¾—åˆ°ä¿¡æ¯ä»¥ä¾¿è®¡ç®—è¡Œé«˜,è¡ŒèŒƒå›´. = è¡Œæ•°
+	int _rowIndexBufLen;		// è¡Œç´¢å¼•ç¼“å†²çš„é•¿åº¦
+	int _widestRowIndex;		// æœ€å®½çš„è¡Œçš„åºå·
+	bool _autoWrap;				// æ˜¯å¦è‡ªåŠ¨æ¢è¡Œ
 
-	// ´°¿ÚÍ¼ÏñµÄÄÚ´æ»º³å
+	// çª—å£å›¾åƒçš„å†…å­˜ç¼“å†²
 	HDC _hdc;
 	HBITMAP _hbmp;
 	POINT _windowSize;
 	POINT _windowPos;
 	HBRUSH _windowBkBrush;
-	POINT _sel;					// Ñ¡ÖĞÇøÓò [x, y)
-	POINT _dirtyRange;			// ÔàÇøÓò [x, y) µ± y = -1 Ê±±íÊ¾¸üĞÂ´Óµ¥Ôª x µÄÆğÊ¼×ø±êµ½Õû¸ö¿ÉÊÓ´°¿ÚµÄ½áÊø×ø±ê.
-	int _colSpacing;			// ×Ö¼ä¾à
-	int _rowSpacing;			// ĞĞ¼ä¾à
-	int _alignMode;				// ¶ÔÆë·½Ê½
+	POINT _sel;					// é€‰ä¸­åŒºåŸŸ [x, y)
+	POINT _dirtyRange;			// è„åŒºåŸŸ [x, y) å½“ y = -1 æ—¶è¡¨ç¤ºæ›´æ–°ä»å•å…ƒ x çš„èµ·å§‹åæ ‡åˆ°æ•´ä¸ªå¯è§†çª—å£çš„ç»“æŸåæ ‡.
+	int _colSpacing;			// å­—é—´è·
+	int _rowSpacing;			// è¡Œé—´è·
+	int _alignMode;				// å¯¹é½æ–¹å¼
 
-	MyCellCharacterFactory _charFactory;	// ×Ö·û¹¤³§
+	MyCellCharacterFactory _charFactory;	// å­—ç¬¦å·¥å‚
 
 	int reserve(int len);
 	
-	int setRowInfo(int row, int pos, int width, int y, unsigned int mask);	// ÉèÖÃĞĞË÷Òı,»á×Ô¶¯Î¬»¤ĞĞË÷ÒıÓÃµ½µÄÄÚ´æ.
+	int setRowInfo(int row, int pos, int width, int y, unsigned int mask);	// è®¾ç½®è¡Œç´¢å¼•,ä¼šè‡ªåŠ¨ç»´æŠ¤è¡Œç´¢å¼•ç”¨åˆ°çš„å†…å­˜.
 	int getRowInfo(int row, unsigned int mask) const;
 	
 	int drawc(int pos, const POINT& pt);
-	int markDirtyRange(const POINT& rng);					// ±ê¼ÇÔàÇøÓò [x, y) ×Ö·ûĞòºÅ×îÖÕ»á×ª»»³ÉĞéÄâÍ¼ÏñÄÚµÄÒ»¸öÇøÓò
+	int markDirtyRange(const POINT& rng);					// æ ‡è®°è„åŒºåŸŸ [x, y) å­—ç¬¦åºå·æœ€ç»ˆä¼šè½¬æ¢æˆè™šæ‹Ÿå›¾åƒå†…çš„ä¸€ä¸ªåŒºåŸŸ
 	int getWidestRow(const POINT& rng) const;
 
-	// ¸üĞÂĞĞË÷Òı,ÀûÓÃÔ­ÓĞµÄĞĞË÷ÒıÊı¾İ. len < 0 ±íÊ¾É¾³ı; len > 0 ±íÊ¾Ìí¼Ó.
+	// æ›´æ–°è¡Œç´¢å¼•,åˆ©ç”¨åŸæœ‰çš„è¡Œç´¢å¼•æ•°æ®. len < 0 è¡¨ç¤ºåˆ é™¤; len > 0 è¡¨ç¤ºæ·»åŠ .
 	int updateRowIndex(int pos, int len);
 	int updateWindow();
 	
-	int redraw();						// ÖØ»­´°¿Ú(ÊÓ¿Ú)ÄÚµÄÄÚÈİ
-	int rebuildRowIndex();				// ÖØ½¨ĞĞË÷Òı
+	int redraw();						// é‡ç”»çª—å£(è§†å£)å†…çš„å†…å®¹
+	int rebuildRowIndex();				// é‡å»ºè¡Œç´¢å¼•
 
-	// ½ûÖ¹¸´ÖÆ
+	// ç¦æ­¢å¤åˆ¶
 	MyVirtualImage(const MyVirtualImage&);
 	MyVirtualImage& operator = (const MyVirtualImage&);
 public:
@@ -202,20 +202,20 @@ public:
 	virtual ~MyVirtualImage();
 
 	/*
-	* ScreenBuffer ÊôĞÔ
+	* ScreenBuffer å±æ€§
 	*/
 
-	// ÊÇ·ñ×Ô¶¯»»ĞĞ
+	// æ˜¯å¦è‡ªåŠ¨æ¢è¡Œ
 	bool enableAutoWrap(bool autoWrap);
 
-	// »ñÈ¡ĞĞ¸ß, ĞĞ¼ä¾à, ×Ö·ûÆ½¾ù¿í¶È,×Ö¼ä¾à
+	// è·å–è¡Œé«˜, è¡Œé—´è·, å­—ç¬¦å¹³å‡å®½åº¦,å­—é—´è·
 	int getRowSpacing() const;
 	int getCharSpacing() const;
 
 	/*
-	* Ìí¼ÓĞŞ¸ÄÉ¾³ı
+	* æ·»åŠ ä¿®æ”¹åˆ é™¤
 	*/
-	// remove(0, -1) É¾³ıÈ«²¿
+	// remove(0, -1) åˆ é™¤å…¨éƒ¨
 	int insert(int pos, MyCell** cells, int len);
 	int remove(int pos, int len);
 	MyCell* getCell(int pos);
@@ -225,9 +225,9 @@ public:
 	int getText(int pos, int len, wchar_t* dest, int destLen) const;
 	
 	/*
-	* ÊÓÍ¼Ïà¹Øº¯Êı
+	* è§†å›¾ç›¸å…³å‡½æ•°
 	*/
-	// ÉèÖÃ×ÖÌå, tabSize ±íÊ¾ \t Õ¼ÓÃ¼¸¸ö¿Õ¸ñ
+	// è®¾ç½®å­—ä½“, tabSize è¡¨ç¤º \t å ç”¨å‡ ä¸ªç©ºæ ¼
 	// OPAQUE / TRANSPARENT
 	HFONT setFont(HFONT font, int rowSpacing, int colSpacing, int tabSize);
 	int getCharAveWidth() const;
@@ -235,33 +235,33 @@ public:
 	int setBkMode(int m);
 	HBRUSH setBkBrush(HBRUSH bkBrush);
 
-	// ·µ»ØËùÓĞÎÄ±¾¶¼ÏÔÊ¾Ê±´°¿Ú¼´ĞéÄâÍ¼ÏñµÄ´óĞ¡(ÓÃ»§ÒÔ´ËÉèÖÃ¹ö¶¯ÌõµÄĞÅÏ¢)
+	// è¿”å›æ‰€æœ‰æ–‡æœ¬éƒ½æ˜¾ç¤ºæ—¶çª—å£å³è™šæ‹Ÿå›¾åƒçš„å¤§å°(ç”¨æˆ·ä»¥æ­¤è®¾ç½®æ»šåŠ¨æ¡çš„ä¿¡æ¯)
 	POINT getImageSize() const;	
 	
-	// ÉèÖÃÊÓ¿ÚµÄ´óĞ¡(ÕâÊÇÒ»¸öÏà¶Ô·ÑÊ±µÄ²Ù×÷,ËùÒÔÓÃ»§Ó¦¸Ã¾¡Á¿¼õÉÙµ÷ÓÃ´Ëº¯ÊıµÄ´ÎÊı,±ÈÈç²»ÒªÈÃ´°¿Ú´óĞ¡Á¬Ğø±ä»¯,¶øÊÇ·Ö¶Î±ä»¯)
+	// è®¾ç½®è§†å£çš„å¤§å°(è¿™æ˜¯ä¸€ä¸ªç›¸å¯¹è´¹æ—¶çš„æ“ä½œ,æ‰€ä»¥ç”¨æˆ·åº”è¯¥å°½é‡å‡å°‘è°ƒç”¨æ­¤å‡½æ•°çš„æ¬¡æ•°,æ¯”å¦‚ä¸è¦è®©çª—å£å¤§å°è¿ç»­å˜åŒ–,è€Œæ˜¯åˆ†æ®µå˜åŒ–)
 	int setWindowSize(const POINT& sz);		
 	int setWindowPos(const POINT& pos);
 	int render(HDC hdc, const RECT& dest);
 	
-	// ÖØ»­Ö¸¶¨µ¥Ôª¸ñ
+	// é‡ç”»æŒ‡å®šå•å…ƒæ ¼
 	int update(int pos, int len);	
 	
-	// ÔÚĞéÄâÍ¼ÏñÖĞ×ö ĞòºÅ,×ø±êºÍĞĞÁĞµÄÏà»¥×ª»»
-	// MyVirtualImage ÖĞËùÓĞ×Ö·û¶¼ÔÚÒ»¸ö"ĞéÄâÍ¼Ïñ"ÖĞÅÅÁĞºÃÁË. ´°¿ÚÖĞÏÔÊ¾µÄÄÚÈİÖ»ÊÇÕâ¸öĞéÄâÍ¼ÏñµÄÒ»²¿·Ö.
-	// pos µÄÓĞĞ§·¶Î§ÊÇ [0, size()]. ÆäÖĞ size() ÊÇÏÂÒ»¸öÊä³ö×Ö·ûµÄÎ»ÖÃ.
+	// åœ¨è™šæ‹Ÿå›¾åƒä¸­åš åºå·,åæ ‡å’Œè¡Œåˆ—çš„ç›¸äº’è½¬æ¢
+	// MyVirtualImage ä¸­æ‰€æœ‰å­—ç¬¦éƒ½åœ¨ä¸€ä¸ª"è™šæ‹Ÿå›¾åƒ"ä¸­æ’åˆ—å¥½äº†. çª—å£ä¸­æ˜¾ç¤ºçš„å†…å®¹åªæ˜¯è¿™ä¸ªè™šæ‹Ÿå›¾åƒçš„ä¸€éƒ¨åˆ†.
+	// pos çš„æœ‰æ•ˆèŒƒå›´æ˜¯ [0, size()]. å…¶ä¸­ size() æ˜¯ä¸‹ä¸€ä¸ªè¾“å‡ºå­—ç¬¦çš„ä½ç½®.
 
-	// °Ñ×ø±êºÍĞĞÁĞ(¿ÉÄÜ°üº¬ÎŞĞ§·¶Î§)²âËãÎªÓĞĞ§µÄĞòºÅ[0, _curCellPos]
+	// æŠŠåæ ‡å’Œè¡Œåˆ—(å¯èƒ½åŒ…å«æ— æ•ˆèŒƒå›´)æµ‹ç®—ä¸ºæœ‰æ•ˆçš„åºå·[0, _curCellPos]
 	int hitTest(const POINT& pt, unsigned int* htc = NULL) const;
 	int hitTest(int row, int col, unsigned int* htc = NULL) const;
 
 	POINT getPoint(int pos) const;
 	int getRowCol(int pos, int* row, int* col) const;
-	POINT getRowRange(int row) const;		// »ñµÃÄ³ĞĞµÄ×Ö·ûĞòºÅ·¶Î§(ËùÓĞµÄ·¶Î§¶¼ÊÇ[f, t))
+	POINT getRowRange(int row) const;		// è·å¾—æŸè¡Œçš„å­—ç¬¦åºå·èŒƒå›´(æ‰€æœ‰çš„èŒƒå›´éƒ½æ˜¯[f, t))
 	int getRowHeight(int row) const;
 	int rows() const;
 	int size() const;
 
-	// Ñ¡ÖĞ, getSel(): x = pos, y = len;
+	// é€‰ä¸­, getSel(): x = pos, y = len;
 	int setSel(int pos, int len);
 	int getSel(int* pos, int* len) const;
 };
